@@ -843,6 +843,10 @@ table.infoSectionTable tr td {
   color:var(--TXTCOLOR2);
 }
 
+.ui-widget button {
+    font-family: CascadiaCode;
+}
+
 .ui-slider {
     background-color: var(--BGCOLOR2);
 }
