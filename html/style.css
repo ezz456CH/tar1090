@@ -350,7 +350,6 @@ select {
 
 .formButton {
     font-size: var(--FS2);
-    font-family: CascadiaCode;
     color:var(--TXTCOLOR3);
     background-color: var(--BGCOLOR2);
     border-color: var(--BGCOLOR1);
@@ -781,6 +780,10 @@ table.infoSectionTable tr td {
 
 .ui-widget-content .ui-selectable .ui-selected {
     border-color: #cc6600;
+}
+
+.ui-widget button {
+    font-family: CascadiaCode;
 }
 
 .buttonFilter li {
