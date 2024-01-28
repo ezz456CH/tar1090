@@ -1,5 +1,5 @@
 :root {
-    --SCALE: 1.1;
+    --SCALE: 1;
     --BGCOLOR1: #F8F8F8;
     --BGCOLOR2: #CCCCCC;
     --ACCENT: #00596b;
@@ -581,6 +581,10 @@ table.infoSectionTable tr td {
     float: right;
     text-align: right;
     display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .infoBlockSection {
