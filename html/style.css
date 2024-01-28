@@ -353,6 +353,7 @@ select {
     color:var(--TXTCOLOR3);
     background-color: var(--BGCOLOR2);
     border-color: var(--BGCOLOR1);
+    font-family: CascadiaCode;
 }
 
 select.error, textarea.error, input.error {
