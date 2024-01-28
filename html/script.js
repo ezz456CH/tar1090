@@ -6552,7 +6552,7 @@ function drawSiteCircle() {
                 width: globalScale,
             }),
             text: new ol.style.Text({
-                font: ((10 * globalScale) + 'CascadiaCode'),
+                font: ((10 * globalScale) + 'px CascadiaCode'),
                 fill: new ol.style.Fill({ color: '#000' }),
                 offsetY: -8,
                 text: format_distance_long(distance, DisplayUnits, 0),
