@@ -581,6 +581,7 @@ table.infoSectionTable tr td {
     float: right;
     text-align: right;
     display: inline-block;
+    overflow-wrap: break-word;
 }
 
 .infoBlockSection {
@@ -617,11 +618,11 @@ table.infoSectionTable tr td {
 }
 
 #settings_infoblock {
-    position: relative;
+    position: fixed;
     top: 1%;
     left: 1%;
-    overflow-wrap: break-word;
-    max-height: 90%;
+    overflow: auto;
+    max-height: 100%;
     box-shadow: calc( 4px * var(--SCALE)) calc( 4px * var(--SCALE)) calc( 10px * var(--SCALE)) #444444;
     padding: calc( 20px * var(--SCALE));
     z-index: 9999;
