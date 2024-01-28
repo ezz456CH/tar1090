@@ -34,6 +34,7 @@ html, body {
 select {
     font-size: var(--FS2);
     height: calc(22px * var(--SCALE));
+    font-family: CascadiaCode;
 }
 
 #planesTable {
@@ -464,6 +465,7 @@ select.error, textarea.error, input.error {
     cursor: pointer;
     text-align: center;
     background-clip: padding-box;
+    font-family: CascadiaCode;
 }
 
 
