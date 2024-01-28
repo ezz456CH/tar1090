@@ -578,8 +578,9 @@ table.infoSectionTable tr td {
 .infoData {
     margin-top: calc( 2px * var(--SCALE));
     margin-bottom: calc( 2px * var(--SCALE));
+    float: right;
     text-align: right;
-    display: inline-block;
+    display: block;
 }
 
 .infoBlockSection {
