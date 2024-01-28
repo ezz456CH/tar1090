@@ -8330,7 +8330,7 @@ function setSelectedIcao() {
         let copy_link_text = (copiedIcao != null) ? "Copied" : ("Copy" + NBSP + "Link");
         let icao_link = "<span  class=identSmall><a class='link identSmall' target=\"_blank\" href=\"" + shareLink +
             "\" onclick=\"copyShareLink(); return false;\">" + copy_link_text + "</a></span>";
-        hex_html = hex_html + NBSP + NBSP + NBSP + icao_link;
+        hex_html = hex_html + "<br>" + icao_link;
     }
     jQuery('#selected_icao').html(hex_html);
 
