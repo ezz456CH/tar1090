@@ -569,7 +569,6 @@ table.infoSectionTable tr td {
     margin-top: calc( 2px * var(--SCALE));
     margin-bottom: calc( 2px * var(--SCALE));
     display: inline-block;
-    overflow-wrap: break-word;
 }
 
 .infoHeading sub {
