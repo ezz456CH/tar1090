@@ -581,6 +581,7 @@ table.infoSectionTable tr td {
     float: right;
     text-align: right;
     display: inline-block;
+    overflow-wrap: break-word;
 }
 
 .infoBlockSection {
