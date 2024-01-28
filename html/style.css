@@ -581,7 +581,6 @@ table.infoSectionTable tr td {
     float: right;
     text-align: right;
     display: inline-block;
-    overflow-wrap: break-word;
 }
 
 .infoBlockSection {
@@ -589,7 +588,6 @@ table.infoSectionTable tr td {
     padding-bottom: calc( 7px * var(--SCALE));
     padding-left: calc( 7px * var(--SCALE));
     padding-right: calc( 7px * var(--SCALE));
-    overflow-wrap: break-word;
 }
 
 .largeText a {
@@ -619,10 +617,10 @@ table.infoSectionTable tr td {
 }
 
 #settings_infoblock {
-    position: fixed;
+    position: relative;
     top: 1%;
     left: 1%;
-    overflow: auto;
+    overflow-wrap: break-word;
     max-height: 90%;
     box-shadow: calc( 4px * var(--SCALE)) calc( 4px * var(--SCALE)) calc( 10px * var(--SCALE)) #444444;
     padding: calc( 20px * var(--SCALE));
