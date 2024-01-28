@@ -79,6 +79,9 @@ select {
     height: 100%;
     z-index:3;
 }
+#export_kml_geom, #export_kml_geom_avg, #export_kml_baro {
+    font-family: CascadiaCode;
+}
 #sidebar_canvas {
     padding: calc( 5px * var(--SCALE));
     overflow: auto;
@@ -465,7 +468,6 @@ select.error, textarea.error, input.error {
     cursor: pointer;
     text-align: center;
     background-clip: padding-box;
-    font-family: CascadiaCode;
 }
 
 
