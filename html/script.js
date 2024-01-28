@@ -5228,7 +5228,7 @@ function setGlobalScale(scale, init) {
     globalScale = scale;
     document.documentElement.style.setProperty("--SCALE", globalScale);
 
-    labelFont = "bold " + (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale) + "Cascadia Code";
+    labelFont = "bold " + (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale);
 
     checkScale();
     setLineWidth();
@@ -6552,7 +6552,7 @@ function drawSiteCircle() {
                 width: globalScale,
             }),
             text: new ol.style.Text({
-                font: ((10 * globalScale) + 'px Helvetica Neue, Helvetica, Tahoma, Verdana, sans-serif'),
+                font: ((10 * globalScale) + 'CascadiaCode'),
                 fill: new ol.style.Fill({ color: '#000' }),
                 offsetY: -8,
                 text: format_distance_long(distance, DisplayUnits, 0),
