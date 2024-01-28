@@ -738,6 +738,7 @@ table.infoSectionTable tr td {
     text-align: left;
     outline: none;
     font-size: calc( 15px * var(--SCALE));
+    font-family: CascadiaCode;
     font-weight: bold;
     color: var(--TXTCOLOR1);
 }
