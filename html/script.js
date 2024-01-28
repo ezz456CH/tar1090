@@ -5228,7 +5228,7 @@ function setGlobalScale(scale, init) {
     globalScale = scale;
     document.documentElement.style.setProperty("--SCALE", globalScale);
 
-    labelFont = "bold " + (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale) + "px Tahoma, Verdana, Helvetica, sans-serif";
+    labelFont = (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale) + "CascadiaCode, sans-serif";
 
     checkScale();
     setLineWidth();
