@@ -346,7 +346,6 @@ select {
     color:var(--TXTCOLOR2);
     background-color: var(--BGCOLOR2);
     border-color: var(--BGCOLOR1);
-    font-family: CascadiaCode;
 }
 
 .formButton {
@@ -846,6 +845,10 @@ table.infoSectionTable tr td {
 }
 
 .ui-widget button {
+    font-family: CascadiaCode;
+}
+
+.ui-widget input {
     font-family: CascadiaCode;
 }
 
