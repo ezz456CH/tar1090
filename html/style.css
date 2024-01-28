@@ -371,7 +371,7 @@ select.error, textarea.error, input.error {
     width: calc( 30px * var(--SCALE));
     height: calc( 30px * var(--SCALE));
 }
-.layer-switcher.shown {
+.layer-switcher !.shown {
     top: calc( 3px * var(--SCALE)) !important;
     right: calc( 44px * var(--SCALE)) !important;
     width: calc( 32px * var(--SCALE));
@@ -397,7 +397,7 @@ select.error, textarea.error, input.error {
     padding-left: calc( 20px * var(--SCALE));
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1 calc(000px * var(--SCALE))) {
     .dateTime {
         display: none;
     }
@@ -573,6 +573,7 @@ table.infoSectionTable tr td {
 .infoData {
     margin-top: calc( 2px * var(--SCALE));
     margin-bottom: calc( 2px * var(--SCALE));
+    float: right;
     text-align: right;
     display: inline-block;
 }
