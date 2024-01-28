@@ -581,10 +581,6 @@ table.infoSectionTable tr td {
     float: right;
     text-align: right;
     display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
 }
 
 .infoBlockSection {
