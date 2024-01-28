@@ -722,6 +722,7 @@ table.infoSectionTable tr td {
 
 .ui-tabs {
     background-color: var(--BGCOLOR1);
+    font-family: CascadiaCode;
 }
 .ui-tabs-nav {
     background-color: var(--BGCOLOR2);
@@ -780,10 +781,6 @@ table.infoSectionTable tr td {
 
 .ui-widget-content .ui-selectable .ui-selected {
     border-color: #cc6600;
-}
-
-.ui-widget button {
-    font-family: CascadiaCode;
 }
 
 .buttonFilter li {
