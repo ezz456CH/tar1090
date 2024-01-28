@@ -863,7 +863,6 @@ table.infoSectionTable tr td {
     background-color: rgb(0, 115, 222);
 }
 
-
 input{
   color:var(--TXTCOLOR1);
 }
@@ -899,9 +898,11 @@ input{
 }
 #replayPlay{
   grid-area: play;
+  font-family: CascadiaCode;
 }
 #replayDatepicker{
   grid-area: datepicker;
+  font-family: CascadiaCode;
 }
 #hourSelect{
   width: 90%;
