@@ -38,11 +38,9 @@ function createBaseLayers() {
     }
     world.push(new ol.layer.Tile({
         source: new ol.source.XYZ({
-            url: 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-            attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a>, <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
+            url: `https://api.mapbox.com/styles/v1/${'mapbox://styles/ezz456ch/clqq1uwtg00s801qy1ywxg1sa'}/tiles/{z}/{x}/{y}?access_token=${'pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ'}`,
+            attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
             maxZoom: 18,
-            id: 'mapbox://styles/ezz456ch/clqq1uwtg00s801qy1ywxg1sa',
-            accessToken: 'pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ'
         }),
         name: 'mapbox_dark',
         title: 'Mapbox Dark',
