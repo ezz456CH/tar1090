@@ -661,7 +661,6 @@ table.infoSectionTable tr td {
     left: 1%;
     overflow: auto;
     max-height: 90%;
-    box-shadow: calc(4px * var(--SCALE)) calc(4px * var(--SCALE)) calc(10px * var(--SCALE)) #444444;
     padding: calc(20px * var(--SCALE));
     z-index: 9999;
     display: none;
