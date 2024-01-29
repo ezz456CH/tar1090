@@ -514,6 +514,7 @@ input.error {
     cursor: pointer;
     text-align: center;
     background-clip: padding-box;
+    user-select: none;
 }
 
 
@@ -521,6 +522,7 @@ input.error {
     display: block;
     margin: calc(1px * var(--SCALE));
     text-align: center;
+    user-select: none;
 }
 
 .buttonSpacer {
