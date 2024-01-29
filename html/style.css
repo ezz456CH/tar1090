@@ -324,8 +324,8 @@ select {
 }
 
 .aircraft_table_header {
-    background-color: var(--ACCENT);
-    color: #000000;
+    background-color: #242424;
+    color: #ffffff;
     cursor: pointer;
 }
 
