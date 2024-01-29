@@ -38,7 +38,7 @@ function createBaseLayers() {
     }
     world.push(new ol.layer.Tile({
         source: new ol.source.XYZ({
-            url: `https://api.mapbox.com/styles/v1/${'mapbox://styles/ezz456ch/clqq1uwtg00s801qy1ywxg1sa'}/tiles/{z}/{x}/{y}?access_token=${'pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ'}`,
+            url: `https://api.mapbox.com/styles/v1/ezz456ch/clqq1uwtg00s801qy1ywxg1sa/wmts?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2w3b3ljYWY2MXlwcjNvbXpkbDlnOXZtMyJ9.CooSv1PEcVNHiMWStUfNzA`,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
             maxZoom: 18,
         }),
