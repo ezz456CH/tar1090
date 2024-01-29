@@ -50,21 +50,21 @@ let SiteName    = "My Radar Site"; // tooltip of the marker
 let updateLocation = false;
 
 // Color controls for the range outline
-let range_outline_color = '#0000DD';
+let range_outline_color = '#292929';
 let range_outline_alpha = 1.0;
 let range_outline_width = 1.7;
 let range_outline_colored_by_altitude = false;
 let range_outline_dash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
 // Style controls for the actal range outline:
-let actual_range_outline_color = '#292929';
+let actual_range_outline_color = '#1da1f2';
 let actual_range_outline_width = 1.7;
 let actual_range_outline_dash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 //
 let actual_range_show = true;
 
 // which map is displayed to new visitors
-let MapType_tar1090 = "osm";
+let MapType_tar1090 = "mapbox_dark";
 let defaultOverlays = [];
 let dwdLayers = 'dwd:RX-Produkt';
 
@@ -196,7 +196,7 @@ let SiteCirclesColors = ['#000000', '#000000', '#000000'];
 let SiteCirclesLineDash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
 // Controls page title, righthand pane when nothing is selected
-let PageName = "tar1090";
+let PageName = "ADS-B | ezz456CH";
 
 // Show country flags by ICAO addresses?
 let ShowFlags = true;
