@@ -533,7 +533,6 @@ input.error {
     line-height: calc(27px * var(--SCALE));
     text-align: center;
     margin: calc(5px * var(--SCALE));
-    color: #000
 }
 
 .activeButton {
@@ -541,7 +540,7 @@ input.error {
 }
 
 .inActiveButton {
-    color: #fff
+    color: #000000
 }
 
 .settingsCog {
