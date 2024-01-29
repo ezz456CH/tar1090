@@ -2,11 +2,11 @@
     --SCALE: 1;
     --BGCOLOR1: #F8F8F8;
     --BGCOLOR2: #CCCCCC;
-    --ACCENT: #00596b;
+    --ACCENT: #fdfdfd;
     --FS1: calc(10px * var(--SCALE));
     --FS2: calc(13px * var(--SCALE));
     --FS3: calc(17px * var(--SCALE));
-    --TXTCOLOR1: #003f4b;
+    --TXTCOLOR1: #4b4b4b;
     --TXTCOLOR2: #050505;
     --TXTCOLOR3: #101010;
 }
@@ -533,10 +533,11 @@ input.error {
     line-height: calc(27px * var(--SCALE));
     text-align: center;
     margin: calc(5px * var(--SCALE));
+    color: #000
 }
 
 .activeButton {
-    color: #000
+    color: #33b5e5
 }
 
 .inActiveButton {
