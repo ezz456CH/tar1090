@@ -25,7 +25,7 @@ body {
     padding: calc(0px * var(--SCALE));
     background: var(--BGCOLOR1);
     background-color: var(--BGCOLOR1);
-    font-family: "Cascadia Code", CascadiaCode, Verdana, sans-serif;
+    font-family: CascadiaCode;
     font-size: var(--FS2);
     overflow: hidden;
     height: 100%;
@@ -319,10 +319,13 @@ select {
     left: 37%;
 }
 
+#ui-datepicker-div {
+    font-family: CascadiaCode;
+}
 
 .aircraft_table_header {
     background-color: var(--ACCENT);
-    color: #FFFFFF;
+    color: #000000;
     cursor: pointer;
 }
 
@@ -333,7 +336,7 @@ select {
 }
 
 .verticalRateTriangle {
-    font-family: "Courier New", CascadiaCode;
+    font-family: CascadiaCode;
 }
 
 .icaoCodeColumn {
