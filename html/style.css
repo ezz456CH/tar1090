@@ -324,7 +324,7 @@ select {
 }
 
 .aircraft_table_header {
-    background-color: #242424;
+    background-color: rgb(35, 69, 82);
     color: #ffffff;
     cursor: pointer;
 }
