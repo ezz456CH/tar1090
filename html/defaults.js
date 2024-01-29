@@ -50,7 +50,7 @@ let SiteName    = "My Radar Site"; // tooltip of the marker
 let updateLocation = false;
 
 // Color controls for the range outline
-let range_outline_color = '#292929';
+let range_outline_color = '#ababab';
 let range_outline_alpha = 1.0;
 let range_outline_width = 1.7;
 let range_outline_colored_by_altitude = false;
