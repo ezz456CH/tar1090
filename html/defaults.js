@@ -57,8 +57,8 @@ let range_outline_colored_by_altitude = false;
 let range_outline_dash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
 // Style controls for the actal range outline:
-let actual_range_outline_color = '#e7e7e7';
-let actual_range_outline_width = 1.1;
+let actual_range_outline_color = '#ababab';
+let actual_range_outline_width = 1.0;
 let actual_range_outline_dash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 //
 let actual_range_show = true;
@@ -191,7 +191,7 @@ let SiteCircles = true; // true to show circles (only shown if the center marker
 // In miles, nautical miles, or km (depending settings value 'DisplayUnits')
 let SiteCirclesDistances = new Array(100, 150, 200);
 // When more circles defined than cirle colors last color will be used or black by default
-let SiteCirclesColors = ['#e7e7e7', '#e7e7e7', '#e7e7e7'];
+let SiteCirclesColors = ['#000000', '#000000', '#000000'];
 // Show circles using dashed line (CAUTION, can be slow, especially when zooming in a lot)
 let SiteCirclesLineDash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
