@@ -562,7 +562,6 @@ input.error {
     top: calc(60px * var(--SCALE));
     min-width: calc(132px * var(--SCALE));
     padding-right: calc(5px * var(--SCALE));
-    box-shadow: calc(4px * var(--SCALE)) calc(4px * var(--SCALE)) calc(10px * var(--SCALE)) #444444;
     cursor: pointer;
     z-index: 9999;
     display: none;
