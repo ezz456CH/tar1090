@@ -29,8 +29,8 @@ let DisplayUnits = "nautical";
 // degrees.
 
 // Default center of the map.
-let DefaultCenterLat = 40.56;
-let DefaultCenterLon = -73.66
+let DefaultCenterLat = 14.81;
+let DefaultCenterLon = 104.46
 // The google maps zoom level, 0 - 16, lower is further out
 let DefaultZoomLvl   = 9;
 
@@ -50,14 +50,14 @@ let SiteName    = "My Radar Site"; // tooltip of the marker
 let updateLocation = false;
 
 // Color controls for the range outline
-let range_outline_color = '#ababab';
+let range_outline_color = '#0000DD';
 let range_outline_alpha = 1.0;
 let range_outline_width = 1.7;
 let range_outline_colored_by_altitude = false;
 let range_outline_dash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
 // Style controls for the actal range outline:
-let actual_range_outline_color = '#1da1f2';
+let actual_range_outline_color = '#e7e7e7';
 let actual_range_outline_width = 1.7;
 let actual_range_outline_dash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 //
@@ -191,7 +191,7 @@ let SiteCircles = true; // true to show circles (only shown if the center marker
 // In miles, nautical miles, or km (depending settings value 'DisplayUnits')
 let SiteCirclesDistances = new Array(100, 150, 200);
 // When more circles defined than cirle colors last color will be used or black by default
-let SiteCirclesColors = ['#000000', '#000000', '#000000'];
+let SiteCirclesColors = ['#ababab', '#ababab', '#ababab'];
 // Show circles using dashed line (CAUTION, can be slow, especially when zooming in a lot)
 let SiteCirclesLineDash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
