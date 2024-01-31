@@ -61,7 +61,7 @@ let actual_range_outline_color = '#000000s';
 let actual_range_outline_width = 1.0;
 let actual_range_outline_dash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 //
-let actual_range_show = true;
+let actual_range_show = false;
 
 // which map is displayed to new visitors
 let MapType_tar1090 = "mapbox_dark";
@@ -69,7 +69,7 @@ let defaultOverlays = [];
 let dwdLayers = 'dwd:RX-Produkt';
 
 // Default map dim state
-let MapDim = true;
+let MapDim = false;
 let mapDimPercentage = 0.45;
 let mapContrastPercentage = 0;
 
