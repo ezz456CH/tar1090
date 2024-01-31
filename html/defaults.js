@@ -69,7 +69,7 @@ let defaultOverlays = [];
 let dwdLayers = 'dwd:RX-Produkt';
 
 // Default map dim state
-let MapDim = false;
+let MapDim = true;
 let mapDimPercentage = 0.45;
 let mapContrastPercentage = 0;
 
