@@ -12,7 +12,7 @@
 }
 
 @font-face {
-    font-family: "CascadiaCode";
+    font-family: "Cascadia Code";
     src: url("fonts/CascadiaCode-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
@@ -25,7 +25,7 @@ body {
     padding: calc(0px * var(--SCALE));
     background: var(--BGCOLOR1);
     background-color: var(--BGCOLOR1);
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
     font-size: var(--FS2);
     overflow: hidden;
     height: 100%;
@@ -35,7 +35,7 @@ body {
 select {
     font-size: var(--FS2);
     height: calc(22px * var(--SCALE));
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 #planesTable {
@@ -86,7 +86,7 @@ select {
 #export_kml_geom,
 #export_kml_geom_avg,
 #export_kml_baro {
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 #sidebar_canvas {
@@ -320,7 +320,7 @@ select {
 }
 
 #ui-datepicker-div {
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 .aircraft_table_header {
@@ -336,11 +336,11 @@ select {
 }
 
 .verticalRateTriangle {
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 .icaoCodeColumn {
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
     text-transform: uppercase;
 }
 
@@ -402,7 +402,7 @@ select {
     color: var(--TXTCOLOR3);
     background-color: var(--BGCOLOR2);
     border-color: var(--BGCOLOR1);
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 select.error,
@@ -770,7 +770,7 @@ table.infoSectionTable tr td {
 
 .ui-tabs {
     background-color: var(--BGCOLOR1);
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 .ui-tabs-nav {
@@ -790,7 +790,7 @@ table.infoSectionTable tr td {
     text-align: left;
     outline: none;
     font-size: calc(15px * var(--SCALE));
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
     font-weight: bold;
     color: var(--TXTCOLOR1);
 }
@@ -938,11 +938,11 @@ html .ui-button.ui-state-disabled:active {
 }
 
 .ui-widget button {
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 .ui-widget input {
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 .ui-slider {
@@ -990,12 +990,12 @@ input {
 
 #replayPlay {
     grid-area: play;
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 #replayDatepicker {
     grid-area: datepicker;
-    font-family: CascadiaCode;
+    font-family: Cascadia Code;
 }
 
 #hourSelect {

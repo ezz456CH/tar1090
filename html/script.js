@@ -5228,7 +5228,7 @@ function setGlobalScale(scale, init) {
     globalScale = scale;
     document.documentElement.style.setProperty("--SCALE", globalScale);
 
-    labelFont = "bold " + (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale) + "px CascadiaCode";
+    labelFont = "bold " + (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale) + "px Cascadia Code";
 
     checkScale();
     setLineWidth();
@@ -6552,7 +6552,7 @@ function drawSiteCircle() {
                 width: globalScale,
             }),
             text: new ol.style.Text({
-                font: ((10 * globalScale) + 'px CascadiaCode'),
+                font: ((10 * globalScale) + 'px Cascadia Code'),
                 fill: new ol.style.Fill({ color: '#000000' }),
                 offsetY: -8,
                 text: format_distance_long(distance, DisplayUnits, 0),
@@ -8322,7 +8322,7 @@ function setSelectedIcao() {
         return;
     }
     selIcao = selected.icao;
-    let hex_html = "<span style='font-family: CascadiaCode;' class=identSmall>Hex:" + NBSP + selected.icao.toUpperCase() + "</span>";
+    let hex_html = "<span style='font-family: Cascadia Code;' class=identSmall>Hex:" + NBSP + selected.icao.toUpperCase() + "</span>";
     if (globeIndex || shareBaseUrl) {
         if (copiedIcao && (copiedIcao != selected.icao || new Date().getTime() - copyLinkTime > 2000)) {
             copiedIcao = null;
