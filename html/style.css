@@ -124,8 +124,7 @@ select {
     width: calc(32px * var(--SCALE));
     height: calc(38px * var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
-    background-color: rgba(255, 255, 255, .2);
-
+    background-color: transparent;
     cursor: pointer;
     background-size: calc(26px * var(--SCALE)) calc(30px * var(--SCALE));
     background-repeat: no-repeat;
