@@ -20,6 +20,7 @@
 
 html,
 body {
+    -webkit-font-smoothing: antialiased;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     margin: calc(0px * var(--SCALE));
     padding: calc(0px * var(--SCALE));
