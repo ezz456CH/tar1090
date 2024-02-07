@@ -604,6 +604,7 @@ input.error {
     font-size: calc(14px * var(--SCALE));
     font-weight: bold;
     color: var(--TXTCOLOR1);
+    font-family: Cascadia Code;
 }
 
 .infoSectionTable {
