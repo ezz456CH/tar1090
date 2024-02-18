@@ -185,6 +185,7 @@ select {
     position: absolute;
     bottom: calc(10px * var(--SCALE));
     left: calc(50% - 60px * var(--SCALE));
+    pointer-events: none;
 }
 
 .credits-text {
