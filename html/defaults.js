@@ -32,7 +32,7 @@ let DisplayUnits = "nautical";
 let DefaultCenterLat = 14.81;
 let DefaultCenterLon = 104.46
 // The google maps zoom level, 0 - 16, lower is further out
-let DefaultZoomLvl   = 9;
+let DefaultZoomLvl   = 7;
 
 let autoselectCoords = null;
 
@@ -69,7 +69,7 @@ let defaultOverlays = [];
 let dwdLayers = 'dwd:RX-Produkt';
 
 // Default map dim state
-let MapDim = true;
+let MapDim = false;
 let mapDimPercentage = 0.45;
 let mapContrastPercentage = 0;
 
@@ -233,7 +233,7 @@ let utcTimesHistoric = true;
 let labelZoom = 0;
 let labelZoomGround = 14.8;
 
-let labelFont = 'bold 12px tahoma';
+let labelFont = 'bold 12px Cascadia Code';
 
 let displayUATasADSB = false;
 let uatNoTISB = false;
@@ -308,7 +308,7 @@ let planespottersAPIurl = "https://api.planespotters.net/pub/photos/";
 let planespottingAPI = false;
 
 // get flight route from routeApi service
-let useRouteAPI = false;
+let useRouteAPI = true;
 // which routeApi service to use
 let routeApiUrl = "https://api.adsb.lol/api/0/routeset";
 
