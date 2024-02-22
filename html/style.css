@@ -112,6 +112,26 @@ select {
 #export_kml_geom_avg,
 #export_kml_baro {
     font-family: Cascadia Code;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: #3D3D3D;
+    background: #fff;
+    border: none;
+    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 4px;
+}
+
+#export_kml_geom:hover,
+#export_kml_geom_avg:hover,
+#export_kml_baro:hover {
+    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
 }
 
 #sidebar_canvas {
@@ -186,6 +206,7 @@ select {
     bottom: calc(10px * var(--SCALE));
     left: calc(50% - 60px * var(--SCALE));
     pointer-events: none;
+    user-select: none;
 }
 
 .credits-text {
