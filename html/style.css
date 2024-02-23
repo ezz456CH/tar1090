@@ -125,6 +125,8 @@ select {
     -webkit-user-select: none;
     touch-action: manipulation;
     margin: 4px;
+    height: 42px;
+    width: 182px;
 }
 
 #export_kml_geom:hover,
