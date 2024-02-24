@@ -10078,7 +10078,7 @@
 			const e = void 0 !== t.className ? t.className : "ol-attribution",
 				i = void 0 !== t.tipLabel ? t.tipLabel : "Attributions",
 				n = void 0 !== t.expandClassName ? t.expandClassName : e + "-expand",
-				r = void 0 !== t.collapseLabel ? t.collapseLabel : "›",
+				r = void 0 !== t.collapseLabel ? t.collapseLabel : '<i class="fa-solid fa-caret-right"></i>',
 				s = void 0 !== t.collapseClassName ? t.collapseClassName : e + "-collapse";
 			"string" == typeof r ? (this.collapseLabel_ = document.createElement("span"), this.collapseLabel_.textContent = r, this.collapseLabel_.className = s) : this.collapseLabel_ = r;
 			const o = void 0 !== t.label ? t.label : "i";
