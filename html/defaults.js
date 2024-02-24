@@ -308,7 +308,7 @@ let planespottersAPIurl = "https://api.planespotters.net/pub/photos/";
 let planespottingAPI = false;
 
 // get flight route from routeApi service
-let useRouteAPI = true;
+let useRouteAPI = false;
 // which routeApi service to use
 let routeApiUrl = "https://api.adsb.lol/api/0/routeset";
 
