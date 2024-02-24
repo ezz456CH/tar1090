@@ -20472,7 +20472,7 @@
 						element: i,
 						target: e.target
 					}), this.activationMode = e.activationMode || "mouseover", this.startActive = !0 === e.startActive, this.label = void 0 !== e.label ? e.label : "",
-                    this.collapseLabel = void 0 !== e.collapseLabel ? e.collapseLabel : '<i class="fas fa-angle-double-right"></i>',
+                    this.collapseLabel = void 0 !== e.collapseLabel ? e.collapseLabel : '<i class="fa-solid fa-caret-right"></i>',
                     this.tipLabel = e.tipLabel ? e.tipLabel : "Legend", this.collapseTipLabel = e.collapseTipLabel ? e.collapseTipLabel : "Collapse legend", this.groupSelectStyle = r.getGroupSelectStyle(e.groupSelectStyle), this.reverse = !1 !== e.reverse, this.mapListeners = [], this.hiddenClassName = "ol-unselectable ol-control layer-switcher", r.isTouchDevice_() && (this.hiddenClassName += " touch"), this.shownClassName = "shown", i.className = this.hiddenClassName, this.button = document.createElement("button"), i.appendChild(this.button), this.panel = document.createElement("div"), this.panel.className = "panel", i.appendChild(this.panel), r.enableTouchScroll_(this.panel), i.classList.add(n + "group-select-style-" + this.groupSelectStyle), i.classList.add(n + "activation-mode-" + this.activationMode), "click" === this.activationMode ? (i.classList.add("activationModeClick"), this.button.onclick = t => {
 						const e = t || window.event;
 						this.element.classList.contains(this.shownClassName) ? this.hidePanel() : this.showPanel(), e.preventDefault()
