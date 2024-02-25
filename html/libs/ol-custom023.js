@@ -20529,7 +20529,7 @@
 					this.element.classList.contains(this.shownClassName) && (this.element.classList.remove(this.shownClassName), this.updateButton()), this.dispatchEvent("hide")
 				}
 				updateButton() {
-					this.element.classList.contains(this.shownClassName) ? (this.button.textContent = this.collapseLabel, this.button.setAttribute("title", this.collapseTipLabel), this.button.setAttribute("aria-label", this.collapseTipLabel)) : (this.button.textContent = this.label, this.button.setAttribute("title", this.tipLabel), this.button.setAttribute("aria-label", this.tipLabel))
+					this.element.classList.contains(this.shownClassName) ? (this.button.innerHTML = this.collapseLabel, this.button.setAttribute("title", this.collapseTipLabel), this.button.setAttribute("aria-label", this.collapseTipLabel)) : (this.button.textContent = this.label, this.button.setAttribute("title", this.tipLabel), this.button.setAttribute("aria-label", this.tipLabel))
 				}
 				renderPanel() {
 					this.dispatchEvent("render"), r.renderPanel(this.getMap(), this.panel, {
