@@ -20489,7 +20489,7 @@
 					}), this.activationMode = e.activationMode || "mouseover",
 						this.startActive = !0 === e.startActive,
 						this.label = void 0 !== e.label ? e.label : "",
-						this.collapseLabel = void 0 !== e.collapseLabel ? e.collapseLabel : '<i class="fa-solid fa-caret-right"></i>',
+						this.collapseLabel = '<i class="fa-solid fa-caret-right"></i>',
 						this.tipLabel = e.tipLabel ? e.tipLabel : "Legend",
 						this.collapseTipLabel = e.collapseTipLabel ? e.collapseTipLabel : "Collapse legend",
 						this.groupSelectStyle = r.getGroupSelectStyle(e.groupSelectStyle),
