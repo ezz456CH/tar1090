@@ -82,7 +82,7 @@ let markerZoomDivide = 8.5;
 // marker size when the zoom level is less than markerZoomDivide
 let markerSmall = 1;
 // marker size when the zoom level is more than markerZoomDivide
-let markerBig = 1.18;
+let markerBig = 1;
 
 let largeMode = 1;
 
