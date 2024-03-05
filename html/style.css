@@ -228,6 +228,7 @@ select {
     z-index: 99;
     opacity: 0.7;
     margin: 4px;
+    margin-left: 0px;
 }
 
 .withOverflowingBackground::before {
