@@ -65,7 +65,7 @@ let actual_range_show = false;
 
 // which map is displayed to new visitors
 let MapType_tar1090 = "mapbox_satellite";
-let defaultOverlays = [];
+let defaultOverlays = ["rainviewer_radar"];
 let dwdLayers = 'dwd:RX-Produkt';
 
 // Default map dim state
