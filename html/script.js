@@ -120,7 +120,7 @@ let darkerColors = false;
 let autoselect = false;
 let nogpsOnly = false;
 let spritesDataURL = null;
-let trace_hist_only = false;
+let trace_hist_only = true;
 let traces_high_res = false;
 let show_rId = true;
 let labels_top = false;
@@ -1884,7 +1884,7 @@ function setIntervalTimers() {
     }
     if (enable_pf_data && !pTracks && !globeIndex) {
         jQuery('#pf_info_container').removeClass('hidden');
-        timers.pf_data = window.setInterval(fetchPfData, RefreshInterval);
+        timers.pf_data = window.setInterval(fetchPfData, RefreshInterval*10.314);
         fetchPfData();
     }
     if (receiverJson && receiverJson.outlineJson) {
