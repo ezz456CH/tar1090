@@ -121,7 +121,7 @@ let autoselect = false;
 let nogpsOnly = false;
 let spritesDataURL = null;
 let trace_hist_only = false;
-let traces_high_res = true;
+let traces_high_res = false;
 let show_rId = true;
 let labels_top = false;
 let lockDotCentered = false;
@@ -1888,7 +1888,7 @@ function setIntervalTimers() {
         fetchPfData();
     }
     if (receiverJson && receiverJson.outlineJson) {
-        timers.drawOutline = window.setInterval(drawOutlineJson, 15000);
+        timers.drawOutline = window.setInterval(drawOutlineJson, 5000);
         drawOutlineJson();
     }
 }
