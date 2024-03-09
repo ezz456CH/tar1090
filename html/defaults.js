@@ -271,8 +271,8 @@ let mlatTimeout = 30;
 let enableMouseover = true;
 
 // enable/disable temporary aircraft trails
-let tempTrails = false;
-let tempTrailsTimeout = 90;
+let tempTrails = true;
+let tempTrailsTimeout = 30;
 let squareMania = false;
 
 // Columns that have a // in front of them are shown.

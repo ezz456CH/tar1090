@@ -50,7 +50,7 @@ let loadStart = new Date().getTime();
 let mapResizeTimeout;
 let pointerMoveTimeout;
 let iconSize = 1;
-let debugTracks = true;
+let debugTracks = false;
 let debugAll = false;
 let trackLabels = false;
 let grouptype_checkbox;
