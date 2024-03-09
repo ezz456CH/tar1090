@@ -1968,7 +1968,7 @@ function startPage() {
     initVisibilityChange();
 
     if (pTracks)
-        setTimeout(TAR.planeMan.refresh, 5000);
+        setTimeout(TAR.planeMan.refresh, 10000);
 
     window.addEventListener("beforeunload", function (event) {
         //jQuery("#map_canvas").hide();
@@ -6089,7 +6089,7 @@ function refreshInt() {
 
     if (document.visibilityState === 'hidden') { refresh *= 4; } // in case visibility change events don't work, reduce refresh rate if visibilityState works
 
-    console.log(refresh);
+    // console.log(refresh);
 
     lastRefreshInt = refresh;
 
@@ -6767,7 +6767,7 @@ function getTrace(newPlane, hex, options) {
     traceOpts.follow = (options.follow == true);
 
     if (showTrace) {
-        //console.log(today.toUTCString() + ' ' + traceDate.toUTCString());
+        console.log(today.toUTCString() + ' ' + traceDate.toUTCString());
 
         if (traceOpts.startHours == null || traceOpts.startHours < 0)
             traceOpts.startStamp = traceDate.getTime() / 1000;
