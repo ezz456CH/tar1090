@@ -1968,7 +1968,7 @@ function startPage() {
     initVisibilityChange();
 
     if (pTracks)
-        setTimeout(TAR.planeMan.refresh, 10000);
+        setTimeout(TAR.planeMan.refresh, 5000);
 
     window.addEventListener("beforeunload", function (event) {
         //jQuery("#map_canvas").hide();

@@ -271,7 +271,7 @@ let mlatTimeout = 30;
 let enableMouseover = true;
 
 // enable/disable temporary aircraft trails
-let tempTrails = true;
+let tempTrails = false;
 let tempTrailsTimeout = 30;
 let squareMania = false;
 
