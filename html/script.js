@@ -6745,7 +6745,7 @@ function getTrace(newPlane, hex, options) {
 
     let URL1;
     let URL2;
-    //console.log('Requesting trace: ' + hex);
+    console.log('Requesting trace: ' + hex);
 
     // use non historic traces until 60 min after midnight
     let today = new Date();
@@ -6767,7 +6767,7 @@ function getTrace(newPlane, hex, options) {
     traceOpts.follow = (options.follow == true);
 
     if (showTrace) {
-        console.log(today.toUTCString() + ' ' + traceDate.toUTCString());
+        //console.log(today.toUTCString() + ' ' + traceDate.toUTCString());
 
         if (traceOpts.startHours == null || traceOpts.startHours < 0)
             traceOpts.startStamp = traceDate.getTime() / 1000;
