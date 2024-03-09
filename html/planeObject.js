@@ -1259,7 +1259,7 @@ PlaneObject.prototype.processTrace = function() {
             this.track_linesegs[this.track_linesegs.length - 1].fixed.appendCoordinate(proj);
             this.track_linesegs.push({ fixed: new ol.geom.LineString([proj]),
                 feature: null,
-                estimated: false,
+                estimated: true,
                 ground: (this.altitude == "ground"),
                 altitude: this.alt_rounded,
                 alt_real: this.altitude,
