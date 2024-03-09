@@ -1879,7 +1879,7 @@ function setIntervalTimers() {
     //timers.reaper = setInterval(reaper, 40000);
 
     if (tempTrails) {
-        timers.trailReaper = window.setInterval(trailReaper, 10000);
+        timers.trailReaper = window.setInterval(trailReaper, 5000);
         trailReaper(now);
     }
     if (enable_pf_data && !pTracks && !globeIndex) {
