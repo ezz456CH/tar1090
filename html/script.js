@@ -1884,7 +1884,7 @@ function setIntervalTimers() {
     }
     if (enable_pf_data && !pTracks && !globeIndex) {
         jQuery('#pf_info_container').removeClass('hidden');
-        timers.pf_data = window.setInterval(fetchPfData, RefreshInterval*10.314);
+        timers.pf_data = window.setInterval(fetchPfData, RefreshInterval);
         fetchPfData();
     }
     if (receiverJson && receiverJson.outlineJson) {
