@@ -196,7 +196,7 @@ let SiteCirclesColors = ['#000000', '#000000', '#000000'];
 let SiteCirclesLineDash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
 // Controls page title, righthand pane when nothing is selected
-let PageName = "ADS-B | ezz456CH";
+let PageName = "adsb.ezz456ch.xyz";
 
 // Show country flags by ICAO addresses?
 let ShowFlags = true;
@@ -393,4 +393,4 @@ let disableGeoLocation = false;
 let prefer978 = 0;
 
 
-let dynGlobeRate = true; // enable use of globeRates.json in index.html directory to steer client refresh rate
+let dynGlobeRate = false; // enable use of globeRates.json in index.html directory to steer client refresh rate
