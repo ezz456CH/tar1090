@@ -6745,7 +6745,7 @@ function getTrace(newPlane, hex, options) {
 
     let URL1;
     let URL2;
-    console.log('Requesting trace: ' + hex);
+    //console.log('Requesting trace: ' + hex);
 
     // use non historic traces until 60 min after midnight
     let today = new Date();
