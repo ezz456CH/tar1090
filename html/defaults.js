@@ -393,4 +393,4 @@ let disableGeoLocation = false;
 let prefer978 = 0;
 
 
-let dynGlobeRate = false; // enable use of globeRates.json in index.html directory to steer client refresh rate
+let dynGlobeRate = true; // enable use of globeRates.json in index.html directory to steer client refresh rate
