@@ -6074,9 +6074,9 @@ function refreshInt() {
         inactive = 4 * base;
 
 
-    if (globeIndex) {
-        refresh *= inactive / base;
-    }
+    // if (globeIndex) {
+    //     refresh *= inactive / base;
+    // }
 
     if (!mapIsVisible)
         refresh *= 2;
