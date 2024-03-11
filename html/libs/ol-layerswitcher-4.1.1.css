@@ -26,8 +26,8 @@
     /*logo.png*/;
   background-repeat: no-repeat;
   background-position: 2px;
-  background-color: white;
-  color: black;
+  background-color: #ffffff;
+  color: #000000;
   border: none;
 }
 
@@ -59,6 +59,7 @@
   right: 2px;
   position: absolute;
   background-color: #ffffff;
+  color: #000000;
   margin: 1px;
 }
 
