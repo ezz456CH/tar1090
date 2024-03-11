@@ -31,6 +31,12 @@
   border: none;
 }
 
+.layer-switcher button:focus,
+.layer-switcher button:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
 .layer-switcher.shown {
   overflow-y: hidden;
   display: flex;
@@ -61,6 +67,12 @@
   background-color: #ffffff;
   color: #000000;
   margin: 1px;
+}
+
+.layer-switcher.shown button:focus,
+.layer-switcher.shown button:hover {
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .layer-switcher ul {
