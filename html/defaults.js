@@ -196,7 +196,7 @@ let SiteCirclesColors = ['#000000', '#000000', '#000000'];
 let SiteCirclesLineDash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
 // Controls page title, righthand pane when nothing is selected
-let PageName = "adsb.ezz456ch.xyz";
+let PageName = "ADS-B - ezz456CH";
 
 // Show country flags by ICAO addresses?
 let ShowFlags = true;

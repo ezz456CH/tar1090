@@ -600,15 +600,15 @@ input.error {
 }
 
 .settingsCog {
-    width: calc(48px * var(--SCALE));
-    height: calc(48px * var(--SCALE));
+    width: calc(27px * var(--SCALE));
+    height: calc(28px * var(--SCALE));
     cursor: pointer;
     background-image: url('images/settings-icon02.png');
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: calc(6px * var(--SCALE));
+    margin-top: calc(0px * var(--SCALE));
     margin-bottom: calc(6px * var(--SCALE));
-    margin-left: calc(-12px * var(--SCALE));
+    margin-left: calc(4px * var(--SCALE));
 }
 
 #highlighted_infoblock {
