@@ -10089,9 +10089,9 @@
 			"string" == typeof r ? (this.collapseLabel_ = document.createElement("span"),
 			this.collapseLabel_.innerHTML = r,
 			this.collapseLabel_.className = s) : this.collapseLabel_ = r;
-			const o = void 0 !== t.label ? t.label : "i";
+			const o = void 0 !== t.label ? t.label : '<i class="fa-solid fa-layer-group"></i>';
 			"string" == typeof o ? (this.label_ = document.createElement("span"),
-			this.label_.textContent = o,
+			this.label_.innerHTML = o,
 			this.label_.className = n) : this.label_ = o;
 			const a = this.collapsible_ && !this.collapsed_ ? this.collapseLabel_ : this.label_;
 			this.toggleButton_ = document.createElement("button"),
@@ -20488,7 +20488,7 @@
 						target: e.target
 					}), this.activationMode = e.activationMode || "mouseover",
 						this.startActive = !0 === e.startActive,
-						this.label = void 0 !== e.label ? e.label : "",
+						this.label = void 0 !== e.label ? e.label : '<i class="fa-solid fa-layer-group"></i>',
 						this.collapseLabel = void 0 !== e.collapseLabel ? e.collapseLabel : '<i class="fa-solid fa-caret-right"></i>',
 						this.tipLabel = e.tipLabel ? e.tipLabel : "Legend",
 						this.collapseTipLabel = e.collapseTipLabel ? e.collapseTipLabel : "Collapse legend",
@@ -20529,7 +20529,7 @@
 					this.element.classList.contains(this.shownClassName) && (this.element.classList.remove(this.shownClassName), this.updateButton()), this.dispatchEvent("hide")
 				}
 				updateButton() {
-					this.element.classList.contains(this.shownClassName) ? (this.button.innerHTML = this.collapseLabel, this.button.setAttribute("title", this.collapseTipLabel), this.button.setAttribute("aria-label", this.collapseTipLabel)) : (this.button.textContent = this.label, this.button.setAttribute("title", this.tipLabel), this.button.setAttribute("aria-label", this.tipLabel))
+					this.element.classList.contains(this.shownClassName) ? (this.button.innerHTML = this.collapseLabel, this.button.setAttribute("title", this.collapseTipLabel), this.button.setAttribute("aria-label", this.collapseTipLabel)) : (this.button.innerHTML = this.label, this.button.setAttribute("title", this.tipLabel), this.button.setAttribute("aria-label", this.tipLabel))
 				}
 				renderPanel() {
 					this.dispatchEvent("render"), r.renderPanel(this.getMap(), this.panel, {

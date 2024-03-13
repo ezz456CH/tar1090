@@ -470,8 +470,10 @@ input.error {
     background-size: calc(26px * var(--SCALE)) calc(26px * var(--SCALE));
     background-repeat: no-repeat;
     background-position: center;
-    width: calc(30px * var(--SCALE));
-    height: calc(30px * var(--SCALE));
+    width: calc(27px * var(--SCALE));
+    height: calc(27px * var(--SCALE));
+    margin: calc(2px * var(--SCALE));
+    border-radius: calc(2px * var(--SCALE));
 }
 
 .layer-switcher !.shown {
