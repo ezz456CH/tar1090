@@ -168,16 +168,16 @@ select {
 }
 
 .sidebar_button {
-    width: calc(32px * var(--SCALE));
-    height: calc(38px * var(--SCALE));
+    width: calc(27px* var(--SCALE));
+    height: calc(31px* var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
     background-color: transparent;
     cursor: pointer;
-    background-size: calc(26px * var(--SCALE)) calc(30px * var(--SCALE));
+    background-size: calc(28px* var(--SCALE)) calc(32px* var(--SCALE));
     background-repeat: no-repeat;
     background-position: center;
-
     border: none;
+    margin: calc(2px * var(--SCALE));
 }
 
 #toggle_sidebar_button.show_sidebar {
@@ -552,7 +552,7 @@ input.error {
 #header_top {
     text-align: right;
     position: absolute;
-    right: calc(94px * var(--SCALE));
+    right: calc(83px * var(--SCALE));
     top: calc(0px * var(--SCALE));
     height: calc(38px * var(--SCALE));
     z-index: 9;
@@ -606,7 +606,7 @@ input.error {
     background-image: url('images/settings-icon02.png');
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: calc(0px * var(--SCALE));
+    margin-top: calc(4px * var(--SCALE));
     margin-bottom: calc(6px * var(--SCALE));
     margin-left: calc(4px * var(--SCALE));
 }
