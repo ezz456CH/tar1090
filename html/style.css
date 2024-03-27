@@ -607,7 +607,7 @@ input.error {
     background-size: cover;
     background-repeat: no-repeat;
     margin-top: calc(4px * var(--SCALE));
-    margin-bottom: calc(6px * var(--SCALE));
+    margin-bottom: calc(4px * var(--SCALE));
     margin-left: calc(4px * var(--SCALE));
 }
 
@@ -655,7 +655,6 @@ input.error {
     border-collapse: collapse;
     padding: 0;
     margin: 0;
-    cursor: default;
 }
 
 table.infoSectionTable tr td {
