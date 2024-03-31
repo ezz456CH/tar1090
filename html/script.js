@@ -7745,7 +7745,7 @@ function showReplayBar(){
         const slideBase = 1.0;
         jQuery('#replaySpeedSelect').slider({
             value: Math.pow(replay.speed, 1 / slideBase),
-            step: 0.5,
+            step: 0,
             min: Math.pow(1, 1 / slideBase),
             max: Math.pow(250, 1 / slideBase),
             slide: function(event, ui) {
