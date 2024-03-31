@@ -7742,7 +7742,7 @@ function showReplayBar(){
                 replayJump();
             }
         });
-        const slideBase = 3.0;
+        const slideBase = 2.5;
         jQuery('#replaySpeedSelect').slider({
             value: Math.pow(replay.speed, 1 / slideBase),
             step: 0.1,
