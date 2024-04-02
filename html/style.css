@@ -312,52 +312,67 @@ select {
 
 .warning {
     margin-top: 1em;
-    border: calc(2px * var(--SCALE)) solid yellow;
-    background-color: #FFFFA3;
+    background-color: var(--BGCOLOR1);
+    color: var(--TXTCOLOR1);
+    opacity: 0.75;
+    filter: alpha(opacity=75);
     padding: calc(5px * var(--SCALE));
-    color: black;
+    font-weight: bold;
+    line-height: 150%;
+    text-align: center;
+    border-radius: 4px;
+    user-select: none;
+    pointer-events: none;
 }
 
 .error_box {
     position: absolute;
     bottom: calc(90px * var(--SCALE));
     left: calc(25px * var(--SCALE));
-    border: calc(2px * var(--SCALE)) solid red;
-    background-color: #FFFFA3;
+    background-color: var(--BGCOLOR1);
+    color: var(--TXTCOLOR1);
     opacity: 0.75;
     filter: alpha(opacity=75);
     padding: calc(5px * var(--SCALE));
-    color: black;
     font-weight: bold;
-    font-size: var(--FS3);
     line-height: 150%;
     text-align: center;
+    border-radius: 4px;
+    user-select: none;
+    pointer-events: none;
 }
 
 .inaccurate_warning {
     position: absolute;
-    top: calc(25px * var(--SCALE));
-    left: calc(280px * var(--SCALE));
+    top: calc(25px* var(--SCALE));
+    left: calc(280px* var(--SCALE));
     width: 50%;
     background-color: var(--BGCOLOR1);
+    opacity: 0.75;
+    filter: alpha(opacity=75);
     padding: calc(5px * var(--SCALE));
+    line-height: 150%;
+    text-align: center;
+    border-radius: 4px;
+    user-select: none;
+    pointer-events: none;
 }
 
 #js_error {
     position: absolute;
     bottom: 5px;
     left: 5px;
-    border: calc(2px * var(--SCALE)) solid red;
-    background-color: #FFFFA3;
+    background-color: var(--BGCOLOR1);
+    color: var(--TXTCOLOR1);
     opacity: 0.75;
     filter: alpha(opacity=75);
     padding: calc(5px * var(--SCALE));
-    color: black;
-    font-size: var(--FS2);
+    font-weight: bold;
     line-height: 150%;
     text-align: center;
-    z-index: 999;
-    white-space: pre-line;
+    border-radius: 4px;
+    user-select: none;
+    pointer-events: none;
 }
 
 #loader_progress {
