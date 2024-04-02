@@ -302,7 +302,7 @@ select {
 
 .ol-zoom {
     background-color: transparent !important;
-    left: calc(100% - calc(65px * var(--SCALE)));
+    left: calc(100% - calc(35px * var(--SCALE)));
     top: calc(100% - calc(85px * var(--SCALE)));
 }
 
