@@ -777,7 +777,7 @@ table.infoSectionTable tr td {
     float: right;
     width: calc(100% - calc(5px * var(--SCALE)));
     max-width: calc(800px * var(--SCALE));
-    right: calc(85px * var(--SCALE));
+    right: calc(45px * var(--SCALE));
     bottom: calc(35px * var(--SCALE));
     background-color: transparent !important;
 }
