@@ -59,8 +59,13 @@ body {
 
 select {
     font-size: var(--FS2);
-    height: calc(22px * var(--SCALE));
+    height: calc(24px * var(--SCALE));
     font-family: Cascadia Code;
+    color: var(--TXTCOLOR2);
+    background-color: var(--BGCOLOR2);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 #planesTable {
@@ -122,6 +127,7 @@ select {
     border: none;
     box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
     user-select: none;
+    cursor: pointer;
     -webkit-user-select: none;
     touch-action: manipulation;
     margin: 4px;
