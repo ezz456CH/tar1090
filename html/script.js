@@ -2169,6 +2169,7 @@ function ol_map_init() {
         view: new ol.View({
             center: ol.proj.fromLonLat([CenterLon, CenterLat]),
             zoom: zoomLvl,
+            maxZoom: 20,
             multiWorld: true,
         }),
         controls: [new ol.control.Zoom({delta: 1, duration: 0, target: 'map_canvas',}),
