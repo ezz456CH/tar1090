@@ -2175,7 +2175,9 @@ function ol_map_init() {
             new ol.control.Attribution({collapsed: true}),
             new ol.control.ScaleLine({units: DisplayUnits})
         ],
-        interactions: new ol.interaction.defaults({altShiftDragRotate:false, pinchRotate:false,}),
+        interactions: ol.interaction.defaults({altShiftDragRotate:false, pinchRotate:false}).extend([
+            new ol.interaction.DblClickDragZoom()
+        ]),
         maxTilesLoading: 4,
     });
 
