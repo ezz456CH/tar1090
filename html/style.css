@@ -480,6 +480,7 @@ select {
     padding: .2em .5em;
     cursor: pointer;
     margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .formButton:hover,
@@ -886,15 +887,15 @@ table.infoSectionTable tr td {
 }
 
 .greyButton:after {
-    content: '\02795\FE0E';
-    /* Unicode character for "plus" sign (+) */
+    content: '\25BC';
+    /* Unicode character for "Down-Pointing Triangle" sign*/
     float: right;
     margin-left: calc(5px * var(--SCALE));
 }
 
 .greyButton.active:after {
-    content: "\2796\FE0E";
-    /* Unicode character for "minus" sign (-) */
+    content: "\25B2";
+    /* Unicode character for "Up-Pointing Triangle" sign*/
 }
 
 .ui-tabs-nav li a:focus {
