@@ -157,6 +157,8 @@ li.layer-switcher-base-group > label {
   -webkit-transition: -webkit-transform 0.2s ease-in-out;
   -ms-transition: -ms-transform 0.2s ease-in-out;
   transition: transform 0.2s ease-in-out;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .layer-switcher .group.layer-switcher-close button {
