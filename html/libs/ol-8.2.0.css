@@ -184,6 +184,7 @@
   background-color: var(--ol-background-color);
   border: none;
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .ol-control button::-moz-focus-inner {
