@@ -64,7 +64,7 @@ let actual_range_outline_dash = null; // null - solid line, [5, 5] - dashed line
 let actual_range_show = false;
 
 // which map is displayed to new visitors
-let MapType_tar1090 = "mapbox_dark";
+let MapType_tar1090 = "mapbox_dark_no_label";
 let defaultOverlays = ["rainviewer_radar"];
 let dwdLayers = 'dwd:RX-Produkt';
 
