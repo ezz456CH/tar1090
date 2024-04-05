@@ -898,8 +898,8 @@ function initPage() {
         if (!isNaN(dim))
             mapDimPercentage = dim;
     } else if (heatmap) {
-        mapDimPercentage = 0.6;
-        MapDim = true;
+        mapDimPercentage = 0.45;
+        MapDim = false;
     }
 
     if (usp.has('noRegOnly'))
