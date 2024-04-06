@@ -7684,10 +7684,14 @@ function showReplayBar(){
     showingReplayBar = !showingReplayBar;
     if (!showingReplayBar){
         jQuery("#replayBar").hide();
+        replay.playing = false;
+        replayClear()
         replay = null;
         jQuery('#map_canvas').height('100%');
         jQuery('#sidebar_canvas').height('100%');
         jQuery("#selected_showTrace_hide").show();
+        window.history.replaceState({}, document.title, window.location.pathname);
+        location.reload();
     } else {
         jQuery("#replayBar").show();
         jQuery("#replayBar").css('display', 'grid');
