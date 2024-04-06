@@ -484,7 +484,9 @@ select {
 }
 
 .formButton:hover,
-.searchInput:hover {
+.searchInput:hover,
+#replayPlay:hover,
+.searchInput:focus {
     box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
 }
 
@@ -890,7 +892,6 @@ table.infoSectionTable tr td {
 .greyButton:after {
     content: '\25BC';
     /* Unicode character for "Down-Pointing Triangle" sign*/
-    float: right;
     margin-left: calc(5px * var(--SCALE));
 }
 
@@ -1089,11 +1090,27 @@ input {
 #replayPlay {
     grid-area: play;
     font-family: Cascadia Code;
+    font-size: var(--FS2);
+    color: var(--TXTCOLOR3);
+    background-color: var(--BGCOLOR2);
+    border: none;
+    border-radius: 4px;
+    padding: .2em .5em;
+    cursor: pointer;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 #replayDatepicker {
     grid-area: datepicker;
     font-family: Cascadia Code;
+    height: calc(18px * var(--SCALE));
+    color: var(--TXTCOLOR2);
+    background-color: var(--BGCOLOR2);
+    border: none;
+    border-radius: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 #hourSelect {
