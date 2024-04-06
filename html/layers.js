@@ -36,18 +36,6 @@ function createBaseLayers() {
             type: 'base',
         }));
     }
-    world.push(new ol.layer.VectorTile({
-        source: new ol.source.VectorTile({
-            url: "https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/{z}/{x}/{y}.mvt?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ",
-            attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
-            format: new ol.format.MVT(),
-            maxZoom: 9,
-        }),
-        name: 'mapbox_test',
-        title: 'Mapbox Test',
-        type: 'base',
-    }))
-
 
     world.push(new ol.layer.Tile({
         source: new ol.source.XYZ({
