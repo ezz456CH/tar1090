@@ -776,16 +776,16 @@ function initPage() {
     if (uk_advisory) {
 
         labels_top = true;
-        tempTrails = true;
+        tempTrails = false;
         tempTrailsTimeout = 45;
         SiteCirclesDistances = new Array(5, 10, 20);
         SiteCirclesLineDash = [5, 5];
-        SiteCirclesColors = ['#2b3436', '#2b3436', '#2b3436'];
+        SiteCirclesColors = ['#000000', '#000000', '#000000'];
         defaultOverlays.push('uka_airports');
         defaultOverlays.push('uka_airspaces');
         defaultOverlays.push('uka_runways');
         defaultOverlays.push('uka_shoreham');
-        MapType_tar1090 = 'carto_light_all';
+        MapType_tar1090 = 'mapbox_dark_no_label';
         lineWidth=4;
         enableLabels=true;
     }
