@@ -98,7 +98,7 @@ let outlineWidth = 0.90;
 let monochromeMarkers = null;
 let monochromeTracks = null;
 
-let altitudeChartDefaultState = true;
+let altitudeChartDefaultState = false;
 
 // These settings control the coloring of aircraft by altitude.
 // All color values are given as Hue (0-359) / Saturation (0-100) / Lightness (0-100)
@@ -268,7 +268,7 @@ let altitudeFilter = false;
 let mlatTimeout = 30;
 
 // enable/disable mouseover/hover aircraft information
-let enableMouseover = true;
+let enableMouseover = false;
 
 // enable/disable temporary aircraft trails
 let tempTrails = false;
@@ -287,11 +287,11 @@ let HideCols = [
 //	"#altitude",
 //	"#speed",
 	"#vert_rate",
-//	"#distance",
+	"#distance",
 	"#track",
 	"#msgs",
 	"#seen",
-//	"#rssi",
+	"#rssi",
 	"#lat",
 	"#lon",
 	"#data_source",
