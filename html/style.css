@@ -2,6 +2,7 @@
     --SCALE: 1;
     --BGCOLOR1: #F8F8F8;
     --BGCOLOR2: #CCCCCC;
+    --BGCOLOR3: 248, 248, 248;
     --ACCENT: #fdfdfd;
     --FS1: calc(10px * var(--SCALE));
     --FS2: calc(13px * var(--SCALE));
@@ -611,7 +612,7 @@ input.error {
 }
 
 .button {
-    background-color: var(--ACCENT);
+    background-color: var(--BGCOLOR1);
     width: calc(27px * var(--SCALE));
     height: calc(27px * var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
@@ -648,7 +649,7 @@ input.error {
 }
 
 .inActiveButton {
-    color: #000000
+    color: var(--TXTCOLOR2)
 }
 
 .settingsCog {
@@ -656,7 +657,7 @@ input.error {
     height: calc(27px * var(--SCALE));
     cursor: pointer;
     background-image: url('images/settings-icon02.png');
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     margin-top: calc(4px * var(--SCALE));
     margin-bottom: calc(6px * var(--SCALE));

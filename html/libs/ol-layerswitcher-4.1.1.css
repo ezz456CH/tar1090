@@ -7,9 +7,10 @@
 
 .layer-switcher .panel {
   margin: 0;
-  border: 4px solid #eee;
+  background: rgba(var(--BGCOLOR3), 0.8);
+  border: rgba(var(--BGCOLOR3), 0.8);
+  backdrop-filter: blur(5px);
   border-radius: 4px;
-  background-color: white;
   display: none;
   max-height: inherit;
   height: 100%;
@@ -24,15 +25,15 @@
   height: 38px;
   background-repeat: no-repeat;
   background-position: 2px;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--BGCOLOR1);
+  color: var(--TXTCOLOR2);
   border: none;
 }
 
 .layer-switcher button:focus,
 .layer-switcher button:hover {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--BGCOLOR1);
+  color: var(--TXTCOLOR2);
   outline: none;
 }
 
@@ -63,15 +64,15 @@
   background-image: unset;
   right: 2px;
   position: absolute;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--BGCOLOR1);
+  color: var(--TXTCOLOR2);
   margin: 1px;
 }
 
 .layer-switcher.shown button:focus,
 .layer-switcher.shown button:hover {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--BGCOLOR1);
+  color: var(--TXTCOLOR2);
 }
 
 .layer-switcher ul {

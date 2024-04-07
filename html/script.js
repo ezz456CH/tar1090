@@ -2534,11 +2534,12 @@ function initMap() {
         init: darkModeDefault,
         setState: function(state) {
             let root = document.documentElement;
-            jQuery(".layer-switcher .panel").css("background", "var(--BGCOLOR1)");
-            jQuery(".layer-switcher .panel").css("border", "4px solid var(--BGCOLOR1)");
+            jQuery(".layer-switcher .panel").css("background", "rgba(var(--BGCOLOR3), 0.8)");
+            jQuery(".layer-switcher .panel").css("border", "rgba(var(--BGCOLOR3), 0.8)");
             if (state) {
                 root.style.setProperty("--BGCOLOR1", '#313131');
                 root.style.setProperty("--BGCOLOR2", '#242424');
+                root.style.setProperty("--BGCOLOR3","49, 49, 49");
                 root.style.setProperty("--TXTCOLOR1","#BFBFBF");
                 root.style.setProperty("--TXTCOLOR2","#D8D8D8");
                 root.style.setProperty("--TXTCOLOR3","#a8a8a8");
@@ -2551,6 +2552,7 @@ function initMap() {
             } else {
                 root.style.setProperty("--BGCOLOR1", '#F8F8F8');
                 root.style.setProperty("--BGCOLOR2", '#CCCCCC');
+                root.style.setProperty("--BGCOLOR3","248, 248, 248");
                 root.style.setProperty("--TXTCOLOR1","#003f4b");
                 root.style.setProperty("--TXTCOLOR2","#050505");
                 root.style.setProperty("--TXTCOLOR3","#003f4b");
