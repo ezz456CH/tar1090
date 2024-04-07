@@ -472,6 +472,7 @@ select {
     border-radius: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
+    margin-right: 4px;
 }
 
 .searchInput {
@@ -483,6 +484,7 @@ select {
     border-radius: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
+    margin-right: 4px;
 }
 
 .formButton {
@@ -494,7 +496,9 @@ select {
     border-radius: 4px;
     padding: .2em .5em;
     cursor: pointer;
-    margin: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-right: 4px;
 }
 
 .altitudeFilterInput:hover,

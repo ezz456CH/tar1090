@@ -1475,7 +1475,7 @@ jQuery('#selected_altitude_geom1')
                         handles: {
                             w: '#splitter'
                         },
-                        minWidth: 150,
+                        minWidth: 240,
                         maxWidth: (jQuery(window).innerWidth() *0.8),
                     });
 
