@@ -293,6 +293,12 @@ select {
     z-index: 999;
 }
 
+..ol-control {
+    position: absolute;
+    background-color: transparent;
+    border-radius: 4px;
+}
+
 .ol-zoom-in {
     background-image: url("images/zoom-in.png");
     background-size: cover;
