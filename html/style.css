@@ -253,17 +253,17 @@ select {
     display: block;
     position: absolute;
     z-index: 99;
-    top: calc(5px * var(--SCALE));
+    top: calc(6px * var(--SCALE));
     left: calc(0px * var(--SCALE));
     float: right;
-    width: calc(30px * var(--SCALE));
-    height: calc(30px * var(--SCALE));
+    width: calc(27px * var(--SCALE));
+    height: calc(27px * var(--SCALE));
     background-size: calc(30px * var(--SCALE)) calc(30px * var(--SCALE));
     background-repeat: no-repeat;
     background-color: transparent;
     border: none;
     background-image: url("images/toggle-width.png");
-    background-size: cover;
+    background-size: contain;
     transform: scaleX(-1);
 }
 
