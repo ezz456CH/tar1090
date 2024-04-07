@@ -57,6 +57,10 @@ body {
     background: #555;
 }
 
+::-webkit-scrollbar-corner {
+    background: var(--BGCOLOR1);
+}
+
 select {
     font-size: var(--FS2);
     height: calc(24px * var(--SCALE));
@@ -175,7 +179,7 @@ select {
 
 .sidebar_button {
     width: calc(27px* var(--SCALE));
-    height: calc(31px* var(--SCALE));
+    height: calc(28px* var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
     background-color: transparent;
     cursor: pointer;
@@ -183,7 +187,9 @@ select {
     background-repeat: no-repeat;
     background-position: center;
     border: none;
-    margin: calc(2px * var(--SCALE));
+    background-size: contain;
+    margin-bottom: 4px;
+    margin-top: 2px;
 }
 
 #toggle_sidebar_button.show_sidebar {
@@ -453,10 +459,13 @@ select {
 
 .altitudeFilterInput {
     width: calc(50px * var(--SCALE));
-    height: calc(15px * var(--SCALE));
+    height: calc(18px * var(--SCALE));
     color: var(--TXTCOLOR2);
     background-color: var(--BGCOLOR2);
-    border-color: var(--BGCOLOR1);
+    border: none;
+    border-radius: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .searchInput {
@@ -479,14 +488,15 @@ select {
     border-radius: 4px;
     padding: .2em .5em;
     cursor: pointer;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin: 4px;
 }
 
+.altitudeFilterInput:hover,
 .formButton:hover,
 .searchInput:hover,
 #replayPlay:hover,
-.searchInput:focus {
+.searchInput:focus,
+.altitudeFilterInput:focus {
     box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
 }
 
@@ -650,7 +660,7 @@ input.error {
     background-size: cover;
     background-repeat: no-repeat;
     margin-top: calc(4px * var(--SCALE));
-    margin-bottom: calc(4px * var(--SCALE));
+    margin-bottom: calc(6px * var(--SCALE));
     margin-left: calc(4px * var(--SCALE));
 }
 
