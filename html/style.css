@@ -654,7 +654,7 @@ input.error {
 
 .settingsCog {
     width: calc(27px * var(--SCALE));
-    height: calc(28px * var(--SCALE));
+    height: calc(27px * var(--SCALE));
     cursor: pointer;
     background-image: url('images/settings-icon02.png');
     background-size: cover;
