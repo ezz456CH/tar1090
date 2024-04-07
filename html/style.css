@@ -183,13 +183,12 @@ select {
     border-radius: calc(2px * var(--SCALE));
     background-color: transparent;
     cursor: pointer;
-    background-size: calc(28px* var(--SCALE)) calc(32px* var(--SCALE));
     background-repeat: no-repeat;
     background-position: center;
     border: none;
     background-size: contain;
-    margin-bottom: 4px;
-    margin-top: 4px;
+    margin-bottom: calc(4px * var(--SCALE));
+    margin-top: calc(2px * var(--SCALE));
 }
 
 #toggle_sidebar_button.show_sidebar {
