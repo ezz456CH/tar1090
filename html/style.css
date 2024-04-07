@@ -293,7 +293,7 @@ select {
     z-index: 999;
 }
 
-..ol-control {
+.ol-control {
     position: absolute;
     background-color: transparent;
     border-radius: 4px;
