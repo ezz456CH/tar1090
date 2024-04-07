@@ -179,7 +179,7 @@ select {
 
 .sidebar_button {
     width: calc(27px* var(--SCALE));
-    height: calc(28px* var(--SCALE));
+    height: calc(27px* var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
     background-color: transparent;
     cursor: pointer;
@@ -189,7 +189,7 @@ select {
     border: none;
     background-size: contain;
     margin-bottom: 4px;
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 #toggle_sidebar_button.show_sidebar {
@@ -253,7 +253,7 @@ select {
     display: block;
     position: absolute;
     z-index: 99;
-    top: calc(6px * var(--SCALE));
+    top: calc(5px * var(--SCALE));
     left: calc(0px * var(--SCALE));
     float: right;
     width: calc(27px * var(--SCALE));
