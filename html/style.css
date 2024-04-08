@@ -3,6 +3,7 @@
     --BGCOLOR1: #F8F8F8;
     --BGCOLOR2: #CCCCCC;
     --BGCOLOR3: 248, 248, 248;
+    --BGCOLOR4: 204, 204, 204;
     --ACCENT: #fdfdfd;
     --FS1: calc(10px * var(--SCALE));
     --FS2: calc(13px * var(--SCALE));
@@ -253,7 +254,7 @@ select {
     float: right;
     width: calc(27px * var(--SCALE));
     height: calc(27px * var(--SCALE));
-    background-color: #21212185;
+    background-color: rgba(var(--BGCOLOR4), 0.75);
     border: none;
     font-weight: bold;
     font-size: calc(15px * var(--SCALE));
@@ -955,7 +956,7 @@ table.infoSectionTable tr td {
 }
 
 .ui-widget-content .ui-selectable .ui-selected {
-    border-color: #cc6600;
+    border-color: rgba(58, 108, 217, 0.5);
 }
 
 .buttonFilter li {
@@ -965,10 +966,12 @@ table.infoSectionTable tr td {
     margin-bottom: 5px;
     padding: 1px;
     float: left;
-    width: calc(85px * var(--SCALE));
+    width: calc(90px * var(--SCALE));
     color: var(--TXTCOLOR2);
     font-size: var(--FS2);
     text-align: center;
+    border-radius: 4px;
+    line-height: calc(18px * var(--SCALE));
 }
 
 #sortableColumns {

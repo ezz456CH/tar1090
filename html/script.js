@@ -2540,6 +2540,7 @@ function initMap() {
                 root.style.setProperty("--BGCOLOR1", '#313131');
                 root.style.setProperty("--BGCOLOR2", '#242424');
                 root.style.setProperty("--BGCOLOR3","49, 49, 49");
+                root.style.setProperty("--BGCOLOR4","36, 36, 36");
                 root.style.setProperty("--TXTCOLOR1","#BFBFBF");
                 root.style.setProperty("--TXTCOLOR2","#D8D8D8");
                 root.style.setProperty("--TXTCOLOR3","#a8a8a8");
@@ -2553,6 +2554,7 @@ function initMap() {
                 root.style.setProperty("--BGCOLOR1", '#F8F8F8');
                 root.style.setProperty("--BGCOLOR2", '#CCCCCC');
                 root.style.setProperty("--BGCOLOR3","248, 248, 248");
+                root.style.setProperty("--BGCOLOR4","204, 204, 204");
                 root.style.setProperty("--TXTCOLOR1","#003f4b");
                 root.style.setProperty("--TXTCOLOR2","#050505");
                 root.style.setProperty("--TXTCOLOR3","#003f4b");
