@@ -622,7 +622,7 @@ input.error {
 }
 
 .button {
-    background-color: var(--BGCOLOR1);
+    background-color: var(--BGCOLOR3);
     width: calc(27px * var(--SCALE));
     height: calc(27px * var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
@@ -632,6 +632,8 @@ input.error {
     text-align: center;
     background-clip: padding-box;
     user-select: none;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 }
 
 
@@ -778,6 +780,7 @@ table.infoSectionTable tr td {
     z-index: 9999;
     display: none;
     background-color: rgba(var(--BGCOLOR3), 0.95);
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border-radius: 8px;
 }
