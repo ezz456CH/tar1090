@@ -254,7 +254,7 @@ select {
     float: right;
     width: calc(27px * var(--SCALE));
     height: calc(27px * var(--SCALE));
-    background-color: rgba(var(--BGCOLOR4), 0.75);
+    background-color: rgba(var(--BGCOLOR3), 0.75);
     border: none;
     font-weight: bold;
     font-size: calc(15px * var(--SCALE));
