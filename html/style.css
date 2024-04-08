@@ -182,7 +182,8 @@ select {
     width: calc(27px* var(--SCALE));
     height: calc(27px* var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
-    background-color: transparent;
+    background-color: rgba(var(--BGCOLOR3), 0.75);
+    color: var(--TXTCOLOR2);
     cursor: pointer;
     background-repeat: no-repeat;
     background-position: center;
@@ -190,26 +191,20 @@ select {
     background-size: contain;
     margin-bottom: calc(4px * var(--SCALE));
     margin-top: calc(2px * var(--SCALE));
+    font-size: calc(15px * var(--SCALE));
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 }
 
 #toggle_sidebar_button.show_sidebar {
     transform: scaleX(-1);
-    background-image: url("images/hide_sidebar.png");
-}
-
-#toggle_sidebar_button.hide_sidebar {
-    background-image: url("images/hide_sidebar.png");
-}
-
-#shrink_sidebar_button {
-    background-image: url("images/hide_sidebar.png");
+    /* background-image: url("images/hide_sidebar.png"); */
 }
 
 #expand_sidebar_button {
     transform: scaleX(-1);
-    background-image: url("images/hide_sidebar.png");
+    /* background-image: url("images/hide_sidebar.png"); */
 }
-
 
 #credits {
     display: flex;
@@ -258,13 +253,15 @@ select {
     float: right;
     width: calc(27px * var(--SCALE));
     height: calc(27px * var(--SCALE));
-    background-size: calc(30px * var(--SCALE)) calc(30px * var(--SCALE));
-    background-repeat: no-repeat;
-    background-color: transparent;
+    background-color: #21212185;
     border: none;
-    background-image: url("images/toggle-width.png");
-    background-size: contain;
-    transform: scaleX(-1);
+    font-weight: bold;
+    font-size: calc(15px * var(--SCALE));
+    line-height: calc(27px * var(--SCALE));
+    text-align: center;
+    border-radius: 4px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 }
 
 #splitter-infoblock {
@@ -622,7 +619,7 @@ input.error {
 }
 
 .button {
-    background-color: rgba(var(--BGCOLOR3), 0.95);
+    background-color: rgba(var(--BGCOLOR3), 0.75);
     width: calc(27px * var(--SCALE));
     height: calc(27px * var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
