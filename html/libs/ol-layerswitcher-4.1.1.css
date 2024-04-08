@@ -26,16 +26,20 @@
   height: 38px;
   background-repeat: no-repeat;
   background-position: 2px;
-  background-color: var(--BGCOLOR1);
+  background-color: rgba(var(--BGCOLOR3), 0.75);
   color: var(--TXTCOLOR2);
   border: none;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 .layer-switcher button:focus,
 .layer-switcher button:hover {
-  background-color: var(--BGCOLOR1);
+  background-color: rgba(var(--BGCOLOR3), 0.75);
   color: var(--TXTCOLOR2);
   outline: none;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 .layer-switcher.shown {
@@ -52,6 +56,7 @@
 .layer-switcher.shown.ol-control:hover {
   background-color: transparent;
 }
+
 .layer-switcher.shown .panel {
   display: block;
 }
@@ -60,7 +65,7 @@
   display: none;
 }
 
-.layer-switcher.shown.layer-switcher-activation-mode-click > button {
+.layer-switcher.shown.layer-switcher-activation-mode-click>button {
   display: block;
   background-image: unset;
   right: 2px;
@@ -81,21 +86,23 @@
   margin: 1.6em 0.4em;
   padding-left: 0;
 }
+
 .layer-switcher ul ul {
   padding-left: 1.2em;
   margin: 0.1em 0 0 0;
 }
-.layer-switcher li.group + li.group {
+
+.layer-switcher li.group+li.group {
   margin-top: 0.4em;
 }
-.layer-switcher li.group + li.layer-switcher-base-group {
-}
 
-.layer-switcher li.group > label {
+.layer-switcher li.group+li.layer-switcher-base-group {}
+
+.layer-switcher li.group>label {
   font-weight: bold;
 }
 
-.layer-switcher.layer-switcher-group-select-style-none li.group > label {
+.layer-switcher.layer-switcher-group-select-style-none li.group>label {
   padding-left: 1.2em;
 }
 
@@ -111,6 +118,7 @@
   width: 1em;
   font-size: 1em;
 }
+
 .layer-switcher li label {
   padding-left: 2.7em;
   padding-right: 1.2em;
@@ -140,7 +148,7 @@
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
-li.layer-switcher-base-group > label {
+li.layer-switcher-base-group>label {
   padding-left: 1.2em;
 }
 
@@ -168,7 +176,7 @@ li.layer-switcher-base-group > label {
   -webkit-transform: rotate(-90deg);
 }
 
-.layer-switcher .group.layer-switcher-fold.layer-switcher-close > ul {
+.layer-switcher .group.layer-switcher-fold.layer-switcher-close>ul {
   overflow: hidden;
   height: 0;
 }
@@ -177,7 +185,8 @@ li.layer-switcher-base-group > label {
 .layer-switcher.shown.layer-switcher-activation-mode-click {
   padding-left: 34px;
 }
-.layer-switcher.shown.layer-switcher-activation-mode-click > button {
+
+.layer-switcher.shown.layer-switcher-activation-mode-click>button {
   left: 0;
   border-right: 0;
 }
