@@ -622,7 +622,7 @@ input.error {
 }
 
 .button {
-    background-color: var(--BGCOLOR3);
+    background-color: rgba(var(--BGCOLOR3), 0.95);
     width: calc(27px * var(--SCALE));
     height: calc(27px * var(--SCALE));
     border-radius: calc(2px * var(--SCALE));
