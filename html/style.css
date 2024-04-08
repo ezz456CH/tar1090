@@ -985,9 +985,10 @@ table.infoSectionTable tr td {
     margin: 3px 3px 3px 3px;
     padding: calc(0px * var(--SCALE));
     float: left;
-    width: calc(120px * var(--SCALE));
+    width: calc(125px * var(--SCALE));
     border-color: var(--ACCENT);
     background-color: var(--BGCOLOR2);
+    border-radius: 4px;
 }
 
 #copyrightInfo {
