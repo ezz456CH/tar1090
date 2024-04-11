@@ -32,7 +32,7 @@ let DisplayUnits = "nautical";
 let DefaultCenterLat = 14.81;
 let DefaultCenterLon = 104.46
 // The google maps zoom level, 0 - 16, lower is further out
-let DefaultZoomLvl   = 8.6;
+let DefaultZoomLvl   = 7.6;
 
 let autoselectCoords = null;
 

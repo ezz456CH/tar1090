@@ -93,7 +93,11 @@ select {
     height: 100%;
     overflow: auto;
     z-index: 1;
-    background-color: var(--BGCOLOR1);
+    background: rgba(var(--BGCOLOR3), 0.9);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
 }
 
 .adsbx-selected-bg:before {
@@ -129,7 +133,11 @@ select {
     padding: 6px 14px;
     border-radius: 6px;
     color: var(--TXTCOLOR2);
-    background-color: var(--BGCOLOR2);
+    background-color: rgba(var(--BGCOLOR4), 0.75);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
     border: none;
     box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
     user-select: none;
@@ -261,8 +269,6 @@ select {
     line-height: calc(27px * var(--SCALE));
     text-align: center;
     border-radius: 4px;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
 }
 
 #splitter-infoblock {
@@ -591,7 +597,6 @@ input.error {
 
 
 .settingsText {
-    font-size: calc(14px * var(--SCALE));
     line-height: calc(20px * var(--SCALE));
 
 }
@@ -632,6 +637,8 @@ input.error {
     user-select: none;
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
+    transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
 }
 
 
@@ -766,6 +773,12 @@ table.infoSectionTable tr td {
     padding-right: calc(3px * var(--SCALE));
     padding-left: calc(3px * var(--SCALE));
     margin: calc(2px * var(--SCALE));
+    border-width: 2px;
+    margin-bottom: 5px;
+    float: left;
+    font-size: var(--FS2);
+    text-align: center;
+    border-radius: 2px;
 }
 
 #settings_infoblock {
@@ -777,9 +790,11 @@ table.infoSectionTable tr td {
     padding: calc(20px * var(--SCALE));
     z-index: 9999;
     display: none;
-    background-color: rgba(var(--BGCOLOR3), 0.95);
+    background-color: rgba(var(--BGCOLOR3), 0.9);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
+    transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
     border-radius: 8px;
 }
 
@@ -898,7 +913,11 @@ table.infoSectionTable tr td {
 }
 
 .greyButton {
-    background-color: var(--BGCOLOR2);
+    background-color: rgba(var(--BGCOLOR4), 0.75);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
     cursor: pointer;
     padding: calc(4px * var(--SCALE));
     width: 100%;
