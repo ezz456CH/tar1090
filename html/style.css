@@ -94,10 +94,6 @@ select {
     overflow: auto;
     z-index: 1;
     background: rgba(var(--BGCOLOR3), 0.9);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
 }
 
 .adsbx-selected-bg:before {
@@ -134,10 +130,6 @@ select {
     border-radius: 6px;
     color: var(--TXTCOLOR2);
     background-color: rgba(var(--BGCOLOR4), 0.75);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
     border: none;
     box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
     user-select: none;
@@ -201,8 +193,6 @@ select {
     margin-bottom: calc(4px * var(--SCALE));
     margin-top: calc(2px * var(--SCALE));
     font-size: calc(15px * var(--SCALE));
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
 }
 
 #toggle_sidebar_button.show_sidebar {
@@ -635,10 +625,6 @@ input.error {
     text-align: center;
     background-clip: padding-box;
     user-select: none;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
 }
 
 
@@ -791,10 +777,6 @@ table.infoSectionTable tr td {
     z-index: 9999;
     display: none;
     background-color: rgba(var(--BGCOLOR3), 0.9);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
     border-radius: 8px;
 }
 
@@ -914,10 +896,6 @@ table.infoSectionTable tr td {
 
 .greyButton {
     background-color: rgba(var(--BGCOLOR4), 0.75);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
     cursor: pointer;
     padding: calc(4px * var(--SCALE));
     width: 100%;
