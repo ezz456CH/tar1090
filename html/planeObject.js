@@ -1817,7 +1817,7 @@ function altitudeLines (segment) {
             lineStyleCache[lineKey]	= [
                 new ol.style.Style({
                     stroke: new ol.style.Stroke({
-                        color: 'rgba(0, 0, 0, 0.10)',
+                        color: 'rgba(0, 0, 0, 0.3)',
                         width: 2.25 * newWidth,
                         lineJoin: join,
                         lineCap: cap,
