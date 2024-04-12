@@ -6281,13 +6281,13 @@ function setLineWidth() {
 
     estimateStyle = new ol.style.Style({
         stroke: new ol.style.Stroke({
-            color: 'rgba(0, 0, 0, 0.25)',
+            color: 'rgba(0, 0, 0, 0.90)',
             width: 2 * newWidth,
         })
     });
     estimateStyleSlim = new ol.style.Style({
         stroke: new ol.style.Stroke({
-            color: 'rgba(0, 0, 0, 0.25)',
+            color: 'rgba(0, 0, 0, 0.90)',
             width: 2 * newWidth,
         })
     });
