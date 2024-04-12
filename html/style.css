@@ -124,7 +124,6 @@ select {
 #export_kml_baro {
     font-family: Cascadia Code;
     display: flex;
-    flex-direction: column;
     align-items: center;
     padding: 6px 14px;
     border-radius: 6px;
@@ -136,9 +135,13 @@ select {
     cursor: pointer;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin: 4px;
+    margin: calc(5px * var(--SCALE));
     height: 42px;
     width: 182px;
+    height: calc(42px * var(--SCALE));
+    width: calc(182px * var(--SCALE));
+    font-size: calc(13px * var(--SCALE));
+    text-align: center;
 }
 
 #export_kml_geom:hover,
