@@ -697,7 +697,7 @@ function createBaseLayers() {
                         text: showLabel ? feature.get("name") : "",
                         overflow: OLMap.getView().getZoom() > 5,
                         scale: 1.25,
-                        font: ((12 * globalScale) + 'px Cascadia Code'),
+                        font: ((8 * globalScale) + 'px Cascadia Code'),
                         fill: new ol.style.Fill({
                             color: '#000000'
                         }),
