@@ -1822,16 +1822,6 @@ function altitudeLines (segment) {
                         lineJoin: join,
                         lineCap: cap,
                     })
-                }),
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: color,
-                        width: 2 * newWidth,
-                        lineDash: [10, 20 + 3 * newWidth],
-                        lineDashOffset: 5,
-                        lineJoin: join,
-                        lineCap: cap,
-                    }),
                 })
             ];
         } else if (segment.estimated && pTracks) {
