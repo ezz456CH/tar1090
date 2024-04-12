@@ -205,7 +205,7 @@ let ShowFlags = true;
 let FlagPath = "flags-tiny/";
 
 // Set to false to disable the ChartBundle base layers (US coverage only)
-let ChartBundleLayers = true;
+let ChartBundleLayers = false;
 
 // Provide a Bing Maps API key here to enable the Bing imagery layer.
 // You can obtain a free key (with usage limits) at

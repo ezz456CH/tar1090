@@ -284,19 +284,6 @@ function createBaseLayers() {
         world.push(vtlayer);
     }
 
-    world.push(new ol.layer.Tile({
-        source: new ol.source.OSM({
-            url: 'https://gibs-{a-c}.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief_Bathymetry/default/EPSG3857_500m/{z}/{y}/{x}.jpeg',
-            attributions: '<a href="https://terra.nasa.gov/about/terra-instruments/modis">MODIS Terra</a> ' +
-                'Provided by NASA\'s Global Imagery Browse Services (GIBS), part of NASA\'s Earth Observing System Data and Information System (EOSDIS)',
-            maxZoom: 8,
-            transition: tileTransition,
-        }),
-        name: 'gibs_reliev',
-        title: 'GIBS Relief',
-        type: 'base',
-    }));
-
     const date = new Date(Date.now() - 86400 * 1000);
     const yesterday = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1).toString().padStart(2, '0') + '-' + date.getUTCDate().toString().padStart(2, '0');
     world.push(new ol.layer.Tile({
@@ -710,6 +697,7 @@ function createBaseLayers() {
                         text: showLabel ? feature.get("name") : "",
                         overflow: OLMap.getView().getZoom() > 5,
                         scale: 1.25,
+                        font: ((12 * globalScale) + 'px Cascadia Code'),
                         fill: new ol.style.Fill({
                             color: '#000000'
                         }),
