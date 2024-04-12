@@ -135,9 +135,7 @@ select {
     cursor: pointer;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin: calc(5px * var(--SCALE));
-    height: 42px;
-    width: 182px;
+    margin: calc(4px * var(--SCALE));
     height: calc(42px * var(--SCALE));
     width: calc(182px * var(--SCALE));
     font-size: calc(13px * var(--SCALE));
