@@ -95,7 +95,7 @@ function format_altitude_brief(alt, vr, displayUnits, withUnits) {
 	if (alt == null){
 		return NBSP + '?' + NBSP;
 	} else if (alt === "ground"){
-		return "ground";
+		return "GND";
 	}
 
 	alt_text = Math.round(convert_altitude(alt, displayUnits)).toString();
@@ -122,7 +122,7 @@ function format_altitude_long(alt, vr, displayUnits) {
 	if (alt == null) {
 		return "n/a";
 	} else if (alt === "ground") {
-		return "on ground";
+		return "GND";
 	}
 
 	alt_text = Math.round(convert_altitude(alt, displayUnits)).toString() + NNBSP + get_unit_label("altitude", displayUnits);
@@ -143,7 +143,7 @@ function format_altitude(alt, displayUnits) {
 	if (alt == null) {
 		return "n/a";
 	} else if (alt === "ground") {
-		return "on ground";
+		return "GND";
 	}
 
 	alt_text = Math.round(convert_altitude(alt, displayUnits)).toString() + NNBSP + get_unit_label("altitude", displayUnits);
@@ -157,7 +157,7 @@ function format_onground (alt) {
 	if (alt == null) {
 		return "n/a";
 	} else if (alt === "ground") {
-		return "on ground";
+		return "GND";
 	} else {
 		return "airborne";
 	}
