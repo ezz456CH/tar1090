@@ -3285,17 +3285,19 @@ function refreshSelected() {
     jQuery('#selected_sitedist1').updateText(format_distance_long(sitedist, DisplayUnits));
     jQuery('#selected_sitedist2').updateText(format_distance_long(sitedist, DisplayUnits));
     jQuery('#selected_rssi1').updateText(selected.rssi != null ? selected.rssi.toFixed(1) : "n/a");
-    if (globeIndex && binCraft && !showTrace) {
-        jQuery('#selected_message_count').prev().updateText('Receivers:').prop('title', 'Number of receivers receiving this aircraft');
-        if (selected.receiverCount >= 5 && selected.dataSource != 'mlat') {
-            jQuery('#selected_message_count').updateText('> ' + selected.receiverCount);
+        if (globeIndex && binCraft && !showTrace) {
+            jQuery('#selected_message').prop('title', 'Number of receivers receiving this aircraft');
+            jQuery('#selected_message').prev().updateText('Receivers:');
+            if (selected.receiverCount >= 5 && selected.dataSource != 'mlat') {
+                jQuery('#selected_message_count').updateText('> ' + selected.receiverCount);
+            } else {
+                jQuery('#selected_message_count').updateText(selected.receiverCount);
+            }
         } else {
-            jQuery('#selected_message_count').updateText(selected.receiverCount);
+            jQuery('#selected_message').prop('title', 'The total number of messages received from this aircraft');
+            jQuery('#selected_message').prev().updateText('Messages:');
+            jQuery('#selected_message_count').updateText(selected.messages);
         }
-    } else {
-        jQuery('#selected_message_count').prev().updateText('Messages:').prop('title', 'The total number of messages received from this aircraft');
-        jQuery('#selected_message_count').updateText(selected.messages);
-    }
     jQuery('#selected_message_rate').updateText((selected.messageRate != null) ? (selected.messageRate.toFixed(1)) : "n/a");
     jQuery('#selected_photo_link').html(getPhotoLink(selected));
 
