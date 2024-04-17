@@ -10200,17 +10200,24 @@
 				i = void 0 !== t.delta ? t.delta : 1,
 				n = void 0 !== t.zoomInClassName ? t.zoomInClassName : e + "-in",
 				r = void 0 !== t.zoomOutClassName ? t.zoomOutClassName : e + "-out",
-				s = void 0 !== t.zoomInLabel ? t.zoomInLabel : "+",
-				o = void 0 !== t.zoomOutLabel ? t.zoomOutLabel : "–",
 				a = void 0 !== t.zoomInTipLabel ? t.zoomInTipLabel : "Zoom in",
 				l = void 0 !== t.zoomOutTipLabel ? t.zoomOutTipLabel : "Zoom out",
 				h = document.createElement("button");
-			h.className = n, h.setAttribute("type", "button"), h.title = a, h.appendChild("string" == typeof s ? document.createTextNode(s) : s), h.addEventListener(Tt, this.handleClick_.bind(this, i), !1);
+			h.className = n,
+			h.setAttribute("type", "button"),
+			h.title = a,
+			h.innerHTML = '<i class="fa-solid fa-plus"></i>';
+			h.addEventListener(Tt, this.handleClick_.bind(this, i), !1);
 			const u = document.createElement("button");
-			u.className = r, u.setAttribute("type", "button"), u.title = l, u.appendChild("string" == typeof o ? document.createTextNode(o) : o), u.addEventListener(Tt, this.handleClick_.bind(this, -i), !1);
+			u.className = r, u.setAttribute("type", "button"),
+			u.title = l,
+			u.innerHTML = '<i class="fa-solid fa-minus"></i>';
+			u.addEventListener(Tt, this.handleClick_.bind(this, -i), !1);
 			const c = e + " " + Wt + " " + qt,
 				d = this.element;
-			d.className = c, d.appendChild(h), d.appendChild(u), this.duration_ = void 0 !== t.duration ? t.duration : 250
+			d.className = c, d.appendChild(h),
+			d.appendChild(u),
+			this.duration_ = void 0 !== t.duration ? t.duration : 250
 		}
 		handleClick_(t, e) {
 			e.preventDefault(), this.zoomByDelta_(t)

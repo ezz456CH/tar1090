@@ -295,28 +295,39 @@ select {
 }
 
 .ol-zoom-in {
-    background-image: url("images/zoom-in.png");
-    background-size: cover;
-    color: transparent !important;
-    width: calc(25px * var(--SCALE)) !important;
-    height: calc(25px * var(--SCALE)) !important;
-    background-color: transparent !important;
-    margin-bottom: calc(5px * var(--SCALE)) !important;
+    /* background-image: url("images/zoom-in.png"); */
+    /* background-size: cover; */
+    background-color: rgba(var(--BGCOLOR3), 0.75) !important;
+    color: var(--TXTCOLOR2) !important;
+    width: calc(27px * var(--SCALE)) !important;
+    height: calc(27px * var(--SCALE)) !important;
+    margin-bottom: calc(4px * var(--SCALE)) !important;
+    border-radius: calc(2px * var(--SCALE));
+    cursor: pointer;
+    text-align: center;
+    background-clip: padding-box;
+    user-select: none;
 }
 
 .ol-zoom-out {
-    background-image: url("images/zoom-out.png");
-    background-size: cover;
-    color: transparent !important;
-    width: calc(25px * var(--SCALE)) !important;
-    height: calc(25px * var(--SCALE)) !important;
-    background-color: transparent !important;
+    /* background-image: url("images/zoom-out.png"); */
+    /* background-size: cover; */
+    background-color: rgba(var(--BGCOLOR3), 0.75) !important;
+    color: var(--TXTCOLOR2) !important;
+    width: calc(27px * var(--SCALE)) !important;
+    height: calc(27px * var(--SCALE)) !important;
+    margin-bottom: calc(2px * var(--SCALE)) !important;
+    border-radius: calc(2px * var(--SCALE));
+    cursor: pointer;
+    text-align: center;
+    background-clip: padding-box;
+    user-select: none;
 }
 
 .ol-zoom {
     background-color: transparent !important;
-    left: calc(100% - calc(35px * var(--SCALE)));
-    top: calc(100% - calc(85px * var(--SCALE)));
+    left: calc(100% - calc(33.5px * var(--SCALE)));
+    top: calc(100% - calc(81px * var(--SCALE)));
 }
 
 .ol-attribution {
