@@ -77,7 +77,6 @@ select {
 #planesTable {
     font-size: var(--FS2);
     white-space: nowrap;
-    cursor: default;
 }
 
 #layout_container {
@@ -998,6 +997,7 @@ table.infoSectionTable tr td {
     border-color: var(--ACCENT);
     background-color: var(--BGCOLOR2);
     border-radius: 4px;
+    user-select: none;
 }
 
 #copyrightInfo {
