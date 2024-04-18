@@ -2179,7 +2179,6 @@ function ol_map_init() {
         interactions: ol.interaction.defaults({altShiftDragRotate:false, pinchRotate:false}).extend([
             new ol.interaction.DblClickDragZoom()
         ]),
-        maxTilesLoading: 4,
     });
 
     console.time('webglInit');
