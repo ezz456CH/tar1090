@@ -6514,7 +6514,7 @@ function createLocationDot() {
     let markerStyle = new ol.style.Style({
         text: new ol.style.Text({
             text: '+',
-            font: ((10 * globalScale) + 'px Cascadia Code'),
+            font: ((12 * globalScale) + 'px Cascadia Code'),
             fill: new ol.style.Fill({ color: '#000000' }),
         })
     });
