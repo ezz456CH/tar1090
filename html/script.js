@@ -6512,13 +6512,10 @@ function remakeTrails() {
 function createLocationDot() {
     locationDotFeatures.clear();
     let markerStyle = new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 7,
-            snapToPixel: false,
-            fill: new ol.style.Fill({color: 'black'}),
-            stroke: new ol.style.Stroke({
-                color: 'white', width: 2
-            })
+        text: new ol.style.Text({
+            text: '+',
+            font: ((10 * globalScale) + 'px Cascadia Code'),
+            fill: new ol.style.Fill({ color: '#000000' }),
         })
     });
 
@@ -6526,6 +6523,8 @@ function createLocationDot() {
     feature.setStyle(markerStyle);
     locationDotFeatures.addFeature(feature);
 }
+
+
 function drawSiteCircle() {
     //console.trace();
     siteCircleFeatures.clear();
