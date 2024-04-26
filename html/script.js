@@ -2173,7 +2173,7 @@ function ol_map_init() {
         interactions: ol.interaction.defaults({altShiftDragRotate:false, pinchRotate:false}).extend([
             new ol.interaction.DblClickDragZoom({
                 duration: 400,
-                delta: 0.1
+                delta: 1
             })
         ]),
     });
