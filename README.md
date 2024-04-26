@@ -365,7 +365,7 @@ sudo /usr/local/share/tar1090/getupintheair.sh XXXXX 12192 adsbx
 
 ## 0800-DESTROY-SD-CARD
 
-History function as used for globe.adsbexchange.com
+History function as used by several online aggregators using tar1090
 (destroy sd-card is a bit of a joke but obviously it will use disk space and create quite a few files, they will be kept indefinitely so if the folder grows to big you'll have to delete old files yourself)
 
 This is not in any way or form officially supported and you should consider it experimental.
@@ -513,9 +513,27 @@ alternative display style: &realHeat
 - blurryness: &heatBlur=2
 - weight of each dot for the heatmap: &heatWeight=4
 
+## Notable websites related to tar1090 / readsb:
+
+One of this forks main uses is to be the frontend of a global map.
+For that purpose it's used in conjunction with readsb.
+
+Websites using this software:
+
+- https://adsb.lol/
+- https://globe.adsbexchange.com/
+- https://globe.airplanes.live/
+- https://globe.adsb.fi/
+
+Notable Projects that use ADS-B data:
+
+- https://gpsjam.org/
+- https://adsb.exposed/
+- https://tech.marksblogg.com/global-flight-tracking-adsb.html
+
 ## offline map
 
-<https://github.com/adsbxchange/wiki/wiki/tar1090-offline-map>
+<https://github.com/wiedehopf/adsb-wiki/wiki/offline-map-tiles-tar1090>
 
 ## Uses this library for decompressing zstd
 

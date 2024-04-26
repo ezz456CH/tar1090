@@ -1661,14 +1661,9 @@ function initSourceFilter(colors) {
     html += createFilter(colors['uat'], 'UAT / ADS-R', sources[1][0]);
     html += createFilter(colors['mlat'], 'MLAT', sources[2]);
     html += createFilter(colors['tisb'], 'TIS-B', sources[3]);
-
-    //if (!globeIndex)
     html += createFilter(colors['modeS'], 'Mode-S', sources[4]);
-    if (globeIndex)
-        html += createFilter(colors['other'], 'Other', sources[5]);
-
-    if (globeIndex)
-        html += createFilter(colors['uat'], 'ADS-C', sources[6]);
+    html += createFilter(colors['other'], 'Other', sources[5]);
+    html += createFilter(colors['uat'], 'ADS-C', sources[6]);
 
     document.getElementById('sourceFilter').innerHTML = html;
 
@@ -2061,7 +2056,7 @@ function webglAddLayer() {
             glStyle = {
                 'circle-radius': heatmap.radius * globalScale * 1.25,
                 'circle-displacement': [0, 0],
-                'circle-opacity': heatmap.alpha || 1,
+                'circle-opacity': heatmap.alpha || webglIconOpacity,
                 'circle-fill-color' : [
                     'color',
                     [ 'get', 'r' ],
@@ -2259,12 +2254,18 @@ function ol_map_init() {
     }));
 
     OLMap.on('movestart', function(event) {
-        webgl && TrackedAircraftPositions > 2000 && webglLayer.setOpacity(0.25);
+        if (webgl) {
+            if (TrackedAircraftPositions > webglIconMapMoveOpacityCrowdedThreshold) {
+                webglLayer.setOpacity(webglIconMapMoveOpacityCrowded)
+            } else {
+                webglLayer.setOpacity(webglIconMapMoveOpacity)
+            }
+        }
     });
 
     OLMap.on('moveend', function(event) {
         checkMovement();
-        webgl && webglLayer.setOpacity(1);
+        webgl && webglLayer.setOpacity(webglIconOpacity );
     });
 
     OLMap.on(['click', 'dblclick'], function(evt) {
@@ -4393,12 +4394,10 @@ function adjustInfoBlock() {
 }
 
 function initializeUnitsSelector() {
-    // Get display unit preferences from local storage
-    if (!loStore.getItem('displayUnits')) {
-        loStore['displayUnits'] = 'nautical';
+    // Get display unit preferences from local storage otherwise use value previously set defaults.js or config.js
+    if (loStore.getItem('displayUnits')) {
+        DisplayUnits = loStore['displayUnits'];
     }
-
-    DisplayUnits = loStore['displayUnits'];
 
     // Initialize drop-down
     jQuery('#units_selector')
@@ -6516,7 +6515,7 @@ function createLocationDot() {
     let markerStyle = new ol.style.Style({
         text: new ol.style.Text({
             text: '+',
-            font: ((12 * globalScale) + 'px Cascadia Code'),
+            font: ((14 * globalScale) + 'px Cascadia Code'),
             fill: new ol.style.Fill({ color: '#000000' }),
         })
     });
@@ -7022,6 +7021,7 @@ function drawHeatmap() {
             }
 
             let points = myPoints[k];
+            let pointsU = new Uint32Array(points.buffer);
 
             let i = 4 * indexes[k][offsets[k]];
 
@@ -7062,6 +7062,33 @@ function drawHeatmap() {
 
                 if (PlaneFilter.enabled && altFiltered(alt))
                     continue;
+
+                if (heatmap.filters) {
+                    let type = (pointsU[i] >> 27) & 0x1F;
+                    let dataSource;
+                    switch (type) {
+                        case  0: dataSource = 'adsb';     break;
+                        case  1: dataSource = 'modeS';    break;
+                        case  2: dataSource = 'adsr';     break;
+                        case  3: dataSource = 'tisb';     break;
+                        case  4: dataSource = 'adsc';     break;
+                        case  5: dataSource = 'mlat';     break;
+                        case  6: dataSource = 'other';    break;
+                        case  7: dataSource = 'modeS';    break;
+                        case  8: dataSource = 'adsb';     break;
+                        case  9: dataSource = 'adsr';     break;
+                        case 10: dataSource = 'tisb';     break;
+                        case 11: dataSource = 'tisb';     break;
+                        default: dataSource = 'unknown';
+                    }
+                    let hex = (pointsU[i] & 0xFFFFFF).toString(16).padStart(6, '0');
+                    hex = (pointsU[i] & 0x1000000) ? ('~' + hex) : hex;
+                    let plane = g.planes[hex] || new PlaneObject(hex);
+                    plane.dataSource = dataSource;
+                    if (plane.isFiltered()) {
+                        continue;
+                    }
+                }
 
                 pointCount++;
                 //console.log(pos);

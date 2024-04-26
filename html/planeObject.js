@@ -2786,7 +2786,7 @@ PlaneObject.prototype.checkForDB = function(data) {
             this.dbinfoLoaded = true;
         }
     }
-    if (!this.dbinfoLoaded && (!dbServer || replay || pTracks)) {
+    if (!this.dbinfoLoaded && (!dbServer || replay || pTracks || heatmap)) {
         this.getAircraftData();
         return;
     }
@@ -2822,8 +2822,8 @@ PlaneObject.prototype.setProjection = function(arg) {
     //let trace = new Error().stack.toString();
     //console.log(lat + ' ' + trace);
 
-    // manual wrap around
-    if (webgl && Math.abs(CenterLon - lon) > 180) {
+    // manual wrap around (no longer necessary due to OpenLayers changing their webGL code)
+    if (0 && webgl && Math.abs(CenterLon - lon) > 180) {
         if (CenterLon < 0)
             lon -= 360;
         else
