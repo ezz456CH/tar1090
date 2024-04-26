@@ -2170,14 +2170,16 @@ function ol_map_init() {
             center: ol.proj.fromLonLat([CenterLon, CenterLat]),
             zoom: zoomLvl,
             maxZoom: 20,
-            multiWorld: true,
         }),
         controls: [new ol.control.Zoom({delta: 1, duration: 0, target: 'map_canvas',}),
             new ol.control.Attribution({collapsed: true}),
             new ol.control.ScaleLine({units: DisplayUnits})
         ],
         interactions: ol.interaction.defaults({altShiftDragRotate:false, pinchRotate:false}).extend([
-            new ol.interaction.DblClickDragZoom()
+            new ol.interaction.DblClickDragZoom({
+                duration: 1000,
+                delta: 0.1
+            })
         ]),
     });
 
