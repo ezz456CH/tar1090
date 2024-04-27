@@ -7797,6 +7797,13 @@ function showReplayBar(){
         jQuery('#replaySpeedHint').text('Speed: ' + replay.speed + 'x');
 
         jQuery("#selected_showTrace_hide").hide();
+
+        replayJump();
+
+        if(!replay || replay.playing) {
+            return;
+        }
+        replay.playing = true;
     }
 };
 
