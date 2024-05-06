@@ -331,6 +331,7 @@ HideCols = [
 
 // labelsGeom = false; // labels: uses geometric altitude (WGS84 ellipsoid unless geomUseEGM is enabled
 // geomUseEGM = false; // use EGM96 for displaying geometric altitudes (extra load time!)
+// baroUseQNH = false;
 
 // windLabelsSlim = false;
 // showLabelUnits = true;
@@ -359,6 +360,10 @@ HideCols = [
 //seenTimeoutMlat = 58; // in seconds
 
 //tableInView = false; // only show aircraft in current view (V button)
+
+
+// aiscatcher_server = "http://192.168.1.113:8100"; // update with your server address
+// aiscatcher_refresh = 15; // refresh interval in seconds
 
 /*
 tableColors = {

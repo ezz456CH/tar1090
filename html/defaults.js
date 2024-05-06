@@ -346,6 +346,7 @@ let showSil = false;
 
 let labelsGeom = false; // labels: uses geometric altitude (WGS84 ellipsoid unless geomUseEGM is enabled
 let geomUseEGM = false; // use EGM96 for displaying geometric altitudes (extra load time!)
+let baroUseQNH = false;
 
 let windLabelsSlim = false;
 let showLabelUnits = true;
@@ -372,6 +373,10 @@ let seenTimeoutMlat = 58; // in seconds
 let darkModeDefault = true; // turn on dark mode by default (change in browser possible)
 
 let tableInView = false; // only show aircraft in current view (V button)
+
+
+let aiscatcher_server = "";
+let aiscatcher_refresh = 15;
 
 // legacy variables
 let OutlineMlatColor = null;
@@ -415,3 +420,5 @@ let prefer978 = 0;
 
 
 let dynGlobeRate = false; // enable use of globeRates.json in index.html directory to steer client refresh rate
+
+let multiOutline = false;
