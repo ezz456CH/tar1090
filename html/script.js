@@ -8407,6 +8407,7 @@ function printTrace() {
 
 // Create a "hidden" input
 let shareLinkInput = document.createElement("input");
+shareLinkInput.style.display = 'none';
 // Append it to the body
 document.body.appendChild(shareLinkInput);
 
