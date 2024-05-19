@@ -135,6 +135,7 @@ let lastRequestBox = '';
 let nextQuerySelected = 0;
 let enableDynamicCachebusting = false;
 let lastRefreshInt = 1000;
+let reapTimeout = globeIndex ? 240 : 480;
 
 
 let baroCorrectQNH = 1013.25;
@@ -187,11 +188,14 @@ let badDotMlat;
 let showingReplayBar = false;
 
 function processAircraft(ac, init, uat) {
-    let isArray = Array.isArray(ac);
-    let hex = isArray ? ac[0] : ac.hex;
+    let hex = Array.isArray(ac) ? ac[0] : ac.hex;
 
     if (icaoFilter && !icaoFilter.includes(hex))
         return;
+
+    if (g.historyKeep && !g.historyKeep[hex]) {
+        return;
+    }
 
     if (uat && uatNoTISB && ac.type && ac.type.substring(0,4) == "tisb") {
         // drop non ADS-B planes from UAT (TIS-B)
@@ -682,8 +686,6 @@ function initialize() {
         return;
     }
 
-    jQuery.when(historyQueued).done(push_history);
-
     jQuery.when(configureReceiver, heatmapDefer).done(function() {
 
         if (receiverJson) {
@@ -715,6 +717,8 @@ function initialize() {
         initMap();
 
         processQueryToggles();
+
+        jQuery.when(historyQueued).done(push_history);
 
         if (nHistoryItems) {
             jQuery.when(historyLoaded).done(afterHistoryLoad);
@@ -1753,7 +1757,6 @@ function initFlagFilter(colors) {
 function push_history() {
     HistoryItemsReturned = 0;
     PositionHistoryBuffer = [];
-    jQuery("#loader_progress").attr('max',nHistoryItems + 1);
 
     for (let i = 0; i < nHistoryItems; i++) {
         push_history_item(i);
@@ -1761,24 +1764,28 @@ function push_history() {
 }
 
 function push_history_item(i) {
-    jQuery.when(deferHistory[i])
+    deferHistory[i]
         .done(function(json) {
+            HistoryItemsReturned++;
 
             if (HistoryChunks) {
                 if (json && json.files) {
+                    //g.refreshHistory && console.log("itemsreturned chunk: " + HistoryItemsReturned + " chunklen: " + json.files.length);
                     for (let i in json.files) {
                         PositionHistoryBuffer.push(json.files[i]);
+                        if (i == 0 || i == json.files.length - 1) {
+                            //g.refreshHistory && console.log("history buffer push: " + localTime(new Date(json.files[i].now * 1000)));
+                        }
                     }
                 } else if (json && json.now) {
+                    //g.refreshHistory && console.log("itemsreturned simple json: " + HistoryItemsReturned);
                     PositionHistoryBuffer.push(json);
+                    //g.refreshHistory && console.log("history buffer push: " + localTime(new Date(json.now * 1000)));
                 }
             } else {
                 PositionHistoryBuffer.push(json);
             }
 
-
-            HistoryItemsReturned++;
-            jQuery("#loader_progress").attr('value',HistoryItemsReturned);
             if (HistoryItemsReturned == nHistoryItems) {
                 parseHistory();
             }
@@ -1790,7 +1797,6 @@ function push_history_item(i) {
         .fail(function(jqxhr, status, error) {
 
             //Doesn't matter if it failed, we'll just be missing a data point
-            jQuery("#loader_progress").attr('value',HistoryItemsReturned);
             //console.log(error);
             HistoryItemsReturned++;
             if (HistoryItemsReturned == nHistoryItems) {
@@ -1814,18 +1820,52 @@ function parseHistory() {
         console.log(localTime(new Date()) + " Sorting history: " + PositionHistoryBuffer.length);
         PositionHistoryBuffer.sort(function(x,y) { return (y.now - x.now); });
 
+        let currentTime = new Date().getTime()/1000;
+
+        if (!pTracks) {
+            // get all planes within the reapTimeout
+            g.historyKeep = {};
+            for (let i = 0; i < PositionHistoryBuffer.length; i++)  {
+                let data = PositionHistoryBuffer[i];
+                if (currentTime - data.now > reapTimeout) {
+                    break;
+                }
+                for (let j=0; j < data.aircraft.length; j++) {
+                    const ac = data.aircraft[j];
+                    const isArray = Array.isArray(ac);
+                    const hex = isArray ? ac[0] : ac.hex;
+                    const seen = isArray ? ac[6] : ac.seen;
+                    if (currentTime - (data.now - seen) < reapTimeout) {
+                        g.historyKeep[hex] = 1;
+                    }
+                }
+                //console.log("hist: " + localTime(new Date(data.now * 1000)));
+            }
+            for (let i in g.planesOrdered) {
+                let hex = g.planesOrdered[i].icao;
+                g.historyKeep[hex] = 1;
+            }
+        }
+
         // Process history
         let data;
         let h = 0;
         let pruneInt = 100;
-        let currentTime = new Date().getTime()/1000;
         let lastTimestamp = 0;
+        let counter = 0;
 
         while (data = PositionHistoryBuffer.pop()) {
+            counter++;
 
             if (data.now < lastTimestamp) {
                 console.log('parseHistory sorting issue');
             }
+
+            if (lastTimestamp && data.now - lastTimestamp > 15) {
+                console.log("History " + String(counter).padStart(4) + " from: "
+                    + localTime(new Date(data.now * 1000)) + " GAP: " + localTime(new Date(lastTimestamp * 1000)));
+            }
+
             lastTimestamp = data.now;
 
             if (pTracks && currentTime - data.now > pTracks * 3600) {
@@ -1843,18 +1883,17 @@ function parseHistory() {
                 processReceiverUpdate(data, true);
             }
 
-            ++h
+            ++h;
             if (h == 1 || h % pruneInt == 0 || PositionHistoryBuffer.length == 0) {
-
-                console.log("Apply History " + String(h).padStart(4) + " from: "
-                    + localTime(new Date(now * 1000)));
-
-                if (h != 1) {
-                    // prune aircraft list
-                    reaper();
-                }
+                console.log("Apply History " + String(counter).padStart(4) + " from: "
+                    + localTime(new Date(data.now * 1000)));
             }
         }
+
+        // only restrict aircraft process to this list while parsing history
+        g.historyKeep = null;
+
+        reaper();
 
         // Final pass to update all planes to their latest state
         //console.log("Final history cleanup pass");
@@ -1868,7 +1907,6 @@ function parseHistory() {
                 plane.last_message_time -= 999;
             }
         }
-
         refreshFeatures();
         TAR.planeMan.refresh();
     }
@@ -2149,16 +2187,26 @@ function webglAddLayer() {
             style: glStyle,
             renderBuffer: renderBuffer,
         });
-        if (!webglLayer || !webglLayer.getRenderer())
+        if (!webglLayer)
             return false;
+        if (loStore['webglTested'] != 'true' && !webglLayer.getRenderer()) {
+            return false;
+        }
 
         layers.push(webglLayer);
 
         webgl = true;
-        plane.visible = true;
-        plane.updateMarker();
-        OLMap.renderSync();
 
+        // only test webgl once in every browser
+        // after that assume that it's working
+
+        if (loStore['webglTested'] != 'true') {
+            plane.visible = true;
+            plane.updateMarker();
+            OLMap.renderSync();
+        }
+
+        loStore['webglTested'] = 'true';
         success = true;
     } catch (error) {
         try {
@@ -2264,7 +2312,11 @@ function ol_map_init() {
         }
     });
     if (!foundType) {
-        MapType_tar1090 = "osm_adsbx";
+        if (adsbexchange) {
+            MapType_tar1090 = "osm_adsbx";
+        } else {
+            MapType_tar1090 = "osm";
+        }
     }
 
     ol.control.LayerSwitcher.forEachRecursive(layers_group, function(lyr) {
@@ -2909,7 +2961,7 @@ function reaper(all) {
             continue;
         plane.seen = now - plane.last_message_time;
         if ( all || ((!plane.selected)
-            && plane.seen > 300
+            && plane.seen > reapTimeout
             && (plane.dataSource != 'adsc' || plane.seen > jaeroTimeout))
         ) {
             // Reap it.
@@ -3566,12 +3618,13 @@ function mstime() {
 let nextCacheClear = mstime() + 300 * 1000;
 
 function releaseMem() {
-
-    if (mstime() > nextCacheClear) {
-        nextCacheClear = mstime() + 300 * 1000;
-        lineStyleCache = {};
-        iconCache = {};
+    if (!loadFinished || mstime() < nextCacheClear) {
+        return;
     }
+
+    nextCacheClear = mstime() + 300 * 1000;
+    lineStyleCache = {};
+    iconCache = {};
 
     //console.trace();
     //console.log('releaseMem()');
@@ -7921,7 +7974,12 @@ function refreshHistory() {
     }
 
     jQuery("#loader_progress").attr('value', 0);
-    jQuery("#loader").show();
+
+    setTimeout(() => {
+        if (!timersActive) {
+            jQuery("#loader").show();
+        }
+    }, 200);
 
     chunksDefer().done(function(data) {
         console.log(localTime(new Date()) + ' tab change, loading history');
@@ -7990,11 +8048,10 @@ function handleVisibilityChange() {
 }
 
 function noLongerHidden() {
-    jQuery("#loader").hide();
-
     active();
-
     setIntervalTimers();
+
+    jQuery("#loader").hide();
 
     refresh();
 
