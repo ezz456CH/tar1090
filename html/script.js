@@ -3054,7 +3054,7 @@ function displayPhoto() {
         return;
     }
     let new_html="";
-    let photoToPull = photos[0]["thumbnail"]["src"] || photos[0]["thumbnail"];
+    let photoToPull = photos[0]["thumbnail_large"]["src"] || photos[0]["thumbnail"];
     let linkToPicture = photos[0]["link"];
     //console.log(linkToPicture);
     new_html = '<a class=\"link\" href="'+linkToPicture+'" target="_blank" rel="noopener noreferrer"><img id="airplanePhoto" src=' +photoToPull+'></a>';
