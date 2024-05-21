@@ -508,7 +508,7 @@ function afterFirstFetch() {
         }
 
         console.timeEnd('afterFirstFetch()');
-    }, 150);
+    }, 50);
 }
 
 let debugFetch = false;
@@ -722,29 +722,32 @@ function initialize() {
 
         processQueryToggles();
 
-        jQuery.when(historyQueued).done(push_history);
-
-        if (nHistoryItems) {
-            jQuery.when(historyLoaded).done(afterHistoryLoad);
-        } else {
-            afterHistoryLoad();
-        }
+        tryStartPage();
     });
 }
-function afterHistoryLoad() {
-    if (!heatmap)
-        jQuery("#loader").hide();
 
-    if (!zstdDecode) {
+function doHistory() {
+
+    jQuery.when(historyQueued).done(push_history);
+
+    if (nHistoryItems) {
+        jQuery.when(historyLoaded).done(startPage);
+    } else {
         startPage();
+    }
+}
+
+function tryStartPage() {
+    if (!zstdDecode) {
+        doHistory();
     } else {
         try {
-            zstddec.promise.then(function () {
-                startPage();
+            zstddec.promise.then(function() {
+                doHistory();
             });
         } catch (e) {
             webAssemblyFail(e);
-            startPage();
+            doHistory();
         }
     }
 }
@@ -1672,6 +1675,29 @@ function initPage() {
         jQuery('#imageConfigLink').text(imageConfigText)
         jQuery('#imageConfigHeader').show();
     }
+
+
+    if (!globeIndex) {
+        jQuery("#lastLeg_cb").parent().hide();
+        jQuery('#show_trace').hide();
+    }
+    if (globeIndex) {
+        toggleTableInView('enable');
+        if (icaoFilter) {
+            toggleTableInView('disable');
+        }
+    } else {
+        jQuery('#V').show();
+    }
+
+    if (hideButtons) {
+        jQuery('#header_top').hide();
+        jQuery('#header_side').hide();
+        jQuery('#tabs').hide();
+        jQuery('#filterButton').hide();
+        jQuery('.ol-control').hide();
+        jQuery('.ol-attribution').show();
+    }
 }
 
 function initLegend(colors) {
@@ -1911,8 +1937,6 @@ function parseHistory() {
                 plane.last_message_time -= 999;
             }
         }
-        refreshFeatures();
-        TAR.planeMan.refresh();
     }
 
     console.timeEnd("Loaded aircraft tracks from History");
@@ -1984,7 +2008,7 @@ function setIntervalTimers() {
     }
     if (receiverJson && receiverJson.outlineJson) {
         timers.drawOutline = window.setInterval(drawOutlineJson, actualOutline.refresh);
-        drawOutlineJson();
+        setTimeout(drawOutlineJson, 50);
     }
 
     if (aiscatcher_server) {
@@ -2005,7 +2029,12 @@ function setIntervalTimers() {
     }
 
     timersActive = true;
-    fetchData();
+
+    setTimeout(fetchData, 5);
+
+    updateVisible();
+    mapRefresh();
+
     // in case the visibility changed while this was running
     handleVisibilityChange();
 }
@@ -2015,28 +2044,8 @@ let dstring;
 let dresult;
 
 function startPage() {
-
-    if (!globeIndex) {
-        jQuery("#lastLeg_cb").parent().hide();
-        jQuery('#show_trace').hide();
-    }
-    if (globeIndex) {
-        toggleTableInView('enable');
-        if (icaoFilter) {
-            toggleTableInView('disable');
-        }
-    } else {
-        jQuery('#V').show();
-    }
-
-    if (hideButtons) {
-        jQuery('#header_top').hide();
-        jQuery('#header_side').hide();
-        jQuery('#tabs').hide();
-        jQuery('#filterButton').hide();
-        jQuery('.ol-control').hide();
-        jQuery('.ol-attribution').show();
-    }
+    if (!heatmap)
+        jQuery("#loader").hide();
 
     changeZoom("init");
     changeCenter("init");
@@ -2078,9 +2087,7 @@ function startPage() {
     if (pTracks)
         setTimeout(TAR.planeMan.refresh, 10000);
 
-    window.addEventListener("beforeunload", function (event) {
-        clearIntervalTimers();
-    });
+    window.addEventListener("beforeunload", clearIntervalTimers);
 
     if (heatmap || replay || showTrace || pTracks || inhibitFetch) {
         afterFirstFetch();
@@ -5492,10 +5499,13 @@ function refresh(redraw) {
     // before planeman refresh / mapRefresh
     updateVisible();
 
+    mapRefresh(redraw);
+
     //console.time("refreshTable");
     TAR.planeMan.refresh();
     //console.timeEnd("refreshTable");
-    mapRefresh(redraw);
+
+
     refreshSelected();
     refreshHighlighted();
 
