@@ -1794,12 +1794,24 @@ function altitudeLines (segment) {
     let multiplier = segment.estimated ? 0.6 : 1;
 
     if (noVanish)
-        multiplier *= (segment.estimated ? 0.3 : 0.6);
+        multiplier = segment.estimated ? 0.6 : 1;
 
     let join = 'round';
     let cap = 'square';
     if (!debugTracks) {
-        if (modeS) {
+        if (segment.estimated && noVanish) {
+            lineStyleCache[lineKey]	= [
+                new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'rgba(0, 0, 0, 0.3)',
+                        width: 2.25 * newWidth,
+                        lineJoin: join,
+                        lineCap: cap,
+                    })
+                })
+            ];
+        }
+        else if (modeS) {
             lineStyleCache[lineKey]	= [
                 new ol.style.Style({}),
                 new ol.style.Style({
