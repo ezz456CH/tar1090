@@ -3727,96 +3727,71 @@ function refreshFeatures() {
     cols.squawk = {
         text: 'Squawk',
         sort: function () { sortBy('squawk', compareAlpha, function (x) { return x.squawk; }); },
-        value: function (plane) { return (plane.squawk != null ? plane.squawk : ""); },
-        align: 'right'
-    };
+        value: function (plane) { return (plane.squawk != null ? plane.squawk : ""); },    };
     cols.altitude = {
         text: 'Altitude',
         sort: function () { sortBy('altitude', compareNumeric, function (x) { return (x.altitude == "ground" ? -100000 : x.altitude); }); },
         value: function (plane) { return format_altitude_brief(adjust_baro_alt(plane.altitude), plane.vert_rate, DisplayUnits); },
-        align: 'right',
         header: function () { return 'Alt.' + NBSP + '(' + get_unit_label("altitude", DisplayUnits) + ')'; },
     };
     cols.speed = {
         text: pTracks ? 'Max. Speed' : 'Speed',
         sort: function () { sortBy('speed', compareNumeric, function (x) { return x.speed; }); },
         value: function (plane) { return format_speed_brief(plane.speed, DisplayUnits); },
-        align: 'right',
         header: function () { return (pTracks ? 'Max. ' : '') + 'Spd.' + NBSP + '(' + get_unit_label("speed", DisplayUnits) + ')'; },
     };
     cols.vert_rate = {
         text: 'Vertical Rate',
         sort: function () { sortBy('vert_rate', compareNumeric, function (x) { return x.vert_rate; }); },
         value: function (plane) { return format_vert_rate_brief(plane.vert_rate, DisplayUnits); },
-        align: 'right',
         header: function () { return 'V. Rate(' + get_unit_label("verticalRate", DisplayUnits) + ')'; },
     };
     cols.distance = {
         text: pTracks ? 'Max. Distance' : 'Distance',
         sort: function () { sortBy('sitedist', compareNumeric, function (x) { return x.sitedist; }); },
         value: function (plane) { return format_distance_brief(plane.sitedist, DisplayUnits); },
-        align: 'right',
         header: function () { return (pTracks ? 'Max. ' : '') + 'Dist.' + NBSP + '(' + get_unit_label("distance", DisplayUnits) + ')'; },
     };
     cols.track = {
         text: 'Track',
         sort: function () { sortBy('track', compareNumeric, function (x) { return x.track; }); },
-        value: function (plane) { return format_track_brief(plane.track); },
-        align: 'right'
-    };
+        value: function (plane) { return format_track_brief(plane.track); },    };
     cols.msgs = {
         text: 'Messages',
         sort: function () { sortBy('msgs', compareNumeric, function (x) { return x.messages; }); },
-        value: function (plane) { return plane.messages; },
-        align: 'right'
-    };
+        value: function (plane) { return plane.messages; },    };
     cols.seen = {
         text: 'Seen',
         sort: function () { sortBy('seen', compareNumeric, function (x) { return x.seen; }); },
-        value: function (plane) { return plane.seen.toFixed(0); },
-        align: 'right'
-    };
+        value: function (plane) { return plane.seen.toFixed(0); },    };
     cols.rssi = {
         text: 'RSSI',
         sort: function () { sortBy('rssi', compareNumeric, function (x) { return x.rssi; }); },
-        value: function (plane) { return (plane.rssi != null ? plane.rssi.toFixed(1) : ""); },
-        align: 'right'
-    };
+        value: function (plane) { return (plane.rssi != null ? plane.rssi.toFixed(1) : ""); },    };
     cols.lat = {
         text: 'Latitude',
         sort: function () { sortBy('lat', compareNumeric, function (x) { return (x.position !== null ? x.position[1] : null); }); },
-        value: function (plane) { return (plane.position != null ? plane.position[1].toFixed(4) : ""); },
-        align: 'right'
-    };
+        value: function (plane) { return (plane.position != null ? plane.position[1].toFixed(4) : ""); },    };
     cols.lon = {
         text: 'Longitude',
         sort: function () { sortBy('lon', compareNumeric, function (x) { return (x.position !== null ? x.position[0] : null); }); },
-        value: function (plane) { return (plane.position != null ? plane.position[0].toFixed(4) : ""); },
-        align: 'right'
-    };
+        value: function (plane) { return (plane.position != null ? plane.position[0].toFixed(4) : ""); },    };
     cols.data_source = {
         text: 'Source',
         sort: function () { sortBy('data_source', compareNumeric, function (x) { return x.getDataSourceNumber(); }); },
-        value: function (plane) { return format_data_source(plane.getDataSource()); },
-        align: 'right'
-    };
+        value: function (plane) { return format_data_source(plane.getDataSource()); },    };
     cols.military = {
         text: 'Mil.',
         sort: function () { sortBy('military', compareAlpha, function (x) { return (x.military ? 'yes' : 'no'); }); },
-        value: function (plane) { return (plane.military ? 'yes' : 'no'); },
-        align: 'right'
-    };
+        value: function (plane) { return (plane.military ? 'yes' : 'no'); },    };
     cols.wd = {
         text: 'Wind D.',
         sort: function () { sortBy('wd', compareNumeric, function (x) { return x.wd; }); },
-        value: function (plane) { return plane.wd != null ? (plane.wd + '°') : ''; },
-        align: 'right'
-    };
+        value: function (plane) { return plane.wd != null ? (plane.wd + '°') : ''; },    };
     cols.ws = {
         text: 'Wind S.',
         sort: function () { sortBy('ws', compareNumeric, function (x) { return x.ws; }); },
         value: function (plane) { return format_speed_brief(plane.ws, DisplayUnits); },
-        align: 'right',
         header: function () { return 'Wind' + NBSP + '(' + get_unit_label("speed", DisplayUnits) + ')'; },
     };
 
