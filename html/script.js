@@ -4927,7 +4927,7 @@ function onSearch(e) {
     if (searchTerm)
         results = findPlanes(searchTerm, "byIcao", "byCallsign", "byReg", "byType", true);
     if (results.length > 0 && globeIndex) {
-        toggleIsolation("on");
+        // toggleIsolation("on");
         if (results.length < 100) {
             getTrace(null, null, {list: results});
         }
@@ -5695,8 +5695,8 @@ function processURLParams(){
 
     if (urlIcaos.length > 0) {
         const icaos = urlIcaos;
-        if (!usp.has('noIsolation'))
-            toggleIsolation("on");
+        // if (!usp.has('noIsolation'))
+        //    toggleIsolation("on");
         if (icaos.length > 1) {
             toggleMultiSelect("on");
             //follow = false;
@@ -8533,7 +8533,9 @@ function printTrace() {
 
 // Create a "hidden" input
 let shareLinkInput = document.createElement("input");
-shareLinkInput.style.display = 'none';
+shareLinkInput.style.position = 'absolute';
+shareLinkInput.style.left = '-9999px';
+shareLinkInput.tabIndex = -1;
 // Append it to the body
 document.body.appendChild(shareLinkInput);
 
