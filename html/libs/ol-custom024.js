@@ -27199,7 +27199,7 @@
       let e = 1;
       const i = this.targetPointers[0],
         n = this.down_.originalEvent,
-        r = i.clientY - n.clientY;
+        r = -(i.clientY - n.clientY);
       void 0 !== this.lastDistance_ &&
         (e = 1 - (this.lastDistance_ - r) * this.scaleDeltaByPixel_),
         (this.lastDistance_ = r),
