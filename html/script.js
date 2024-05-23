@@ -490,14 +490,21 @@ function afterFirstFetch() {
 
     g.firstFetchDone = true;
 
+    updateVisible();
+    mapRefresh();
+
     setTimeout(() => {
         console.time('afterFirstFetch()');
+
 
         let func;
         while ((func = g.afterLoad.pop())) {
             func();
         }
-        g.afterLoadDone = false;
+        g.afterLoadDone = true;
+        while ((func = g.afterLoad.pop())) {
+            func();
+        }
 
         geoMag = geoMagFactory(cof2Obj());
 
@@ -508,7 +515,7 @@ function afterFirstFetch() {
         }
 
         console.timeEnd('afterFirstFetch()');
-    }, 50);
+    }, 20);
 }
 
 let debugFetch = false;
@@ -722,36 +729,15 @@ function initialize() {
 
         processQueryToggles();
 
-        tryStartPage();
+        jQuery.when(historyQueued).done(push_history);
+
+        if (!nHistoryItems) {
+            historyLoaded.resolve();
+        }
+
+        jQuery.when(historyLoaded, zstdDefer).done(startPage);
     });
 }
-
-function doHistory() {
-
-    jQuery.when(historyQueued).done(push_history);
-
-    if (nHistoryItems) {
-        jQuery.when(historyLoaded).done(startPage);
-    } else {
-        startPage();
-    }
-}
-
-function tryStartPage() {
-    if (!zstdDecode) {
-        doHistory();
-    } else {
-        try {
-            zstddec.promise.then(function() {
-                doHistory();
-            });
-        } catch (e) {
-            webAssemblyFail(e);
-            doHistory();
-        }
-    }
-}
-
 
 
 function processQueryToggles() {
@@ -2030,10 +2016,7 @@ function setIntervalTimers() {
 
     timersActive = true;
 
-    setTimeout(fetchData, 5);
-
-    updateVisible();
-    mapRefresh();
+    fetchData();
 
     // in case the visibility changed while this was running
     handleVisibilityChange();
@@ -2089,9 +2072,7 @@ function startPage() {
 
     window.addEventListener("beforeunload", clearIntervalTimers);
 
-    if (heatmap || replay || showTrace || pTracks || inhibitFetch) {
-        afterFirstFetch();
-    }
+    setTimeout(afterFirstFetch, 50);
 
     console.timeEnd("Page Load");
 }
@@ -4730,13 +4711,13 @@ function invertMap(evt) {
 
         jQuery.get(baseLegend, function (data) {
             jQuery('#altitude_chart_button').css("background-image", createLegendUrl(data));
+            jQuery('#altitude_chart').show();
         });
     }
 
     altitudeChart.render = function () {
         if (toggles['altitudeChart'].state) {
-            loadLegend();
-            jQuery('#altitude_chart').show();
+            runAfterLoad(loadLegend);
         } else {
             jQuery('#altitude_chart').hide();
         }
@@ -5417,6 +5398,11 @@ let checkMoveDone = 0;
 function checkMovement() {
     if (!OLMap)
         return;
+
+    if (!g.firstFetchDone) {
+        return;
+    }
+
     const zoom = OLMap.getView().getZoom();
     const center = ol.proj.toLonLat(OLMap.getView().getCenter());
     const ts = new Date().getTime();
@@ -5468,6 +5454,10 @@ let refreshZoom, refreshCenter;
 function checkRefresh() {
     if (showTrace)
         return;
+
+    if (!g.firstFetchDone) {
+        return;
+    }
     if (triggerRefresh) {
         refresh();
         return;
@@ -8544,9 +8534,7 @@ function printTrace() {
 
 // Create a "hidden" input
 let shareLinkInput = document.createElement("input");
-shareLinkInput.style.position = 'absolute';
-shareLinkInput.style.left = '-9999px';
-shareLinkInput.tabIndex = -1;
+shareLinkInput.hidden = true;
 // Append it to the body
 document.body.appendChild(shareLinkInput);
 
