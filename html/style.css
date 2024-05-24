@@ -400,8 +400,20 @@ select {
     pointer-events: none;
 }
 
-#loader {position: absolute; width: 25%; height: 30px; z-index: 9999; top: 50%; left: 37.5%}
-#loader_progress { width:  100%; height: 100%; position: absolute; }
+#loader {
+    position: absolute;
+    width: 25%;
+    height: 30px;
+    z-index: 9999;
+    top: 50%;
+    left: 37.5%
+}
+
+#loader_progress {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
 
 #ui-datepicker-div {
     font-family: Cascadia Code;
@@ -623,14 +635,17 @@ input.error {
 }
 
 .svgButton {
-    background-color: var(--ACCENT);
-    width: calc( 27px * var(--SCALE));
-    height: calc( 27px * var(--SCALE));
-    cursor: pointer;
-    background-position: center;
-    margin: calc( 2px * var(--SCALE));
+    background-color: rgba(var(--BGCOLOR3), 0.75);
+    width: calc(27px * var(--SCALE));
+    height: calc(27px * var(--SCALE));
+    border-radius: calc(2px * var(--SCALE));
+    margin: calc(2px * var(--SCALE));
     display: inline-block;
-    border-radius: calc( 2px * var(--SCALE));
+    cursor: pointer;
+    text-align: center;
+    background-clip: padding-box;
+    background-position: center;
+    user-select: none;
 }
 
 .fullscreenButton {
