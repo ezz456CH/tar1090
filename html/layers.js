@@ -425,70 +425,70 @@ function createBaseLayers() {
         }));
     }
 
-/*     if (ChartBundleLayers) {
-
-        let chartbundleTypesDirect = {
-            sec: "Sectional Charts",
-            enrh: "IFR Enroute High Charts",
-
-            tac: "Terminal Area Charts",
-            hel: "Helicopter Charts",
-            enrl: "IFR Enroute Low Charts",
-            enra: "IFR Area Charts",
-            secgrids: "Sect. w/ SAR grid",
-        };
-        let chartbundleTypesAx = {
-        };
-        if (adsbexchange) {
-            chartbundleTypesDirect = {
-                secgrids: "Sect. w/ SAR grid",
-            };
-            chartbundleTypesAx = {
+    /*     if (ChartBundleLayers) {
+    
+            let chartbundleTypesDirect = {
                 sec: "Sectional Charts",
                 enrh: "IFR Enroute High Charts",
-
+    
                 tac: "Terminal Area Charts",
                 hel: "Helicopter Charts",
                 enrl: "IFR Enroute Low Charts",
                 enra: "IFR Area Charts",
+                secgrids: "Sect. w/ SAR grid",
             };
-        }
-
-        for (let type in chartbundleTypesAx) {
-            us.push(new ol.layer.Tile({
-                source: new ol.source.OSM({
-                    url: 'https://map.adsbexchange.com/mapproxy/tiles/1.0.0/' + type + '/osm_grid/{z}/{x}/{y}.png',
-                    projection: 'EPSG:3857',
-                    attributions: 'Tiles courtesy of <a href="http://www.chartbundle.com/">ChartBundle</a>',
-                    attributionsCollapsible: false,
-                    maxZoom: 11,
-                    transition: tileTransition,
-                }),
-                name: 'chartbundle_' + type,
-                title: chartbundleTypesAx[type],
-                type: 'base',
-                group: 'chartbundle'
-            }));
-        }
-
-        for (let type in chartbundleTypesDirect) {
-            us.push(new ol.layer.Tile({
-                source: new ol.source.TileWMS({
-                    url: 'https://wms.chartbundle.com/wms',
-                    params: { LAYERS: type },
-                    projection: 'EPSG:3857',
-                    attributions: 'Tiles courtesy of <a href="http://www.chartbundle.com/">ChartBundle</a>',
-                    attributionsCollapsible: false,
-                    maxZoom: 12, // doesn't work for WMS
-                    transition: tileTransition,
-                }),
-                name: 'chartbundle_' + type,
-                title: chartbundleTypesDirect[type],
-                type: 'base',
-                group: 'chartbundle'
-            }));
-        }
-    } */
+            let chartbundleTypesAx = {
+            };
+            if (adsbexchange) {
+                chartbundleTypesDirect = {
+                    secgrids: "Sect. w/ SAR grid",
+                };
+                chartbundleTypesAx = {
+                    sec: "Sectional Charts",
+                    enrh: "IFR Enroute High Charts",
+    
+                    tac: "Terminal Area Charts",
+                    hel: "Helicopter Charts",
+                    enrl: "IFR Enroute Low Charts",
+                    enra: "IFR Area Charts",
+                };
+            }
+    
+            for (let type in chartbundleTypesAx) {
+                us.push(new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        url: 'https://map.adsbexchange.com/mapproxy/tiles/1.0.0/' + type + '/osm_grid/{z}/{x}/{y}.png',
+                        projection: 'EPSG:3857',
+                        attributions: 'Tiles courtesy of <a href="http://www.chartbundle.com/">ChartBundle</a>',
+                        attributionsCollapsible: false,
+                        maxZoom: 11,
+                        transition: tileTransition,
+                    }),
+                    name: 'chartbundle_' + type,
+                    title: chartbundleTypesAx[type],
+                    type: 'base',
+                    group: 'chartbundle'
+                }));
+            }
+    
+            for (let type in chartbundleTypesDirect) {
+                us.push(new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://wms.chartbundle.com/wms',
+                        params: { LAYERS: type },
+                        projection: 'EPSG:3857',
+                        attributions: 'Tiles courtesy of <a href="http://www.chartbundle.com/">ChartBundle</a>',
+                        attributionsCollapsible: false,
+                        maxZoom: 12, // doesn't work for WMS
+                        transition: tileTransition,
+                    }),
+                    name: 'chartbundle_' + type,
+                    title: chartbundleTypesDirect[type],
+                    type: 'base',
+                    group: 'chartbundle'
+                }));
+            }
+        } */
 
     world.push(new ol.layer.Tile({
         source: new ol.source.XYZ({
@@ -565,7 +565,7 @@ function createBaseLayers() {
                         width: 2
                     }),
                     fill: new ol.style.Fill({
-                        color : 'rgba(133, 45, 69, 0.3)'
+                        color: 'rgba(133, 45, 69, 0.3)'
                     })
                 });
             }
@@ -747,7 +747,25 @@ function createBaseLayers() {
 
         world.push(rainviewerRadar);
 
+        const rainviewerRadarCoverage = new ol.layer.Tile({
+            name: 'rainviewer_radar_coverage',
+            title: 'Rainviewer Radar Coverage',
+            type: 'overlay',
+            opacity: 0.25,
+            visible: false,
+            zIndex: 99,
+        });
+        const rainviewerRadarCoverageSource = new ol.source.XYZ({
+            url: 'https://tilecache.rainviewer.com/v2/coverage/0/512/{z}/{x}/{y}/0/0_0.png',
+            tileSize: 512,
+            tilePixelRatio: 2,
+            attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
+            attributionsCollapsible: false,
+            maxZoom: 20,
+        });
+        rainviewerRadarCoverage.setSource(rainviewerRadarCoverageSource);
 
+        world.push(rainviewerRadarCoverage);
 
 
         const rainviewerClouds = new ol.layer.Tile({
@@ -861,7 +879,7 @@ function createBaseLayers() {
     }
 
     if (usp.has('aiscatcher_server')) { aiscatcher_server = usp.get('aiscatcher_server'); }
-    if (aiscatcher_server == 'disable' || heatmap || replay ) {
+    if (aiscatcher_server == 'disable' || heatmap || replay) {
         aiscatcher_server = "";
     }
     if (aiscatcher_server) {
