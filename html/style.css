@@ -622,6 +622,28 @@ input.error {
     z-index: 9;
 }
 
+.svgButton {
+    background-color: var(--ACCENT);
+    width: calc( 27px * var(--SCALE));
+    height: calc( 27px * var(--SCALE));
+    cursor: pointer;
+    background-position: center;
+    margin: calc( 2px * var(--SCALE));
+    display: inline-block;
+    border-radius: calc( 2px * var(--SCALE));
+}
+
+.fullscreenButton {
+    background-image: url('images/fullscreen.svg');
+    background-size: 90%;
+}
+
+.settingsCog {
+    background-image: url('images/cog-white.svg');
+    background-size: 120%;
+}
+
+
 .button {
     background-color: rgba(var(--BGCOLOR3), 0.75);
     width: calc(27px * var(--SCALE));
@@ -661,18 +683,6 @@ input.error {
 
 .inActiveButton {
     color: var(--TXTCOLOR2)
-}
-
-.settingsCog {
-    width: calc(27px * var(--SCALE));
-    height: calc(27px * var(--SCALE));
-    cursor: pointer;
-    background-image: url('images/settings-icon02.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-top: calc(4px * var(--SCALE));
-    margin-bottom: calc(6px * var(--SCALE));
-    margin-left: calc(4px * var(--SCALE));
 }
 
 #highlighted_infoblock {

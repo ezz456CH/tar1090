@@ -38,46 +38,50 @@
   <!-- BODY_ANCHOR -->
   <div id="layout_container">
 
-    <div id="highlighted_infoblock" style="pointer-events: none">
-      <div class="highlightedTitle infoBlockSection">
-        <div>
-          <span class="identLarge"><span id="highlighted_callsign">n/a</span></span>
+      <div id="highlighted_infoblock" style="pointer-events: none">
+        <div class="highlightedTitle infoBlockSection">
+          <div>
+            <span class="identLarge"><span id="highlighted_callsign">n/a</span></span>
+          </div>
+          <div>
+            <span class="identSmall"><span id="highlighted_pf_route"></span></span>
+          </div>
         </div>
-        <div>
-          <span class="identSmall"><span id="highlighted_pf_route"></span></span>
+        <div class="infoBlockSection">
+          <div>
+            <div class="infoHeading"><span>Reg.: </span></div>
+            <div class="infoData"><span id="highlighted_registration">n/a</span></div>
+          </div>
+          <div>
+            <div class="infoHeading"><span>Type code: </span></div>
+            <div class="infoData"><span id="highlighted_icaotype">n/a</span></div>
+          </div>
+          <div>
+              <div id="routeRowHighlight" class="infoHeading"><span title="Reported flight origin and destination according to adsbdb.com">Route</span>:</div>
+              <div class="infoData"><span id="highlighted_route"></span></div>
+          </div>
+          <div class="rSpacer">
+          </div>
+          <div>
+            <div class="infoHeading"><span>Altitude: </span></div>
+            <div class="infoData"><span id="highlighted_altitude">n/a</span></div>
+          </div>
+          <div>
+            <div class="infoHeading"><span>Speed: </span></div>
+            <div class="infoData"><span id="highlighted_speed">n/a</span></div>
+          </div>
+          <div class="rSpacer">
+          </div>
+          <div>
+            <div class="infoHeading"><span>Source: </span></div>
+            <div class="infoData"><span id="highlighted_source">n/a</span></div>
+          </div>
+          <div>
+            <div class="infoHeading"><span>RSSI: </span></div>
+            <div class="infoData"><span id="highlighted_rssi">n/a</span></div>
+          </div>
         </div>
       </div>
-      <div class="infoBlockSection">
-        <div>
-          <div class="infoHeading"><span>Reg.: </span></div>
-          <div class="infoData"><span id="highlighted_registration">n/a</span></div>
-        </div>
-        <div>
-          <div class="infoHeading"><span>Type code: </span></div>
-          <div class="infoData"><span id="highlighted_icaotype">n/a</span></div>
-        </div>
-        <div class="rSpacer">
-        </div>
-        <div>
-          <div class="infoHeading"><span>Altitude: </span></div>
-          <div class="infoData"><span id="highlighted_altitude">n/a</span></div>
-        </div>
-        <div>
-          <div class="infoHeading"><span>Speed: </span></div>
-          <div class="infoData"><span id="highlighted_speed">n/a</span></div>
-        </div>
-        <div class="rSpacer">
-        </div>
-        <div>
-          <div class="infoHeading"><span>Source: </span></div>
-          <div class="infoData"><span id="highlighted_source">n/a</span></div>
-        </div>
-        <div>
-          <div class="infoHeading"><span>RSSI: </span></div>
-          <div class="infoData"><span id="highlighted_rssi">n/a</span></div>
-        </div>
-      </div>
-    </div>
 
 
     <div id="selected_infoblock" style="display: none">
@@ -778,18 +782,19 @@
         <button id="export_kml_geom_avg" onclick='exportKML("geom_avg")'>baro + avg.(EGM96 - baro)</button>
         <button id="export_kml_baro" onclick='exportKML("baro")'>uncorrected pressure alt.</button>
 
-      </div>
-    </div> <!-- selected_infoblock -->
-
-    <div id="map_container" style="background-color:#D2D2D2;">
-      <!-- MAP_CONTAINER_ANCHOR -->
-      <div id="map_canvas" style="background-color:#292929;">
-        <div id="loader">
-          <progress id="loader_progress"></progress>
         </div>
+      </div> <!-- selected_infoblock -->
+
+      <div id="loader">
+          <progress id="loader_progress"></progress>
       </div>
-      <div id="iconTestCanvas" style="background-color:#D2D2D2;display:none;">
-      </div>
+
+      <div id="map_container" style="background-color:#D2D2D2;">
+        <!-- MAP_CONTAINER_ANCHOR -->
+        <div id="map_canvas" style="background-color:#D2D2D2;">
+        </div>
+        <div id="iconTestCanvas" style="background-color:#D2D2D2;display:none;">
+        </div>
 
       <div id="settings_infoblock">
         <div id="settings_close" class="settingsCloseBox"></div>
@@ -856,7 +861,8 @@
             <button id="expand_sidebar_button" class="sidebar_button" title="Expand Sidebar" style="display: none;"><i
                 class="fa-solid fa-caret-right"></i></button>
           </div>
-          <div id="settingsCog" class="settingsCog"></div>
+            <div id="fullscreenButton" class="svgButton fullscreenButton"></div>
+          <div id="settingsCog" class="svgButton settingsCog"></div>
           <div id="L" title="Toggle (L)abels" class="button inActiveButton" onclick="toggleLabels();"><span
               class="buttonText">L</span></div>
           <div id="O" title="Toggle Label Extensi(O)ns" class="button inActiveButton" onclick="toggleExtendedLabels();">

@@ -466,12 +466,11 @@ function fetchDone(data) {
 }
 
 function db_load_type_cache() {
-    jQuery.getJSON(databaseFolder + "/icao_aircraft_types2.js").done(function (typeLookupData) {
+    return jQuery.getJSON(databaseFolder + "/icao_aircraft_types2.js").done(function(typeLookupData) {
         g.type_cache = typeLookupData;
         for (let i in g.planesOrdered) {
             g.planesOrdered[i].setTypeData();
         }
-        refresh();
     });
 }
 
@@ -508,14 +507,16 @@ function afterFirstFetch() {
 
         geoMag = geoMagFactory(cof2Obj());
 
-        db_load_type_cache(); // this will do a refresh()
+        db_load_type_cache().always(function() {
+            refresh();
+        });
 
         if (usp.has('screenshot')) {
             clearIntervalTimers('silent');
         }
 
         console.timeEnd('afterFirstFetch()');
-    }, 20);
+    }, 30);
 }
 
 let debugFetch = false;
@@ -531,10 +532,10 @@ function fetchData(options) {
         return;
     }
     let currentTime = new Date().getTime();
-
+    const refreshMs = refreshInt()
     if (!options.force) {
         if (
-            currentTime - lastFetch < refreshInt()
+            currentTime - lastFetch <= refreshMs
             || pendingFetches > 0
             || OLMap.getView().getInteracting()
             || OLMap.getView().getAnimating()
@@ -542,8 +543,9 @@ function fetchData(options) {
             return;
         }
     }
+    setTimeout(fetchData, refreshMs);
     if (debugFetch) {
-        console.log('Time since last fetch: ' + (currentTime - lastFetch) / 1000);
+        console.log('Time since last fetch: ' + (currentTime - lastFetch) + ' ms');
     }
     lastFetch = currentTime;
 
@@ -624,7 +626,7 @@ function fetchData(options) {
 
     } else if (globeIndex) {
         let indexes = globeIndexes();
-        const ancient = (currentTime - 2 * refreshInt() / globeSimLoad * globeTilesViewCount) / 1000;
+        const ancient = (currentTime - 2 * refreshMs / globeSimLoad * globeTilesViewCount) / 1000;
         for (let i in indexes) {
             const k = indexes[i];
             if (globeIndexNow[k] < ancient) {
@@ -1176,6 +1178,30 @@ function initPage() {
         jQuery('#settings_infoblock').toggle();
     });
 
+    if (onMobile) {
+        jQuery('#fullscreenButton').on('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+    } else {
+        jQuery('#fullscreenButton').hide();
+    }
+
+    if (onMobile) {
+        jQuery('#fullscreenButton').on('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+    } else {
+        jQuery('#fullscreenButton').hide();
+    }
+
     jQuery('#settings_close').on('click', function () {
         jQuery('#settings_infoblock').hide();
     });
@@ -1577,6 +1603,13 @@ function initPage() {
             init: useRouteAPI,
             setState: function (state) {
                 useRouteAPI = state;
+                if (useRouteAPI) {
+                    jQuery('#routeRow').show();
+                    jQuery('#routeRowHighlighted').show();
+                } else {
+                    jQuery('#routeRow').hide();
+                    jQuery('#routeRowHighlighted').hide();
+                }
             }
         });
     }
@@ -3264,15 +3297,13 @@ function refreshSelected() {
     }
 
     if (useRouteAPI) {
-        jQuery('#routeRow').show();
         if (selected.routeString) {
             jQuery('#selected_route').updateText(selected.routeString);
         } else {
             jQuery('#selected_route').updateText('n/a');
         }
-    } else {
-        jQuery('#routeRow').hide();
     }
+
     let magResult = null;
 
     if (geoMag && selected.position != null) {
@@ -3572,6 +3603,14 @@ function refreshHighlighted() {
         jQuery('#highlighted_icaotype').text("n/a");
     }
 
+    if (useRouteAPI) {
+        if (highlighted.routeString) {
+            jQuery('#highlighted_route').updateText(highlighted.routeString);
+        } else {
+            jQuery('#highlighted_route').updateText('n/a');
+        }
+    }
+
     jQuery('#highlighted_source').text(format_data_source(highlighted.getDataSource()));
 
     if (highlighted.registration !== null) {
@@ -3822,9 +3861,6 @@ function refreshFeatures() {
         if (!ShowFlags) {
             planeMan.setColumnVis('flag', false);
         }
-
-        planeMan.redraw();
-        initializing = false;
     }
 
     planeMan.redraw = function () {
@@ -3861,7 +3897,9 @@ function refreshFeatures() {
         }
         planeRowTemplate.innerHTML = template;
 
-        planeMan.refresh();
+        if (!initializing) {
+            planeMan.refresh();
+        }
     }
 
     planeMan.setColumnVis = function (col, visible) {
@@ -3873,8 +3911,18 @@ function refreshFeatures() {
 
     // Refreshes the larger table of all the planes
     planeMan.refresh = function () {
-        if (initializing)
+        if (!loadFinished)  {
             return;
+        }
+        //console.trace();
+
+        if (initializing) {
+            planeMan.redraw();
+            initializing = false;
+        }
+
+        const atime = false;
+        atime && console.time("planeMan.refresh()");
 
         const ctime = false; // gets enabled for debugging table refresh speed
         // globeTableLimit = 1000; for testing performance
@@ -4000,6 +4048,7 @@ function refreshFeatures() {
         ctime && console.timeEnd("DOM2");
 
         ctime && console.timeEnd("planeMan.refresh()");
+        atime && console.timeEnd("planeMan.refresh()");
     }
 
     //
@@ -6183,10 +6232,15 @@ function refreshInt() {
     if (reApi && (binCraft || zstd)) {
         refresh = RefreshInterval * lastRequestSize / 35000;
         let extent = getViewOversize(1.03);
-        let min = 0.7;
+        const latDiff = extent.maxLat - extent.minLat;
+        const lonDiff = extent.maxLon - extent.minLon;
+        const area = latDiff * lonDiff;
+        const areaThreshold = 30 * 30;
+        let min = 1;
         let max = 7;
-        if (zoomLvl < 5) {
-            min += Math.min(1, (5 - zoomLvl) / 4);
+        if (area > areaThreshold && !onlySelected) {
+            const factor2 = Math.min(4, (latDiff * lonDiff) / areaThreshold);
+            min *= factor2;
         }
         if (refresh < RefreshInterval * min) {
             refresh = RefreshInterval * min;
@@ -7959,12 +8013,13 @@ function timeoutFetch() {
 }
 
 function refreshHistory() {
-    if (0 && (new Date().getTime() - g.hideStamp) / 1000 < 2) {
-        console.log('short tab change, not loading history');
+    if (heatmap || replay || globeIndex || pTracks || uuid) {
         noLongerHidden();
         return;
     }
-    if (heatmap || replay || globeIndex || pTracks) {
+
+    if (1 && (new Date().getTime() - g.hideStamp) / 1000 < 5) {
+        console.log('short tab change, not loading history');
         noLongerHidden();
         return;
     }
@@ -8036,10 +8091,13 @@ function handleVisibilityChange() {
 
     // tab is no longer hidden
     if (!tabHidden && !timersActive) {
-        if (loadFinished) {
-            jQuery("#timers_paused").css('display', 'none');
+        loadFinished && jQuery("#timers_paused").css('display','none');
+        globeRateUpdate();
+        if (heatmap || replay || globeIndex || pTracks) {
+            noLongerHidden();
+        } else {
+            refreshHistory();
         }
-        globeRateUpdate().done(refreshHistory);
     }
 }
 
