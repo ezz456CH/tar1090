@@ -648,6 +648,7 @@ input.error {
     user-select: none;
 }
 
+/*
 .fullscreenButton {
     background-image: url('images/fullscreen.svg');
     background-size: 90%;
@@ -657,7 +658,7 @@ input.error {
     background-image: url('images/cog-white.svg');
     background-size: 120%;
 }
-
+*/
 
 .button {
     background-color: rgba(var(--BGCOLOR3), 0.75);
