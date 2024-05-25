@@ -844,10 +844,10 @@ PlaneObject.prototype.updateIcon = function() {
         let callsign = "";
         if (this.flight && this.flight.trim())
             callsign =  this.flight.trim();
-        else if (this.registration)
-            callsign =  'reg: ' + this.registration;
+        // else if (this.registration)
+        //    callsign =  'reg: ' + this.registration;
         else
-            callsign =   'hex: ' + this.icao;
+            callsign = this.icao.toUpperCase();
         if (useRouteAPI && this.routeString)
             callsign += ' - ' + this.routeString;
 
@@ -878,7 +878,7 @@ PlaneObject.prototype.updateIcon = function() {
             }
         } else if (extendedLabels == 3) {
             if (!windLabelsSlim) {
-                labelText += 'Wind' + NBSP;
+                labelText;
             }
             if (this.wd != null) {
                 if (showLabelUnits) {
