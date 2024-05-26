@@ -720,10 +720,10 @@ input.error {
 }
 
 .identLarge {
-    font-size: calc(22px * var(--SCALE));
-    line-height: calc(24px * var(--SCALE));
+    font-size: calc(18px * var(--SCALE));
+    line-height: calc(20px * var(--SCALE));
     color: var(--TXTCOLOR1);
-    font-weight: lighter;
+    font-weight: bold;
 }
 
 .identMedium {

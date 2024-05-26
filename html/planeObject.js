@@ -54,7 +54,7 @@ function PlaneObject(icao) {
 PlaneObject.prototype.setNull = function() {
     this.flight = null;
     this.flightTs = 0;
-    this.name = 'no callsign';
+    this.name = 'No callsign';
     this.squawk    = null;
     this.category  = null;
     this.dataSource = "modeS";
@@ -2869,11 +2869,11 @@ PlaneObject.prototype.setFlight = function(flight) {
     if (flight == null) {
         if (now - this.flightTs > 10 * 60) {
             this.flight = null;
-            this.name ='no callsign';
+            this.name ='No callsign';
         }
     } else if (flight == "@@@@@@@@") {
         this.flight = null;
-        this.name ='no callsign';
+        this.name ='No callsign';
     } else {
         this.flight = `${flight}`;
         this.name = this.flight.trim() || 'empty callsign';
