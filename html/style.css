@@ -219,8 +219,14 @@ select {
     user-select: none;
 }
 
+#creditsSelected {
+    margin-top: 6px;
+}
+
 .credits-text {
     font-size: var(--FS2);
+    font-weight: bold;
+    color: var(--TXTCOLOR1);
 }
 
 .credits-image {
