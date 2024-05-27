@@ -694,7 +694,7 @@ input.error {
 .buttonText {
     font-weight: bold;
     font-size: calc(15px * var(--SCALE));
-    line-height: calc(27px * var(--SCALE));
+    line-height: calc(28px * var(--SCALE));
     text-align: center;
     margin: calc(5px * var(--SCALE));
 }
