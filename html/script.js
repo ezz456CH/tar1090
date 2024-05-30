@@ -4936,19 +4936,19 @@ function onJump(e) {
 function hideSearchWarning() {
     const searchWarning = jQuery('#search_warning');
     if (searchWarning.css('display') !== 'none') {
-        searchWarning.hide('slow');
+        searchWarning.hide();
     }
 }
 
 function showSearchWarning(message) {
     const searchWarning = jQuery('#search_warning');
-    searchWarning.text(message)
+    searchWarning.html(`<i class="fas fa-exclamation-circle"></i> ${message}`);
     if (searchWarning.css('display') === 'none') {
         searchWarning.show();
     }
 
-    //auto hide after 15 seconds
-    setTimeout(() => hideSearchWarning(), 15000);
+    // Auto hide after 5 seconds
+    setTimeout(() => hideSearchWarning(), 5000);
 }
 
 function onSearch(e) {
