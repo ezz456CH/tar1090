@@ -46,6 +46,7 @@ body {
 
 ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -159,7 +160,6 @@ select {
     display: flex;
     flex-direction: column;
     left: calc(0px * var(--SCALE)) !important;
-    box-shadow: 10px 10px 5px 12px rgba(var(--BGCOLOR4), 1);
 }
 
 
@@ -428,6 +428,7 @@ select {
     background-color: rgb(35, 69, 82);
     color: #ffffff;
     cursor: pointer;
+    user-select: none;
 }
 
 .aircraft_table_header td {
@@ -630,7 +631,7 @@ input.error {
 .link,
 .link a {
     color: var(--TXTCOLOR1);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 #header_side {
@@ -737,7 +738,6 @@ input.error {
 
 .identLarge {
     font-size: calc(18px * var(--SCALE));
-    line-height: calc(20px * var(--SCALE));
     color: var(--TXTCOLOR1);
     font-weight: bold;
 }
@@ -796,12 +796,14 @@ table.infoSectionTable tr td {
 .largeText {
     font-weight: bold;
     color: var(--TXTCOLOR1);
-    font-size: var(--FS3);
+    font-size: calc(15px * var(--SCALE));
+    text-decoration: none;
 }
 
 .infoBlockTitleText {
     font-weight: bold;
     color: var(--TXTCOLOR3);
+    text-decoration: none;
 }
 
 .legendTitle {
@@ -1131,6 +1133,7 @@ input {
     border-radius: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
+    font-size: var(--FS2);
 }
 
 #replayBar {
@@ -1184,6 +1187,7 @@ input {
     border-radius: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
+    font-size: var(--FS2);
 }
 
 #hourSelect {
