@@ -632,6 +632,11 @@ input.error {
 .link a {
     color: var(--TXTCOLOR1);
     text-decoration: none;
+    border-radius: 4px;
+}
+
+#tar1090_version {
+    font-weight: bold;
 }
 
 #header_side {
@@ -798,12 +803,14 @@ table.infoSectionTable tr td {
     color: var(--TXTCOLOR1);
     font-size: calc(15px * var(--SCALE));
     text-decoration: none;
+    border-radius: 4px;
 }
 
 .infoBlockTitleText {
     font-weight: bold;
     color: var(--TXTCOLOR3);
     text-decoration: none;
+    border-radius: 4px;
 }
 
 .legendTitle {
