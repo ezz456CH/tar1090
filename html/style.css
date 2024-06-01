@@ -147,7 +147,7 @@ select {
 #export_kml_geom:hover,
 #export_kml_geom_avg:hover,
 #export_kml_baro:hover {
-    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 1);
+    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(59,130,246,.8);
     outline: 0;
 }
 
@@ -532,7 +532,7 @@ select {
 .infoBlockTitleText:focus,
 .ol-attribution a:focus,
 #tar1090_version:focus {
-    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 1);
+    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(59,130,246,.8);
 }
 
 input:focus,
