@@ -303,7 +303,7 @@ let HideCols = [
 	"#registration",
 //	"#aircraft_type",
 	"#squawk",
-//	"#altitude",
+	"#altitude",
 	"#speed",
 	"#vert_rate",
 	"#distance",

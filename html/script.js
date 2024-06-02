@@ -1102,10 +1102,10 @@ function initPage() {
     if (loStore['sidebar_width'] != null)
         jQuery('#sidebar_container').width(loStore['sidebar_width']);
     else
-        jQuery('#sidebar_container').width('240px');
+        jQuery('#sidebar_container').width('250px');
 
     if (jQuery('#sidebar_container').width() > jQuery(window).innerWidth() * 0.8)
-        jQuery('#sidebar_container').width('240px');
+        jQuery('#sidebar_container').width('250px');
 
     loStore['sidebar_width'] = jQuery('#sidebar_container').width();
 
