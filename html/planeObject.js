@@ -889,7 +889,7 @@ PlaneObject.prototype.updateIcon = function() {
                     labelText += format_speed_brief(this.ws, DisplayUnits);
                 }
             } else {
-                labelText += 'n/a';
+                labelText += (unknown) + NBSP + (unknown)
             }
             if (windLabelsSlim) {
                 labelText += '\n' + altString;
@@ -1954,7 +1954,7 @@ PlaneObject.prototype.updateLines = function() {
             // 0 vertical rate to avoid arrow
             let altString;
             if(seg.alt_real == "ground") {
-                altString = "Ground";
+                altString = "GND";
             } else {
                 let alt;
                 if (labelsGeom) {
