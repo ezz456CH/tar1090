@@ -466,7 +466,7 @@ function fetchDone(data) {
 }
 
 function db_load_type_cache() {
-    return jQuery.getJSON(databaseFolder + "/icao_aircraft_types2.js").done(function(typeLookupData) {
+    return jQuery.getJSON(databaseFolder + "/icao_aircraft_types2.js").done(function (typeLookupData) {
         g.type_cache = typeLookupData;
         for (let i in g.planesOrdered) {
             g.planesOrdered[i].setTypeData();
@@ -507,7 +507,7 @@ function afterFirstFetch() {
 
         geoMag = geoMagFactory(cof2Obj());
 
-        db_load_type_cache().always(function() {
+        db_load_type_cache().always(function () {
             refresh();
         });
 
@@ -1179,7 +1179,7 @@ function initPage() {
     });
 
     if (onMobile) {
-        jQuery('#fullscreenButton').on('click', function() {
+        jQuery('#fullscreenButton').on('click', function () {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
             } else if (document.exitFullscreen) {
@@ -1191,16 +1191,24 @@ function initPage() {
     }
 
     if (onMobile) {
-        jQuery('#fullscreenButton').on('click', function() {
+        jQuery('#fullscreenButton').on('click', function () {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
             } else if (document.exitFullscreen) {
                 document.exitFullscreen();
+                window.scrollTo(0, 0);
+            }
+        });
+
+        document.addEventListener('fullscreenchange', function () {
+            if (!document.fullscreenElement) {
+                window.scrollTo(0, 0);
             }
         });
     } else {
         jQuery('#fullscreenButton').hide();
     }
+
 
     jQuery('#settings_close').on('click', function () {
         jQuery('#settings_infoblock').hide();
@@ -1518,7 +1526,7 @@ function initPage() {
         container: null,
         checkbox: null,
         button: '#toggle_sidebar_button',
-        init: (onMobile ? false : true),
+        init: false,
         setState: function (state) {
             if (state) {
                 jQuery("#sidebar_container").show();
@@ -1532,8 +1540,8 @@ function initPage() {
                         handles: {
                             w: '#splitter'
                         },
-                        minWidth: 240,
-                        maxWidth: (jQuery(window).innerWidth() * 0.8),
+                        minWidth: 250,
+                        maxWidth: (jQuery(window).innerWidth() * 0.85),
                     });
 
                     jQuery("#splitter").dblclick(function () {
@@ -3754,7 +3762,8 @@ function refreshFeatures() {
     cols.squawk = {
         text: 'Squawk',
         sort: function () { sortBy('squawk', compareAlpha, function (x) { return x.squawk; }); },
-        value: function (plane) { return (plane.squawk != null ? plane.squawk : ""); },    };
+        value: function (plane) { return (plane.squawk != null ? plane.squawk : ""); },
+    };
     cols.altitude = {
         text: 'Altitude',
         sort: function () { sortBy('altitude', compareNumeric, function (x) { return (x.altitude == "ground" ? -100000 : x.altitude); }); },
@@ -3782,39 +3791,48 @@ function refreshFeatures() {
     cols.track = {
         text: 'Track',
         sort: function () { sortBy('track', compareNumeric, function (x) { return x.track; }); },
-        value: function (plane) { return format_track_brief(plane.track); },    };
+        value: function (plane) { return format_track_brief(plane.track); },
+    };
     cols.msgs = {
         text: 'Messages',
         sort: function () { sortBy('msgs', compareNumeric, function (x) { return x.messages; }); },
-        value: function (plane) { return plane.messages; },    };
+        value: function (plane) { return plane.messages; },
+    };
     cols.seen = {
         text: 'Seen',
         sort: function () { sortBy('seen', compareNumeric, function (x) { return x.seen; }); },
-        value: function (plane) { return plane.seen.toFixed(0); },    };
+        value: function (plane) { return plane.seen.toFixed(0); },
+    };
     cols.rssi = {
         text: 'RSSI',
         sort: function () { sortBy('rssi', compareNumeric, function (x) { return x.rssi; }); },
-        value: function (plane) { return (plane.rssi != null ? plane.rssi.toFixed(1) : ""); },    };
+        value: function (plane) { return (plane.rssi != null ? plane.rssi.toFixed(1) : ""); },
+    };
     cols.lat = {
         text: 'Latitude',
         sort: function () { sortBy('lat', compareNumeric, function (x) { return (x.position !== null ? x.position[1] : null); }); },
-        value: function (plane) { return (plane.position != null ? plane.position[1].toFixed(4) : ""); },    };
+        value: function (plane) { return (plane.position != null ? plane.position[1].toFixed(4) : ""); },
+    };
     cols.lon = {
         text: 'Longitude',
         sort: function () { sortBy('lon', compareNumeric, function (x) { return (x.position !== null ? x.position[0] : null); }); },
-        value: function (plane) { return (plane.position != null ? plane.position[0].toFixed(4) : ""); },    };
+        value: function (plane) { return (plane.position != null ? plane.position[0].toFixed(4) : ""); },
+    };
     cols.data_source = {
         text: 'Source',
         sort: function () { sortBy('data_source', compareNumeric, function (x) { return x.getDataSourceNumber(); }); },
-        value: function (plane) { return format_data_source(plane.getDataSource()); },    };
+        value: function (plane) { return format_data_source(plane.getDataSource()); },
+    };
     cols.military = {
         text: 'Mil.',
         sort: function () { sortBy('military', compareAlpha, function (x) { return (x.military ? 'yes' : 'no'); }); },
-        value: function (plane) { return (plane.military ? 'yes' : 'no'); },    };
+        value: function (plane) { return (plane.military ? 'yes' : 'no'); },
+    };
     cols.wd = {
         text: 'Wind D.',
         sort: function () { sortBy('wd', compareNumeric, function (x) { return x.wd; }); },
-        value: function (plane) { return plane.wd != null ? (plane.wd + '°') : ''; },    };
+        value: function (plane) { return plane.wd != null ? (plane.wd + '°') : ''; },
+    };
     cols.ws = {
         text: 'Wind S.',
         sort: function () { sortBy('ws', compareNumeric, function (x) { return x.ws; }); },
@@ -3911,7 +3929,7 @@ function refreshFeatures() {
 
     // Refreshes the larger table of all the planes
     planeMan.refresh = function () {
-        if (!loadFinished)  {
+        if (!loadFinished) {
             return;
         }
         //console.trace();
@@ -4425,7 +4443,7 @@ function toggleFollow(override) {
 }
 
 function resetMap() {
-    geoFindMe().always(function() {
+    geoFindMe().always(function () {
         if (SitePosition) {
             CenterLon = SiteLon;
             CenterLat = SiteLat;
@@ -4446,7 +4464,7 @@ function resetMap() {
         OLMap.getView().setRotation(mapOrientation);
 
         //selectPlaneByHex(null,false);
-        jQuery("#update_error").css('display','none');
+        jQuery("#update_error").css('display', 'none');
     });
 }
 
@@ -8101,7 +8119,7 @@ function handleVisibilityChange() {
 
     // tab is no longer hidden
     if (!tabHidden && !timersActive) {
-        loadFinished && jQuery("#timers_paused").css('display','none');
+        loadFinished && jQuery("#timers_paused").css('display', 'none');
         globeRateUpdate();
         if (heatmap || replay || globeIndex || pTracks) {
             noLongerHidden();
