@@ -39,7 +39,7 @@ function createBaseLayers() {
 
     custom_layers.push(new ol.layer.Tile({
         source: new ol.source.XYZ({
-            "url": "https://api.mapbox.com/styles/v1/ezz456ch/clwyno9nf01ew01pn7r6r1171/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ",
+            "url": "https://api.mapbox.com/styles/v1/ezz456ch/clwyno9nf01ew01pn7r6r1171/tiles/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ",
             "attributions": '<a href="https://openaip.net/">openAIP.net</a>',
             tileSize: 512,
             tilePixelRatio: 2,
