@@ -43,7 +43,6 @@ function createBaseLayers() {
             "attributions": '<a href="https://openaip.net/">openAIP.net</a>',
             tileSize: 512,
             tilePixelRatio: 2,
-            transition: tileTransition,
             maxZoom: 18,
         }),
         name: 'openaip_th',
