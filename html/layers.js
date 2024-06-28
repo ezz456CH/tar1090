@@ -40,7 +40,7 @@ function createBaseLayers() {
     world.push(new ol.layer.Tile({
         preload: Infinity,
         source: new ol.source.XYZ({
-            url: `https://api.mapbox.com/styles/v1/ezz456ch/clqq1uwtg00s801qy1ywxg1sa/tiles/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ`,
+            url: `https://api.mapbox.com/styles/v1/ezz456ch/clqq1uwtg00s801qy1ywxg1sa/tiles/{z}/{x}/{y}@2x?access_token=${mapboxaccess_token}`,
             tileSize: 512,
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
@@ -54,7 +54,7 @@ function createBaseLayers() {
     world.push(new ol.layer.Tile({
         preload: Infinity,
         source: new ol.source.XYZ({
-            url: `https://api.mapbox.com/styles/v1/ezz456ch/clukyvend002x01pb8xor4jrr/tiles/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ`,
+            url: `https://api.mapbox.com/styles/v1/ezz456ch/clukyvend002x01pb8xor4jrr/tiles/{z}/{x}/{y}@2x?access_token=${mapboxaccess_token}`,
             tileSize: 512,
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
@@ -68,7 +68,7 @@ function createBaseLayers() {
     world.push(new ol.layer.Tile({
         preload: Infinity,
         source: new ol.source.XYZ({
-            url: `https://api.mapbox.com/styles/v1/ezz456ch/cls426oa000gy01ql1fgv4oy3/tiles/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ`,
+            url: `https://api.mapbox.com/styles/v1/ezz456ch/cls426oa000gy01ql1fgv4oy3/tiles/{z}/{x}/{y}@2x?access_token=${mapboxaccess_token}`,
             tileSize: 512,
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
@@ -82,7 +82,7 @@ function createBaseLayers() {
     world.push(new ol.layer.Tile({
         preload: Infinity,
         source: new ol.source.XYZ({
-            url: `https://api.mapbox.com/styles/v1/ezz456ch/clul0k47o005m01pbhcm44l4i/tiles/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ`,
+            url: `https://api.mapbox.com/styles/v1/ezz456ch/clul0k47o005m01pbhcm44l4i/tiles/{z}/{x}/{y}@2x?access_token=${mapboxaccess_token}`,
             tileSize: 512,
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',

@@ -223,6 +223,8 @@ ColorByAlt = {
 //
 BingMapsAPIKey = null;
 
+// mapboxaccess_token = null
+
 // This determines what is up, default is north (0 degrees)
 //mapOrientation = 0;
 

@@ -235,6 +235,8 @@ let ChartBundleLayers = false;
 //
 let BingMapsAPIKey = null;
 
+let mapboxaccess_token = "pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ";
+
 let pf_data = ["chunks/pf.json"]
 
 let mapOrientation = 0; // This determines what is up, normally north (0 degrees)
