@@ -14087,8 +14087,6 @@
         i = void 0 !== t.delta ? t.delta : 1,
         n = void 0 !== t.zoomInClassName ? t.zoomInClassName : e + "-in",
         r = void 0 !== t.zoomOutClassName ? t.zoomOutClassName : e + "-out",
-        s = void 0 !== t.zoomInLabel ? t.zoomInLabel : "+",
-        o = void 0 !== t.zoomOutLabel ? t.zoomOutLabel : "–",
         a = void 0 !== t.zoomInTipLabel ? t.zoomInTipLabel : "Zoom in",
         l = void 0 !== t.zoomOutTipLabel ? t.zoomOutTipLabel : "Zoom out",
         h = document.createElement("button");

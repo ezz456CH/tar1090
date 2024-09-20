@@ -1262,12 +1262,6 @@ function earlyInitPage() {
                 window.scrollTo(0, 0);
             }
         });
-
-        document.addEventListener('fullscreenchange', function () {
-            if (!document.fullscreenElement) {
-                window.scrollTo(0, 0);
-            }
-        });
     } else {
         jQuery('#fullscreenButton').hide();
     }
