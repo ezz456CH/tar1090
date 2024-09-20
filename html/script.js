@@ -82,9 +82,8 @@ let pendingFetches = 0;
 let firstFetch = true;
 let debugCounter = 0;
 let pathName = window.location.pathname.replace(/\/+/, '/') || "/";
-let icaoFilter = null;
 let sourcesFilter = null;
-let sources = ['adsb', ['uat', 'adsr'], 'mlat', 'tisb', 'modeS', 'other', 'adsc'];
+let sources = ['adsb', ['uat', 'adsr'], 'mlat', 'tisb', 'modeS', 'other', 'adsc', 'ais'];
 let flagFilter = null;
 let flagFilterValues = ['military', 'pia', 'ladd'];
 let showTrace = false;
@@ -192,6 +191,9 @@ function processAircraft(ac, init, uat) {
     const hex = isArray ? ac[0] : ac.hex;
 
     if (icaoFilter && !icaoFilter.includes(hex))
+        return;
+
+    if (icaoBlacklist && icaoBlacklist.includes(hex))
         return;
 
     const type = isArray ? ac[7] : ac.type;
@@ -329,7 +331,7 @@ function processReceiverUpdate(data, init) {
         globeIndexNow[data.globeIndex] = data.now;
     }
 
-    if (!(uat || init || (globeIndex && adsbexchange))) {
+    if (!(uat || init || (globeIndex && aggregator))) {
         updateMessageRate(data);
     }
 
@@ -693,7 +695,7 @@ function fetchData(options) {
 // this function is called from index.html on body load
 // kicks off the whole rabbit hole
 function initialize() {
-    if (usp.has('iconTest')) {
+    if (usp.has('iconTest') || usp.has('iconTestLabels')) {
         jQuery('#iconTestCanvas').show();
         iconTest();
         return;
@@ -701,6 +703,7 @@ function initialize() {
 
     // things that can run without receiver json being known
     earlyInitPage();
+    initMapEarly();
 
     jQuery.when(configureReceiver, heatmapDefer).done(function() {
 
@@ -710,6 +713,7 @@ function initialize() {
             if (receiverJson.json_trace_interval < 2)
                 traces_high_res = true;
             if (receiverJson.lat != null) {
+                //console.log("receiver.json lat: " + receiverJson.lat)
                 SiteLat = receiverJson.lat;
                 SiteLon = receiverJson.lon;
                 SitePosition = [SiteLon, SiteLat];
@@ -781,6 +785,53 @@ function replaySpeedChange(arg) {
 };
 
 function initPage() {
+
+    if (globeIndex) {
+        function setGlobeTableLimit() {
+            let mult = 1 + 4 * toggles['moreTableLines1'].state + 16 * (toggles['moreTableLines2'] && toggles['moreTableLines2'].state);
+            globeTableLimit = globeTableLimitBase * mult;
+            if (toggles['allTableLines'] && toggles['allTableLines'].state)
+                globeTableLimit = 1e9;
+            if (onMobile)
+                globeTableLimit /= 2;
+        };
+        new Toggle({
+            key: "moreTableLines1",
+            display: "More Table Lines",
+            container: "#sidebar-table",
+            init: false,
+            setState: setGlobeTableLimit,
+        });
+        new Toggle({
+            key: "moreTableLines2",
+            display: "Even More Table Lines",
+            container: "#sidebar-table",
+            init: false,
+            setState: setGlobeTableLimit,
+        });
+        new Toggle({
+            key: "allTableLines",
+            display: "All Table Lines",
+            container: "#sidebar-table",
+            init: false,
+            setState: setGlobeTableLimit,
+        });
+    }
+
+
+    if (!globeIndex) {
+        jQuery("#lastLeg_cb").parent().hide();
+        jQuery('#show_trace').hide();
+    }
+    if (globeIndex) {
+        toggleTableInView('enable');
+        if (icaoFilter) {
+            toggleTableInView('disable');
+        }
+    } else {
+        jQuery('#V').show();
+    }
+
     if (usp.has('SiteLat') && usp.has('SiteLon')) {
         let lat = parseFloat(usp.get('SiteLat'));
         let lon = parseFloat(usp.get('SiteLon'));
@@ -789,21 +840,19 @@ function initPage() {
                 SiteLat = CenterLat = DefaultCenterLat = lat;
                 SiteLon = CenterLon = DefaultCenterLon = lon;
                 SiteOverride = true;
-            } else {
-                loStore['SiteLat'] = lat;
-                loStore['SiteLon'] = lon;
             }
+            loStore['SiteLat'] = lat;
+            loStore['SiteLon'] = lon;
         }
     }
     if (loStore['SiteLat'] != null && loStore['SiteLon'] != null) {
         if (usp.has('SiteClear')) {
             loStore.removeItem('SiteLat');
             loStore.removeItem('SiteLon');
-        } else if (!usp.has('SiteNosave')) {
-            SiteLat = CenterLat = DefaultCenterLat = parseFloat(loStore['SiteLat']);
-            SiteLon = CenterLon = DefaultCenterLon = parseFloat(loStore['SiteLon']);
-            SiteOverride = true;
         }
+    } else {
+        CenterLat = DefaultCenterLat;
+        CenterLon = DefaultCenterLon;
     }
 
 }
@@ -999,6 +1048,10 @@ function earlyInitPage() {
 
     if (value = usp.get('icaoFilter')) {
         icaoFilter = value.toLowerCase().split(',');
+    }
+
+    if (value = usp.get('icaoBlacklist')) {
+        icaoBlacklist = value.toLowerCase().split(',');
     }
 
     if (value = usp.getFloat('filterMaxRange')) {
@@ -1498,38 +1551,6 @@ function earlyInitPage() {
         }
     });
 
-    if (globeIndex) {
-        function setGlobeTableLimit() {
-            let mult = 1 + 4 * toggles['moreTableLines1'].state + 16 * (toggles['moreTableLines2'] && toggles['moreTableLines2'].state);
-            globeTableLimit = globeTableLimitBase * mult;
-            if (toggles['allTableLines'] && toggles['allTableLines'].state)
-                globeTableLimit = 1e9;
-            if (onMobile)
-                globeTableLimit /= 2;
-        };
-        new Toggle({
-            key: "moreTableLines1",
-            display: "More Table Lines",
-            container: "#sidebar-table",
-            init: false,
-            setState: setGlobeTableLimit,
-        });
-        new Toggle({
-            key: "moreTableLines2",
-            display: "Even More Table Lines",
-            container: "#sidebar-table",
-            init: false,
-            setState: setGlobeTableLimit,
-        });
-        new Toggle({
-            key: "allTableLines",
-            display: "All Table Lines",
-            container: "#sidebar-table",
-            init: false,
-            setState: setGlobeTableLimit,
-        });
-    }
-
     new Toggle({
         key: "sidebar_visible",
         display: "Sidebar visible",
@@ -1693,15 +1714,17 @@ function earlyInitPage() {
 
     TAR.altitudeChart.init();
 
-    if (adsbexchange) {
-        jQuery('#adsbexchange_header').show();
+    if (aggregator) {
+        jQuery('#aggregator_header').show();
         jQuery('#credits').show();
         if (!onMobile) {
             jQuery('#creditsSelected').show();
         }
-        jQuery('#selected_infoblock').addClass('adsbx-selected-bg');
-        if (false && window.self != window.top) {
-            window.top.location.href = "https://www.adsbexchange.com/";
+        jQuery('#selected_infoblock').addClass('aggregator-selected-bg');
+
+        // activate to prevent iframe use
+        if (inhibitIframe && window.self != window.top) {
+            window.top.location.href = "https://www.aggregator.com/";
             return;
         }
     }
@@ -1713,19 +1736,6 @@ function earlyInitPage() {
         jQuery('#imageConfigHeader').show();
     }
 
-
-    if (!globeIndex) {
-        jQuery("#lastLeg_cb").parent().hide();
-        jQuery('#show_trace').hide();
-    }
-    if (globeIndex) {
-        toggleTableInView('enable');
-        if (icaoFilter) {
-            toggleTableInView('disable');
-        }
-    } else {
-        jQuery('#V').show();
-    }
 
     if (hideButtons) {
         jQuery('#header_top').hide();
@@ -1751,6 +1761,8 @@ function initLegend(colors) {
         html += '<div class="legendTitle" style="background-color:' + colors['modeS'] + ';">Mode-S</div>';
     if (globeIndex)
         html += '<div class="legendTitle" style="background-color:' + colors['other'] + ';">Other</div>';
+    if (aiscatcher_server)
+        html += '<div class="legendTitle" style="background-color:' + colors['ais'] + ';">AIS</div>';
 
     document.getElementById('legend').innerHTML = html;
 }
@@ -1769,6 +1781,10 @@ function initSourceFilter(colors) {
     html += createFilter(colors['modeS'], 'Mode-S', sources[4]);
     html += createFilter(colors['other'], 'Other', sources[5]);
     html += createFilter(colors['uat'], 'ADS-C', sources[6]);
+
+    if (aiscatcher_server) {
+        html += createFilter(colors['ais'], 'AIS', sources[7]);
+    }
 
     document.getElementById('sourceFilter').innerHTML = html;
 
@@ -2023,7 +2039,7 @@ function setIntervalTimers() {
         jQuery("#timers_paused").css('display', 'none');
     }
     console.log(localTime(new Date()) + " set timers ");
-    if ((adsbexchange || dynGlobeRate) && !uuid) {
+    if (dynGlobeRate && !uuid) {
         timers.globeRateUpdate = setInterval(globeRateUpdate, 180000);
     }
     pollPositionInterval();
@@ -2049,20 +2065,12 @@ function setIntervalTimers() {
     }
 
     if (aiscatcher_server) {
-        function updateAIScatcher() {
-            let req = jQuery.ajax({
-                url: aiscatcher_server + '/geojson',
-                dataType: 'text',
-            });
-
-            req.done(function (data) {
-                //console.log(data);
-                g.aiscatcher_source.setUrl("data:text/plain;base64," + btoa(data));
-                g.aiscatcher_source.refresh();
-            });
-        }
         timers.aiscatcher = setInterval(updateAIScatcher, aiscatcher_refresh * 1000);
         updateAIScatcher();
+    }
+    if (droneJson) {
+        timers.droneJson = setInterval(updateDrones, droneRefresh * 1000);
+        updateDrones();
     }
 
     timersActive = true;
@@ -2071,6 +2079,124 @@ function setIntervalTimers() {
 
     // in case the visibility changed while this was running
     handleVisibilityChange();
+}
+
+function updateDrones() {
+    let req = jQuery.ajax({
+        url: droneJson,
+        dataType: 'json',
+    });
+
+    req.done(function(data) {
+        handleDrones(data);
+    });
+}
+
+function handleDrones(data) {
+    g.droneLast = g.droneNow || 0;
+    g.droneNow = new Date().getTime() / 1000;
+
+    for (let i in data) {
+        processDrone(data[i], g.droneNow, g.droneLast);
+    }
+}
+
+function processDrone(drone, now, last) {
+    const hex = drone.id;
+
+    // Do we already have this plane object in g.planes?
+    // If not make it.
+    let plane = g.planes[hex]
+
+    if (!plane) {
+        plane = new PlaneObject(hex);
+    }
+
+    let ac = {};
+
+    ac.type = 'other';
+    ac.t = 'DRON';
+    ac.gs = drone.speed / 1852 * 3600; // m/s to knots
+    ac.flight = drone.description;
+    ac.alt_baro = drone.alt * 3.28; // m to ft
+    ac.baro_rate = drone.vspeed * 3.28 * 60; // m/s to fpm
+
+    ac.seen = now - new Date(drone.time).getTime() / 1000;
+
+    if (drone.lat && drone.lon) {
+        ac.lat = drone.lat;
+        ac.lon = drone.lon
+        ac.seen_pos = ac.seen;
+    }
+    //console.log(ac);
+
+    plane.updateData(now, last, ac, false);
+}
+
+function updateAIScatcher() {
+    let req = jQuery.ajax({
+        url: aiscatcher_server + '/geojson',
+        dataType: 'text',
+    });
+
+    req.done(function(data) {
+        //console.log(data);
+        g.aiscatcher_source.setUrl("data:text/plain;base64,"+btoa(data));
+        g.aiscatcher_source.refresh();
+
+        if (aiscatcher_test) {
+            processAIS(JSON.parse(data));
+        }
+    });
+}
+
+function processAIS(data) {
+    g.ais_last = g.ais_now || 0;
+    g.ais_now = new Date().getTime() / 1000;
+
+    const features = data.features;
+    for (let i in features) {
+        processBoat(features[i], g.ais_now, g.ais_last);
+    }
+}
+
+function processBoat(feature, now, last) {
+    const pr = feature.properties;
+    const hex = 'MMSI' + pr.mmsi;
+
+    // Do we already have this plane object in g.planes?
+    // If not make it.
+    let plane = g.planes[hex]
+
+    if (!plane) {
+        plane = new PlaneObject(hex);
+        plane.country = pr.country;
+        plane.country_code = pr.country;
+        plane.baseScale = 0.2;
+    }
+
+    let ac = {};
+
+    ac.type = 'ais';
+    ac.gs = pr.speed;
+    ac.flight = pr.callsign;
+    ac.r = pr.shipname
+    ac.seen = now - pr.last_signal;
+
+    ac.messages  = pr.count;
+    ac.rssi      = pr.level;
+
+    ac.track = pr.cog;
+
+    if (feature.geometry && feature.geometry.coordinates) {
+        const coords = feature.geometry.coordinates;
+        ac.lat = coords[1];
+        ac.lon = coords[0];
+        ac.seen_pos = now - pr.last_signal;
+    }
+    //console.log(ac);
+
+    plane.updateData(now, last, ac, false);
 }
 
 let djson;
@@ -2205,7 +2331,8 @@ function webglAddLayer() {
             ],
             'icon-rotation': ['get', 'rotation'],
             'icon-rotate-with-view': false,
-            'icon-scale': ['get', 'scale', 'number']
+            //'icon-scale': [ 'array', ['get', 'scale'], ['get', 'scale'] ],
+            'icon-scale': [ 'abs', ['get', 'scale']],
         };
         if (heatmap) {
             glStyle = {
@@ -2357,11 +2484,7 @@ function ol_map_init() {
         }
     });
     if (!foundType) {
-        if (adsbexchange) {
-            MapType_tar1090 = "osm_adsbx";
-        } else {
-            MapType_tar1090 = "osm";
-        }
+        MapType_tar1090 = "osm";
     }
 
     ol.control.LayerSwitcher.forEachRecursive(layers_group, function (lyr) {
@@ -2514,20 +2637,9 @@ function ol_map_init() {
     checkPointermove();
 }
 
-// Initalizes the map and starts up our timers to call various functions
-function initMap() {
-
-    if (globeIndex && adsbexchange) {
-        jQuery('#dump1090_total_history_td').hide();
-        jQuery('#dump1090_message_rate_td').hide();
-    }
+function initMapEarly() {
 
     // Load stored map settings if present
-    CenterLon = Number(loStore['CenterLon']) || DefaultCenterLon;
-    CenterLat = Number(loStore['CenterLat']) || DefaultCenterLat;
-    zoomLvl = Number(loStore['zoomLvl']) || DefaultZoomLvl;
-    zoomLvlCache = zoomLvl;
-
     if (overrideMapType)
         MapType_tar1090 = overrideMapType;
     else if (loStore['MapType_tar1090']) {
@@ -2560,6 +2672,22 @@ function initMap() {
             runAfterLoad(geoFindMe);
         }
     });
+}
+
+
+// Initalizes the map and starts up our timers to call various functions
+function initMap() {
+
+    CenterLon = Number(loStore['CenterLon']) || DefaultCenterLon;
+    CenterLat = Number(loStore['CenterLat']) || DefaultCenterLat;
+    //console.log("initMap Centerlat: " + CenterLat);
+    zoomLvl = Number(loStore['zoomLvl']) || DefaultZoomLvl;
+    zoomLvlCache = zoomLvl;
+
+    if (globeIndex && aggregator) {
+        jQuery('#dump1090_total_history_td').hide();
+        jQuery('#dump1090_message_rate_td').hide();
+    }
 
     locationDotLayer = new ol.layer.Vector({
         name: 'locationDot',
@@ -3005,9 +3133,13 @@ function reaper(all) {
         if (plane == null)
             continue;
         plane.seen = now - plane.last_message_time;
-        if (all || ((!plane.selected)
-            && plane.seen > reapTimeout
-            && (plane.dataSource != 'adsc' || plane.seen > jaeroTimeout))
+        if ( all ||
+            (
+                (!plane.selected)
+                && plane.seen > reapTimeout
+                && (plane.dataSource != 'adsc' || plane.seen > jaeroTimeout)
+                && (plane.dataSource != 'ais' || plane.seen > aisTimeout)
+            )
         ) {
             // Reap it.
             //console.log("Removed " + plane.icao);
@@ -3065,7 +3197,11 @@ function refreshPageTitle() {
         subtitle += MessageRate.toFixed(1) + '/s';
     }
 
-    document.title = PageName + ' - ' + subtitle;
+    if (PageName) {
+        document.title = PageName + ' - ' + subtitle;
+    } else {
+        document.title = subtitle;
+    }
 }
 
 function displaySil() {
@@ -5483,6 +5619,13 @@ function checkMovement() {
         return;
     }
 
+    let currentTime = new Date().getTime()/1000;
+    if (currentTime > g.route_cache_timer) {
+        // check if it's time to send a batch of request to the API server
+        g.route_cache_timer = currentTime + 1;
+        routeDoLookup(currentTime);
+    }
+
     const zoom = OLMap.getView().getZoom();
     const center = ol.proj.toLonLat(OLMap.getView().getCenter());
     const ts = new Date().getTime();
@@ -6113,6 +6256,7 @@ function inView(pos, ex) {
 let lastAddressBarUpdate = 0;
 let updateAddressBarTimeout;
 let updateAddressBarPushed = false;
+let updateAddressBarString = "";
 function updateAddressBar() {
     if (!window.history || !window.history.replaceState)
         return;
@@ -6237,6 +6381,11 @@ function updateAddressBar() {
     lastAddressBarUpdate = time;
     */
 
+    if (string == updateAddressBarString) {
+        return;
+    }
+    updateAddressBarString = string;
+
     if (!updateAddressBarPushed) {
         // make sure we keep the thing we clicked on first in the browser history
         window.history.pushState("object or string", "Title", string);
@@ -6309,7 +6458,7 @@ function refreshInt() {
     if (!mapIsVisible)
         refresh *= 2;
 
-    if (adsbexchange && window.self != window.top) {
+    if (aggregator && window.self != window.top) {
         refresh *= 1.5;
     } else if (onMobile && TrackedAircraftPositions > 800) {
         refresh *= 1.5;
@@ -6688,6 +6837,11 @@ function geoFindMe() {
 
 let initSitePosFirstRun = true;
 function initSitePos() {
+    // fall back to loStore position
+    if (loStore['SiteLat'] != null && loStore['SiteLon'] != null && SiteLat == null && SiteLon == null) {
+        SiteLat = CenterLat = DefaultCenterLat = parseFloat(loStore['SiteLat']);
+        SiteLon = CenterLon = DefaultCenterLon = parseFloat(loStore['SiteLon']);
+    }
     // Set SitePosition
     if (SiteLat != null && SiteLon != null) {
         SitePosition = [SiteLon, SiteLat];
@@ -6948,6 +7102,7 @@ function everySecond() {
     if (traceRate > 0)
         traceRate = traceRate * 0.985 - 1;
     updateIconCache();
+
 }
 
 let getTraceTimeout = null;
@@ -8051,7 +8206,7 @@ function timeoutFetch() {
 }
 
 function refreshHistory() {
-    if (heatmap || replay || globeIndex || pTracks || uuid) {
+    if (heatmap || replay || globeIndex || pTracks || uuid || !HistoryChunks) {
         noLongerHidden();
         return;
     }
@@ -8101,8 +8256,8 @@ function refreshHistory() {
             console.error(e);
             noLongerHidden();
         }
-    }).fail(function () {
-        noLongerHidden();
+    }).fail(function() {
+        setTimeout(refreshHistory, 500);
     });
 }
 
@@ -8717,7 +8872,7 @@ function requestBoxString() {
     return `${extent.minLat.toFixed(6)},${extent.maxLat.toFixed(6)},${minLon},${maxLon}`;
 }
 
-if (adsbexchange && window.location.hostname.startsWith('inaccurate')) {
+if (aggregator && window.location.hostname.startsWith('inaccurate')) {
     jQuery('#inaccurate_warning').removeClass('hidden');
     document.getElementById('inaccurate_warning').innerHTML = `
 <br>
@@ -8777,12 +8932,14 @@ function adjust_baro_alt(alt) {
 }
 
 function globeRateUpdate() {
-    if (adsbexchange) {
+    if (aggregator) {
         dynGlobeRate = true;
-        const cookieExp = getCookie('adsbx_sid').split('_')[0];
-        const ts = new Date().getTime();
-        if (!cookieExp || cookieExp < ts + 3600 * 1000)
-            setCookie('adsbx_sid', ((ts + 2 * 86400 * 1000) + '_' + Math.random().toString(36).substring(2, 15)), 2);
+        if (0) {
+            const cookieExp = getCookie('asdf_id').split('_')[0];
+            const ts = new Date().getTime();
+            if (!cookieExp || cookieExp < ts + 3600*1000)
+                setCookie('adsbx_sid', ((ts + 2*86400*1000) + '_' + Math.random().toString(36).substring(2, 15)), 2);
+        }
     }
     if (dynGlobeRate) {
         return jQuery.ajax({ url: '/globeRates.json', cache: false, dataType: 'json', }).done(function (data) {

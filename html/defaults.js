@@ -235,7 +235,14 @@ let ChartBundleLayers = false;
 //
 let BingMapsAPIKey = null;
 
-let mapboxaccess_token = "pk.eyJ1IjoiZXp6NDU2Y2giLCJhIjoiY2xyejA2c21qMXR1ZjJtcHF4OWNwYmx0ayJ9.t0RfR9x4m8owrAuoVlnQtQ";
+// Provide a Mapbox API key here to enable the Mapbox vector layers.
+// You can obtain a free key (with usage limits) at
+// https://www.mapbox.com/
+//
+// Be sure to quote your key:
+//   MapboxAPIKey = "your key here";
+//
+let MapboxAPIKey = null;
 
 let pf_data = ["chunks/pf.json"]
 
@@ -380,6 +387,14 @@ let audio_url = ""; // show html5 audio player for this URL
 
 let aiscatcher_server = "";
 let aiscatcher_refresh = 15;
+let aiscatcher_test = true;
+let aisTimeout = 1200;
+
+let droneJson = "";
+let droneRefresh = 1;
+
+let icaoFilter = null;
+let icaoBlacklist = null;
 
 // legacy variables
 let OutlineMlatColor = null;
@@ -397,6 +412,7 @@ let tableColors = {
         tisb:      "#ffd8e6",
         unknown:   "#dcdcdc",
         other:   "#dcdcdc",
+        ais:     "#dcdcdc",
     },
     selected: {
         adsb:      "#88DDFF",
@@ -408,6 +424,7 @@ let tableColors = {
         tisb:      "#FFC1D8",
         unknown:   "#bcbcbc",
         other:   "#bcbcbc",
+        ais:   "#bcbcbc",
     },
     special: {
         7500:      "#ff0000",
@@ -425,3 +442,4 @@ let prefer978 = 0;
 let dynGlobeRate = false; // enable use of globeRates.json in index.html directory to steer client refresh rate
 
 let multiOutline = false;
+let inhibitIframe = false;

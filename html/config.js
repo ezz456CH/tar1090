@@ -223,7 +223,14 @@ ColorByAlt = {
 //
 BingMapsAPIKey = null;
 
-// mapboxaccess_token = null
+// Provide a Mapbox API key here to enable the Mapbox vector layers.
+// You can obtain a free key (with usage limits) at
+// https://www.mapbox.com/
+//
+// Be sure to quote your key:
+//   MapboxAPIKey = "your key here";
+//
+MapboxAPIKey = null;
 
 // This determines what is up, default is north (0 degrees)
 //mapOrientation = 0;
@@ -255,6 +262,9 @@ BingMapsAPIKey = null;
 // imageConfigText = "";
 
 //flightawareLinks = false;
+//shareBaseUrl = 'https://adsb.lol/';
+//shareBaseUrl = 'https://globe.adsb.fi/';
+//shareBaseUrl = 'https://globe.airplanes.live/';
 //shareBaseUrl = 'https://globe.adsbexchange.com/';
 // planespottersLinks = false;
 
@@ -370,6 +380,14 @@ HideCols = [
 
 // aiscatcher_server = "http://192.168.1.113:8100"; // update with your server address
 // aiscatcher_refresh = 15; // refresh interval in seconds
+// aiscatcher_test = true; // show with squares on the aircraft icon layer
+// aisTimeout = 1200;
+
+// droneJson = "";
+// droneRefresh = 1;
+
+// icaoFilter = [ "123456", "888888" ]; // only show these icaos
+// icaoBlacklist = [ "123456", "888888" ]; // never show these icaos
 
 /*
 tableColors = {
