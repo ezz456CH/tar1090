@@ -705,7 +705,7 @@ function initialize() {
     earlyInitPage();
     initMapEarly();
 
-    jQuery.when(configureReceiver, heatmapDefer).done(function() {
+    jQuery.when(configureReceiver, heatmapDefer).done(function () {
 
         if (receiverJson) {
             if (receiverJson.trace_hist_only)
@@ -2087,7 +2087,7 @@ function updateDrones() {
         dataType: 'json',
     });
 
-    req.done(function(data) {
+    req.done(function (data) {
         handleDrones(data);
     });
 }
@@ -2139,9 +2139,9 @@ function updateAIScatcher() {
         dataType: 'text',
     });
 
-    req.done(function(data) {
+    req.done(function (data) {
         //console.log(data);
-        g.aiscatcher_source.setUrl("data:text/plain;base64,"+btoa(data));
+        g.aiscatcher_source.setUrl("data:text/plain;base64," + btoa(data));
         g.aiscatcher_source.refresh();
 
         if (aiscatcher_test) {
@@ -2183,8 +2183,8 @@ function processBoat(feature, now, last) {
     ac.r = pr.shipname
     ac.seen = now - pr.last_signal;
 
-    ac.messages  = pr.count;
-    ac.rssi      = pr.level;
+    ac.messages = pr.count;
+    ac.rssi = pr.level;
 
     ac.track = pr.cog;
 
@@ -2332,7 +2332,7 @@ function webglAddLayer() {
             'icon-rotation': ['get', 'rotation'],
             'icon-rotate-with-view': false,
             //'icon-scale': [ 'array', ['get', 'scale'], ['get', 'scale'] ],
-            'icon-scale': [ 'abs', ['get', 'scale']],
+            'icon-scale': ['abs', ['get', 'scale']],
         };
         if (heatmap) {
             glStyle = {
@@ -3133,7 +3133,7 @@ function reaper(all) {
         if (plane == null)
             continue;
         plane.seen = now - plane.last_message_time;
-        if ( all ||
+        if (all ||
             (
                 (!plane.selected)
                 && plane.seen > reapTimeout
@@ -5619,7 +5619,7 @@ function checkMovement() {
         return;
     }
 
-    let currentTime = new Date().getTime()/1000;
+    let currentTime = new Date().getTime() / 1000;
     if (currentTime > g.route_cache_timer) {
         // check if it's time to send a batch of request to the API server
         g.route_cache_timer = currentTime + 1;
@@ -8256,7 +8256,7 @@ function refreshHistory() {
             console.error(e);
             noLongerHidden();
         }
-    }).fail(function() {
+    }).fail(function () {
         setTimeout(refreshHistory, 500);
     });
 }
@@ -8785,7 +8785,10 @@ function printTrace() {
 
 // Create a "hidden" input
 let shareLinkInput = document.createElement("input");
-shareLinkInput.hidden = true;
+
+shareLinkInput.style.position = 'absolute';
+shareLinkInput.style.left = '-9999px';
+shareLinkInput.tabIndex = -1;
 // Append it to the body
 document.body.appendChild(shareLinkInput);
 
@@ -8937,8 +8940,8 @@ function globeRateUpdate() {
         if (0) {
             const cookieExp = getCookie('asdf_id').split('_')[0];
             const ts = new Date().getTime();
-            if (!cookieExp || cookieExp < ts + 3600*1000)
-                setCookie('adsbx_sid', ((ts + 2*86400*1000) + '_' + Math.random().toString(36).substring(2, 15)), 2);
+            if (!cookieExp || cookieExp < ts + 3600 * 1000)
+                setCookie('adsbx_sid', ((ts + 2 * 86400 * 1000) + '_' + Math.random().toString(36).substring(2, 15)), 2);
         }
     }
     if (dynGlobeRate) {
