@@ -191,7 +191,7 @@ select {
     text-align: center;
     line-height: .4em;
     padding: 0;
-    margin-bottom: calc(4px * var(--SCALE));
+    margin-bottom: calc(2px * var(--SCALE));
     margin-top: calc(2px * var(--SCALE));
     font-size: calc(15px * var(--SCALE));
 }
