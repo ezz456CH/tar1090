@@ -135,7 +135,7 @@ function createBaseLayers() {
 
     world.push(new ol.layer.Tile({
         source: new ol.source.OSM({
-            "url" : "https://{a-d}.tile.openstreetmap.de/{z}/{x}/{y}.png",
+            "url": "https://{a-d}.tile.openstreetmap.de/{z}/{x}/{y}.png",
             attributionsCollapsible: false,
             maxZoom: 17,
             transition: tileTransition,
@@ -397,36 +397,36 @@ function createBaseLayers() {
         }));
     }
 
-/*     if (ChartBundleLayers) {
-
-        let chartbundleTypesDirect = {
-            sec: "Sectional Charts",
-            enrh: "IFR Enroute High Charts",
-
-            tac: "Terminal Area Charts",
-            hel: "Helicopter Charts",
-            enrl: "IFR Enroute Low Charts",
-            enra: "IFR Area Charts",
-            secgrids: "Sect. w/ SAR grid",
-        };
-
-        for (let type in chartbundleTypesDirect) {
-            us.push(new ol.layer.Tile({
-                source: new ol.source.TileWMS({
-                    url: 'https://wms.chartbundle.com/wms',
-                    params: {LAYERS: type},
-                    projection: 'EPSG:3857',
-                    attributions: 'Tiles courtesy of <a href="http://www.chartbundle.com/">ChartBundle</a>',
-                    attributionsCollapsible: false,
-                    maxZoom: 12, // doesn't work for WMS
-                    transition: tileTransition,
-                }),
-                name: 'chartbundle_' + type,
-                title: chartbundleTypesDirect[type],
-                type: 'base',
-                group: 'chartbundle'}));
-        }
-    } */
+    /*     if (ChartBundleLayers) {
+    
+            let chartbundleTypesDirect = {
+                sec: "Sectional Charts",
+                enrh: "IFR Enroute High Charts",
+    
+                tac: "Terminal Area Charts",
+                hel: "Helicopter Charts",
+                enrl: "IFR Enroute Low Charts",
+                enra: "IFR Area Charts",
+                secgrids: "Sect. w/ SAR grid",
+            };
+    
+            for (let type in chartbundleTypesDirect) {
+                us.push(new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://wms.chartbundle.com/wms',
+                        params: {LAYERS: type},
+                        projection: 'EPSG:3857',
+                        attributions: 'Tiles courtesy of <a href="http://www.chartbundle.com/">ChartBundle</a>',
+                        attributionsCollapsible: false,
+                        maxZoom: 12, // doesn't work for WMS
+                        transition: tileTransition,
+                    }),
+                    name: 'chartbundle_' + type,
+                    title: chartbundleTypesDirect[type],
+                    type: 'base',
+                    group: 'chartbundle'}));
+            }
+        } */
 
     world.push(new ol.layer.Tile({
         source: new ol.source.XYZ({
@@ -662,7 +662,7 @@ function createBaseLayers() {
             type: 'overlay',
             opacity: rainViewerCloudsOpacity,
             visible: false,
-            zIndex: 99,
+            zIndex: 80,
         });
         g.refreshRainviewerClouds = async function () {
             const latestLayer = await g.getRainviewerLayers('satellite');
@@ -694,7 +694,7 @@ function createBaseLayers() {
             type: 'overlay',
             opacity: rainViewerRadarOpacity,
             visible: false,
-            zIndex: 99,
+            zIndex: 90,
         });
         g.refreshRainviewerRadar = async function () {
             const latestLayer = await g.getRainviewerLayers('radar');
@@ -726,7 +726,7 @@ function createBaseLayers() {
             type: 'overlay',
             opacity: 0.25,
             visible: false,
-            zIndex: 99,
+            zIndex: 70,
         });
         const rainviewerRadarCoverageSource = new ol.source.XYZ({
             url: 'https://tilecache.rainviewer.com/v2/coverage/0/512/{z}/{x}/{y}/0/0_0.png',
