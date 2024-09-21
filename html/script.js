@@ -2452,7 +2452,7 @@ function ol_map_init() {
             zoom: zoomLvl,
             maxZoom: 20,
         }),
-        controls: [new ol.control.Zoom({ delta: 1, duration: 0, target: 'map_canvas', }),
+        controls: [
         new ol.control.Attribution({ collapsed: true }),
         new ol.control.ScaleLine({ units: DisplayUnits })
         ],
