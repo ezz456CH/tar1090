@@ -6776,7 +6776,7 @@ function geoFindMe() {
         if (loStore['geoFindMeFirstVisit'] != 'no' && !(usp.has("lat") && usp.has("lon"))) {
             OLMap.getView().setCenter(ol.proj.fromLonLat([SiteLon, SiteLat]));
             loStore['geoFindMeFirstVisit'] = 'no';
-            siteCircleLayer.setVisible(true);
+            //siteCircleLayer.setVisible(true);
         }
 
         initSitePos();
