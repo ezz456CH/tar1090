@@ -109,7 +109,7 @@ function createBaseLayers() {
 
     world.push(new ol.layer.Tile({
         source: new ol.source.OSM({
-            maxZoom: 17,
+            maxZoom: 18,
             attributionsCollapsible: false,
             transition: tileTransition,
         }),
@@ -152,7 +152,7 @@ function createBaseLayers() {
                 attributions: 'Powered by <a href="https://www.esri.com">Esri.com</a>' +
                     '— Sources: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
                 attributionsCollapsible: false,
-                maxZoom: 20,
+                maxZoom: 18,
                 transition: tileTransition,
             }),
             name: 'esri',
@@ -165,7 +165,7 @@ function createBaseLayers() {
                 attributions: 'Powered by <a href="https://www.esri.com">Esri.com</a>' +
                     '— Sources: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
                 attributionsCollapsible: false,
-                maxZoom: 20,
+                maxZoom: 18,
                 transition: tileTransition,
             }),
             name: 'esri_gray',
@@ -178,7 +178,7 @@ function createBaseLayers() {
                 attributions: 'Powered by <a href="https://www.esri.com">Esri.com</a>' +
                     '— Sources: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
                 attributionsCollapsible: false,
-                maxZoom: 20,
+                maxZoom: 18,
                 transition: tileTransition,
             }),
             name: 'esri_streets',
