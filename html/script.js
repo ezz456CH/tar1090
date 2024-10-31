@@ -2453,8 +2453,8 @@ function ol_map_init() {
             maxZoom: 20,
         }),
         controls: [
-        new ol.control.Attribution({ collapsed: true }),
-        new ol.control.ScaleLine({ units: DisplayUnits })
+            new ol.control.Attribution({ collapsed: true }),
+            new ol.control.ScaleLine({ units: DisplayUnits })
         ],
         interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }).extend([
             new ol.interaction.DblClickDragZoom({
@@ -8953,7 +8953,26 @@ function globeRateUpdate() {
 }
 globeRateUpdate();
 
-
-
 parseURLIcaos();
 initialize();
+
+let canvases;
+let gl;
+
+const olwebgl = setInterval(() => {
+    canvases = document.querySelector('canvas.ol-layer');
+
+    if (canvases) {
+        console.log('"canvas.ol-layer" found:', canvases);
+        gl = canvases.getContext('webgl');
+
+        if (gl) {
+            canvases.addEventListener('webglcontextlost', (event) => {
+                event.preventDefault();
+                console.error('WebGL context lost. Reloading the page...');
+                location.reload();
+            });
+        }
+        clearInterval(olwebgl);
+    }
+}, 1000);
