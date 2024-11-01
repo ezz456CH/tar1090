@@ -8958,6 +8958,7 @@ initialize();
 
 let canvases;
 let gl;
+let ollayersArray;
 
 function isMapbox(layers) {
     const mapboxLayers = [];
@@ -9010,11 +9011,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
             clearInterval(olwebgl);
         }
-    }, 1000);
+    }, 150);
 
-    const layersArray = OLMap.getLayers().getArray();
-    for (let i = 0; i < layersArray.length; i++) {
-        const layer = layersArray[i];
-        layer.on('change', mapboxlogo);
-    }
+    const ollayers = setInterval(() => {
+        ollayersArray = OLMap.getLayers().getArray();
+
+        if (ollayersArray.length > 0) {
+            try {
+                for (let i = 0; i < ollayersArray.length; i++) {
+                    const layer = ollayersArray[i];
+                    layer.on('change', mapboxlogo);
+                }
+            } catch {
+                //console.error(error);
+            }
+            clearInterval(ollayers);
+        }
+    }, 150);
 });

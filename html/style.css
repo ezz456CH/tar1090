@@ -1228,7 +1228,7 @@ input {
 
 .mapbox-logo {
     position: absolute;
-    display: block;
+    display: none;
     margin: 5px;
     height: 20px;
     width: 65px;
