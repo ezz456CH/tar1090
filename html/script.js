@@ -8959,20 +8959,57 @@ initialize();
 let canvases;
 let gl;
 
-const olwebgl = setInterval(() => {
-    canvases = document.querySelector('canvas.ol-layer');
+function isMapbox(layers) {
+    const mapboxLayers = [];
 
-    if (canvases) {
-        console.log('"canvas.ol-layer" found:', canvases);
-        gl = canvases.getContext('webgl');
+    for (let i = 0; i < layers.length; i++) {
+        const layer = layers[i];
+        const properties = layer.getProperties();
 
-        if (gl) {
-            canvases.addEventListener('webglcontextlost', (event) => {
-                event.preventDefault();
-                console.error('WebGL context lost. Reloading the page...');
-                location.reload();
-            });
+        if (properties.name?.includes('mapbox') && layer.getVisible()) {
+            mapboxLayers.push(properties.name);
         }
-        clearInterval(olwebgl);
+
+        if (layer.getLayers) {
+            const subLayers = layer.getLayers().getArray();
+            const subStatus = isMapbox(subLayers);
+            mapboxLayers.push(...subStatus.mapboxLayers);
+        }
     }
-}, 1000);
+
+    return { mapboxLayers };
+}
+
+function mapboxlogo() {
+    const layersArray = OLMap.getLayers().getArray();
+
+    const mblogo = document.querySelector('a.mapbox-logo');
+    const olscaleline = document.querySelector('div.ol-scale-line.ol-unselectable');
+    mblogo.style.display = isMapbox(layersArray).mapboxLayers.length > 0 ? 'block' : 'none';
+    olscaleline.style.bottom = isMapbox(layersArray).mapboxLayers.length > 0 ? '32px' : '8px';
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    const olwebgl = setInterval(() => {
+        canvases = document.querySelector('canvas.ol-layer');
+
+        if (canvases) {
+            console.log('"canvas.ol-layer" found:', canvases);
+            gl = canvases.getContext('webgl');
+
+            if (gl) {
+                canvases.addEventListener('webglcontextlost', (event) => {
+                    event.preventDefault();
+                    console.error('WebGL context lost. Reloading the page...');
+                    location.reload();
+                });
+            }
+            clearInterval(olwebgl);
+        }
+    }, 1000);
+
+    const layersArray = OLMap.getLayers().getArray();
+    layersArray.forEach(layer => {
+        layer.on('change', mapboxlogo);
+    });
+});
