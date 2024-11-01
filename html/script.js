@@ -9009,7 +9009,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }, 1000);
 
     const layersArray = OLMap.getLayers().getArray();
-    layersArray.forEach(layer => {
+    for (let i = 0; i < layersArray.length; i++) {
+        const layer = layersArray[i];
         layer.on('change', mapboxlogo);
-    });
+    }
 });
