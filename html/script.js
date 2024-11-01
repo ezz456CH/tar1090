@@ -8975,6 +8975,10 @@ function isMapbox(layers) {
             const subStatus = isMapbox(subLayers);
             mapboxLayers.push(...subStatus.mapboxLayers);
         }
+
+        if (mapboxLayers.length > 0) {
+            break;
+        }
     }
 
     return { mapboxLayers };
