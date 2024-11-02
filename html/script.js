@@ -819,7 +819,7 @@ function initPage() {
     }
 
 
-    if (!globeIndex) {
+    if (!globeIndex && !haveTraces) {
         jQuery("#lastLeg_cb").parent().hide();
         jQuery('#show_trace').hide();
     }
@@ -4446,7 +4446,7 @@ function selectPlaneByHex(hex, options) {
 
     const multiDeselect = multiSelect && newPlane && newPlane.selected && !onlySelected;
 
-    if (!options.noFetch && globeIndex && hex) {
+    if (!options.noFetch && (globeIndex || showTrace || haveTraces) && hex) {
         newPlane = getTrace(newPlane, hex, options);
     }
 
@@ -5909,7 +5909,7 @@ function processURLParams() {
 
     if (urlIcaos.length > 0) {
         const icaos = urlIcaos;
-        // if (!usp.has('noIsolation'))
+        // if (!usp.has('noIsolation') && !usp.has('replay'))
         //     toggleIsolation("on");
         if (icaos.length > 1) {
             toggleMultiSelect("on");
@@ -6261,13 +6261,16 @@ function updateAddressBar() {
 
     let string = '';
 
-    if (SelPlanes.length > 0) {
-        string += '?icao=' + SelPlanes.map((s) => encodeURIComponent(s.icao)).join(',')
-    } else if (replay) {
+    if (replay) {
         string += '?replay=';
         string += zDateString(replay.ts);
-        string += '-' + replay.ts.getUTCHours().toString().padStart(2, '0');
-        string += ':' + replay.ts.getUTCMinutes().toString().padStart(2, '0');
+        string += '-' + replay.ts.getUTCHours().toString().padStart(2,'0');
+        string += ':' + replay.ts.getUTCMinutes().toString().padStart(2,'0');
+    }
+
+    if (SelPlanes.length > 0) {
+        string += (string ? '&' : '?');
+        string += 'icao=' + SelPlanes.map((s) => encodeURIComponent(s.icao)).join(',')
     }
 
     if (showTrace || replay) {
@@ -6275,7 +6278,7 @@ function updateAddressBar() {
         string += 'lat=' + CenterLat.toFixed(3) + '&lon=' + CenterLon.toFixed(3) + '&zoom=' + zoomLvl.toFixed(1);
     }
 
-    if (SelPlanes.length > 0 && (showTrace || replay)) {
+    if (SelPlanes.length > 0 && (showTrace)) {
         string += (string ? '&' : '?');
         string += 'showTrace=' + traceDateString;
         if (legSel != -1)
@@ -6498,7 +6501,10 @@ function toggleShowTrace() {
             const plane = SelPlanes[i];
             plane.setNull();
         }
-        selectPlaneByHex(hex, { noDeselect: true, follow: true, zoom: zoomLvl, });
+        selectPlaneByHex(hex, {noDeselect: true, follow: true, zoom: zoomLvl,});
+        if (replay) {
+            replayStep();
+        }
     }
 
     jQuery('#history_collapse').toggle();
@@ -7135,10 +7141,11 @@ function getTrace(newPlane, hex, options) {
 
     // use non historic traces until 60 min after midnight
     let today = new Date();
-    if ((showTrace || replay) && !(today.getTime() > traceDate.getTime() && today.getTime() < traceDate.getTime() + (24 * 3600 + 60 * 60) * 1000)) {
-        let dateString = traceDateString || zDateString(today);
+    let refDate = (replay ? replay.ts : traceDate) || today;
+
+    if ((showTrace || replay) && !(today.getTime() > refDate.getTime() && today.getTime() < refDate.getTime() + (24 * 3600 + 60 * 60) * 1000)) {
         URL1 = null;
-        URL2 = 'globe_history/' + dateString.replace(/-/g, '/') + '/traces/' + hex.slice(-2) + '/trace_full_' + hex + '.json';
+        URL2 = 'globe_history/' + zDateString(refDate).replace(/-/g, '/') + '/traces/' + hex.slice(-2) + '/trace_full_' + hex + '.json';
         traceRate += 3;
     } else {
         URL1 = 'data/traces/' + hex.slice(-2) + '/trace_recent_' + hex + '.json';
@@ -7146,8 +7153,7 @@ function getTrace(newPlane, hex, options) {
         traceRate += 2;
     }
     if (showTrace && trace_hist_only) {
-        let dateString = traceDateString || zDateString(today);
-        URL2 = 'globe_history/' + dateString.replace(/-/g, '/') + '/traces/' + hex.slice(-2) + '/trace_full_' + hex + '.json';
+        URL2 = 'globe_history/' + zDateString(refDate).replace(/-/g, '/') + '/traces/' + hex.slice(-2) + '/trace_full_' + hex + '.json';
     }
 
     traceOpts.follow = (options.follow == true);
@@ -7591,8 +7597,6 @@ function loadReplay(ts) {
     replay.ts = ts;
     replaySetTimeHint();
 
-    setTraceDate({ ts: ts });
-
     if (!g.replayCache) {
         g.replayCache = new ItemCache(onMobile ? 12 : 24);
     }
@@ -7650,7 +7654,6 @@ function loadReplay(ts) {
                         .then((data) => {
                             delete replay.abortController;
                             g.replayCache.add(rKey, data);
-                            setTraceDate({ ts: ts });
                             initReplay(chunk, data);
                             //console.log(`loaded: ${rKey}`);
                             ff();
