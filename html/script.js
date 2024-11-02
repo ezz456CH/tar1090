@@ -8995,6 +8995,8 @@ function mapboxlogo() {
 
     const mblogo = document.querySelector('a.mapbox-logo');
     const olscaleline = document.querySelector('div.ol-scale-line.ol-unselectable');
+    const oloverlaycontainerstopevent = document.querySelector('div.ol-overlaycontainer-stopevent');
+    oloverlaycontainerstopevent.appendChild(mblogo);
     mblogo.style.display = isMapbox(layersArray).mapboxLayers.length > 0 ? 'block' : 'none';
     olscaleline.style.bottom = isMapbox(layersArray).mapboxLayers.length > 0 ? '32px' : '8px';
 }
