@@ -4656,6 +4656,7 @@ function adjustInfoBlock() {
     }
     jQuery('#selected_infoblock').css("width", infoBlockWidth * globalScale + 'px');
 
+    jQuery('.mapbox-logo').css('left', (infoBlockWidth * globalScale) + 'px')
     jQuery('.ol-scale-line').css('left', (infoBlockWidth * globalScale + 8) + 'px');
     jQuery('#replayBar').css('left', (infoBlockWidth * globalScale + 8) + 'px');
 
@@ -4682,6 +4683,7 @@ function adjustInfoBlock() {
             jQuery("#sidebar_container").css('margin-left', '0');
         //jQuery('#sidebar_canvas').css('margin-bottom', 0);
 
+        jQuery('.mapbox-logo').css('left', '0px')
         jQuery('.ol-scale-line').css('left', '8px');
         jQuery('#replayBar').css('left', '0px');
         jQuery('#credits').css('bottom', '');
