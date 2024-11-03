@@ -1856,7 +1856,7 @@ function altitudeLines (segment) {
                 new ol.style.Style({
                     stroke: new ol.style.Stroke({
                         color: color,
-                        width: 2 * newWidth * multiplier,
+                        width: 1 * newWidth * multiplier,
                         lineJoin: join,
                         lineCap: cap,
                     })
@@ -1878,7 +1878,7 @@ function altitudeLines (segment) {
                 new ol.style.Style({
                     stroke: new ol.style.Stroke({
                         color: color,
-                        width: 2 * newWidth * multiplier,
+                        width: 1 * newWidth * multiplier,
                         lineJoin: join,
                         lineCap: cap,
                     })
