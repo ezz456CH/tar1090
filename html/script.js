@@ -8787,6 +8787,9 @@ function printTrace() {
 // Create a "hidden" input
 let shareLinkInput = document.createElement("input");
 
+shareLinkInput.setAttribute('type', 'text');
+shareLinkInput.setAttribute('aria-label', 'shareLink')
+
 shareLinkInput.style.position = 'absolute';
 shareLinkInput.style.left = '-9999px';
 shareLinkInput.tabIndex = -1;
@@ -8795,12 +8798,12 @@ document.body.appendChild(shareLinkInput);
 
 function copyShareLink() {
     // Assign shareLinkInput the value we want to copy
-    shareLinkInput.setAttribute("value", shareLink);
+    shareLinkInput.setAttribute('value', shareLink);
 
     // Highlight its content
     shareLinkInput.select();
     // Copy the highlighted text
-    document.execCommand("copy");
+    document.execCommand('copy');
     // deselect input field
     shareLinkInput.blur();
 
