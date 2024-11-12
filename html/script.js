@@ -50,7 +50,9 @@ let mapResizeTimeout;
 let pointerMoveTimeout;
 let iconSize = 1;
 let debugTracks = false;
+let verboseUpdateTrack = false;
 let debugAll = false;
+let debugRoute = false;
 let trackLabels = false;
 let multiSelect = false;
 let uat_data = null;
@@ -5102,7 +5104,7 @@ function onSearch(e) {
     let results = [];
     if (searchTerm)
         results = findPlanes(searchTerm, "byIcao", "byCallsign", "byReg", "byType", true);
-    if (results.length > 0 && globeIndex) {
+    if (results.length > 0 && haveTraces) {
         // toggleIsolation("on");
         if (results.length < 100) {
             getTrace(null, null, { list: results });
@@ -6033,6 +6035,8 @@ function findPlanes(queries, byIcao, byCallsign, byReg, byType, showWarnings) {
                 || (byReg && plane.registration != null && plane.registration.toLowerCase().match(query))
                 || (byType && plane.icaoType != null && plane.icaoType.toLowerCase().match(query))
             ) {
+                results.push(plane);
+                /* leaving this code in place just in case, not sure what this limitation to planes on screen is for when searching
                 if (globeIndex) {
                     if (plane.inView)
                         results.push(plane);
@@ -6040,6 +6044,7 @@ function findPlanes(queries, byIcao, byCallsign, byReg, byType, showWarnings) {
                     if (plane.checkVisible())
                         results.push(plane);
                 }
+                */
             }
         }
     }
@@ -6058,7 +6063,7 @@ function findPlanes(queries, byIcao, byCallsign, byReg, byType, showWarnings) {
     } else {
         console.log("No match found for query: " + queries);
         let foundByHex = 0;
-        if (globeIndex) {
+        if (haveTraces) {
             for (let i in queries) {
                 const query = queries[i];
                 if (query.toLowerCase().match(/~?[a-f,0-9]{6}/)) {
