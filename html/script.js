@@ -176,6 +176,9 @@ let MessageRate = 0;
 let layers;
 let layers_group;
 
+let canvases;
+let gl;
+
 const nullStyle = new ol.style.Style({});
 
 let estimateStyle;
@@ -2461,6 +2464,74 @@ function ol_map_init() {
     webglInit();
     console.timeEnd('webglInit');
 
+    function olwebgl() {
+        canvases = document.querySelector('canvas.ol-layer');
+
+        if (canvases) {
+            console.log('"canvas.ol-layer" found:', canvases);
+            gl = canvases.getContext('webgl');
+
+            if (gl) {
+                canvases.addEventListener('webglcontextlost', (event) => {
+                    event.preventDefault();
+                    console.error('WebGL context lost. Reloading the page...');
+                    location.reload();
+                });
+            }
+            return
+        }
+
+        requestAnimationFrame(olwebgl);
+    };
+
+    function isMapbox(layers) {
+        const mapboxLayers = [];
+
+        for (let i = 0; i < layers.length; i++) {
+            const layer = layers[i];
+            const properties = layer.getProperties();
+
+            if (properties.name?.includes('mapbox') && layer.getVisible()) {
+                mapboxLayers.push(properties.name);
+            }
+
+            if (layer.getLayers) {
+                const subLayers = layer.getLayers().getArray();
+                const subStatus = isMapbox(subLayers);
+                mapboxLayers.push(...subStatus.mapboxLayers);
+            }
+
+            if (mapboxLayers.length > 0) {
+                break;
+            }
+        }
+
+        return { mapboxLayers };
+    }
+
+    function mapboxlogo() {
+        const ollayersArray = OLMap.getLayers().getArray();
+
+        const mblogo = document.querySelector('a.mapbox-logo');
+        const olscaleline = document.querySelector('div.ol-scale-line.ol-unselectable');
+        const oloverlaycontainerstopevent = document.querySelector('div.ol-overlaycontainer-stopevent');
+
+        oloverlaycontainerstopevent.appendChild(mblogo);
+        const hasMapboxLayer = isMapbox(ollayersArray).mapboxLayers.length > 0;
+
+        mblogo.style.display = hasMapboxLayer ? 'block' : 'none';
+        olscaleline.style.bottom = hasMapboxLayer ? '32px' : '8px';
+
+        if (ollayersArray.length > 0) {
+            for (let i = 0; i < ollayersArray.length; i++) {
+                const layer = ollayersArray[i];
+                layer.on('change', mapboxlogo);
+            }
+        }
+    }
+
+    olwebgl();
+    mapboxlogo();
 
     let foundType = false;
     ol.control.LayerSwitcher.forEachRecursive(layers_group, function (lyr) {
@@ -3885,11 +3956,13 @@ function refreshFeatures() {
         sort: function () { sortBy('registration', compareAlpha, function (x) { return x.registration; }); },
         value: function (plane) { return (flightawareLinks ? getFlightAwareIdentLink(plane.registration, plane.registration) : (plane.registration ? plane.registration : "")); },
         html: flightawareLinks,
-        text: 'Registration' };
+        text: 'Registration'
+    };
     cols.type = {
-        sort: function () { sortBy('type', compareAlpha, function(x) { return x.icaoType; }); },
-        value: function(plane) { return (plane.icaoType != null ? plane.icaoType : ""); },
-        text: 'Type' };
+        sort: function () { sortBy('type', compareAlpha, function (x) { return x.icaoType; }); },
+        value: function (plane) { return (plane.icaoType != null ? plane.icaoType : ""); },
+        text: 'Type'
+    };
     cols.squawk = {
         text: 'Squawk',
         sort: function () { sortBy('squawk', compareAlpha, function (x) { return x.squawk; }); },
@@ -4219,7 +4292,7 @@ function refreshFeatures() {
         if (xv == null) return 1;
         if (yv == null) return -1;
 
-        const c = planeMan.sortAscending ? planeMan.sortCompare(xv,yv) : planeMan.sortCompare(yv,xv);
+        const c = planeMan.sortAscending ? planeMan.sortCompare(xv, yv) : planeMan.sortCompare(yv, xv);
         if (c !== 0) return c;
 
         return x._sort_pos - y._sort_pos;
@@ -4247,7 +4320,7 @@ function refreshFeatures() {
         }
         // or distance
         else if (planeMan.sortId == "data_source") {
-            pList.sort(function(x,y) {
+            pList.sort(function (x, y) {
                 return (x.sitedist - y.sitedist);
             });
         }
@@ -5104,8 +5177,8 @@ function onSearch(e) {
     let results = [];
     if (searchTerm)
         results = findPlanes(searchTerm, "byIcao", "byCallsign", "byReg", "byType", true);
-    if (results.length > 0 && haveTraces) {
-        // toggleIsolation("on");
+    if (results.length > 0 && globeIndex) {
+        toggleIsolation("on");
         if (results.length < 100) {
             getTrace(null, null, { list: results });
         }
@@ -6254,8 +6327,8 @@ function updateAddressBar() {
     if (replay) {
         string += '?replay=';
         string += zDateString(replay.ts);
-        string += '-' + replay.ts.getUTCHours().toString().padStart(2,'0');
-        string += ':' + replay.ts.getUTCMinutes().toString().padStart(2,'0');
+        string += '-' + replay.ts.getUTCHours().toString().padStart(2, '0');
+        string += ':' + replay.ts.getUTCMinutes().toString().padStart(2, '0');
     }
 
     if (SelPlanes.length > 0) {
@@ -6491,7 +6564,7 @@ function toggleShowTrace() {
             const plane = SelPlanes[i];
             plane.setNull();
         }
-        selectPlaneByHex(hex, {noDeselect: true, follow: true, zoom: zoomLvl,});
+        selectPlaneByHex(hex, { noDeselect: true, follow: true, zoom: zoomLvl, });
         if (replay) {
             replayStep();
         }
@@ -8957,79 +9030,3 @@ globeRateUpdate();
 
 parseURLIcaos();
 initialize();
-
-let canvases;
-let gl;
-let ollayersArray;
-
-function isMapbox(layers) {
-    const mapboxLayers = [];
-
-    for (let i = 0; i < layers.length; i++) {
-        const layer = layers[i];
-        const properties = layer.getProperties();
-
-        if (properties.name?.includes('mapbox') && layer.getVisible()) {
-            mapboxLayers.push(properties.name);
-        }
-
-        if (layer.getLayers) {
-            const subLayers = layer.getLayers().getArray();
-            const subStatus = isMapbox(subLayers);
-            mapboxLayers.push(...subStatus.mapboxLayers);
-        }
-
-        if (mapboxLayers.length > 0) {
-            break;
-        }
-    }
-
-    return { mapboxLayers };
-}
-
-function mapboxlogo() {
-    const layersArray = OLMap.getLayers().getArray();
-
-    const mblogo = document.querySelector('a.mapbox-logo');
-    const olscaleline = document.querySelector('div.ol-scale-line.ol-unselectable');
-    const oloverlaycontainerstopevent = document.querySelector('div.ol-overlaycontainer-stopevent');
-    oloverlaycontainerstopevent.appendChild(mblogo);
-    mblogo.style.display = isMapbox(layersArray).mapboxLayers.length > 0 ? 'block' : 'none';
-    olscaleline.style.bottom = isMapbox(layersArray).mapboxLayers.length > 0 ? '32px' : '8px';
-}
-
-document.addEventListener("DOMContentLoaded", (event) => {
-    const olwebgl = setInterval(() => {
-        canvases = document.querySelector('canvas.ol-layer');
-
-        if (canvases) {
-            console.log('"canvas.ol-layer" found:', canvases);
-            gl = canvases.getContext('webgl');
-
-            if (gl) {
-                canvases.addEventListener('webglcontextlost', (event) => {
-                    event.preventDefault();
-                    console.error('WebGL context lost. Reloading the page...');
-                    location.reload();
-                });
-            }
-            clearInterval(olwebgl);
-        }
-    }, 150);
-
-    const ollayers = setInterval(() => {
-        ollayersArray = OLMap.getLayers().getArray();
-
-        if (ollayersArray.length > 0) {
-            try {
-                for (let i = 0; i < ollayersArray.length; i++) {
-                    const layer = ollayersArray[i];
-                    layer.on('change', mapboxlogo);
-                }
-            } catch {
-                //console.error(error);
-            }
-            clearInterval(ollayers);
-        }
-    }, 150);
-});
