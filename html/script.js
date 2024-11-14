@@ -6914,7 +6914,7 @@ function initSitePos() {
         drawSiteCircle();
         createLocationDot();
     } else {
-        TAR.planeMan.setColumnVis('distance', false);
+        TAR.planeMan.setColumnVis('sitedist', false);
     }
 
     if (initSitePosFirstRun) {
@@ -7785,6 +7785,17 @@ function initReplay(chunk, data) {
     replayStep();
 }
 
+function setReplayTimeHint(date) {
+    if (true || utcTimesHistoric) {
+        jQuery("#replayDateHintLocal").html(TIMEZONE + " Date: " + lDateString(date));
+        jQuery("#replayDateHint").html("" + zDateString(date));
+        jQuery("#replayTimeHint").html("UTC:" + NBSP + zuluTime(date) + ' / ' + TIMEZONE + ":" + NBSP + localTime(date));
+    } else {
+        jQuery("#replayDateHintLocal").html("");
+        jQuery("#replayDateHint").html("Date: " + lDateString(date));
+        jQuery("#replayTimeHint").html("Time: " + localTime(date) + NBSP + TIMEZONE);
+    }
+}
 function replayOnSliderMove() {
     clearTimeout(refreshId);
 
@@ -7793,13 +7804,8 @@ function replayOnSliderMove() {
     date.setUTCMinutes(Number(replay.minutes));
     replay.seconds = 0;
     date.setUTCSeconds(Number(replay.seconds));
-    if (true || utcTimesHistoric) {
-        jQuery("#replayDateHint").html("Date: " + zDateString(date));
-        jQuery("#replayTimeHint").html("Time: " + zuluTime(date) + NBSP + 'Z');
-    } else {
-        jQuery("#replayDateHint").html("Date: " + lDateString(date));
-        jQuery("#replayTimeHint").html("Time: " + localTime(date) + NBSP + TIMEZONE);
-    }
+
+    setReplayTimeHint(date);
 }
 let replayJumpEnabled = true;
 function replayJump() {
@@ -7834,8 +7840,8 @@ function replaySetTimeHint(arg) {
     dateString = zDateString(replay.ts);
     timeString = zuluTime(replay.ts) + NBSP + 'Z';
 
-    jQuery("#replayDateHint").html("Date: " + dateString);
-    jQuery("#replayTimeHint").html("Time: " + timeString);
+    setReplayTimeHint(replay.ts);
+
     if (replay.datepickerDate != dateString) {
         replay.datepickerDate = dateString;
         jQuery("#replayDatepicker").datepicker('setDate', dateString);
