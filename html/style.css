@@ -505,6 +505,7 @@ select {
     margin-top: 4px;
     margin-bottom: 4px;
     margin-right: 4px;
+    font-family: Cascadia Code;
 }
 
 .formButton {
@@ -1146,22 +1147,22 @@ input {
 }
 
 #replayBar {
-  background: var(--BGCOLOR1);
-  display: none;
-  width: calc(100% - 80px);
-  padding-right: 80px;
-  position: absolute;
-  height: 10px;
-  bottom: 0%;
-  grid-template-columns: 1fr 1.5fr 5fr 2fr;
-  grid-template-rows: 20px 40px 20px 20px;
-  justify-items: center;
-  align-items: center;
-  grid-template-areas:
-    "timezone dateHint timeHint speedHint"
-    "play datepicker hours speedSelect"
-    ". dateHintLocal minutes loading "
-    ". . . .";
+    background: var(--BGCOLOR1);
+    display: none;
+    width: calc(100% - 80px);
+    padding-right: 80px;
+    position: absolute;
+    height: 10px;
+    bottom: 0%;
+    grid-template-columns: 1fr 1.5fr 5fr 2fr;
+    grid-template-rows: 20px 40px 20px 20px;
+    justify-items: center;
+    align-items: center;
+    grid-template-areas:
+        "timezone dateHint timeHint speedHint"
+        "play datepicker hours speedSelect"
+        ". dateHintLocal minutes loading "
+        ". . . .";
 }
 
 #replayLoading {
@@ -1217,11 +1218,13 @@ input {
 #replayTimeHint {
     grid-area: timeHint;
 }
-#replayDateHintLocal{
-  grid-area: dateHintLocal;
+
+#replayDateHintLocal {
+    grid-area: dateHintLocal;
 }
-#replayDateHint{
-  grid-area: dateHint;
+
+#replayDateHint {
+    grid-area: dateHint;
 }
 
 #replaySpeedHint {
