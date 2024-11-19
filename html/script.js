@@ -5558,14 +5558,14 @@ function bearingFromLonLat(position1, position2) {
 
 function zoomIn() {
     const zoom = OLMap.getView().getZoom();
-    OLMap.getView().setZoom((zoom + 1).toFixed());
+    OLMap.getView().setZoom((zoom + 1));
     if (FollowSelected)
         toggleFollow(true);
 }
 
 function zoomOut() {
     const zoom = OLMap.getView().getZoom();
-    OLMap.getView().setZoom((zoom - 1).toFixed());
+    OLMap.getView().setZoom((zoom - 1));
     if (FollowSelected)
         toggleFollow(true);
 }
