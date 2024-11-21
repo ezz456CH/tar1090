@@ -1706,16 +1706,18 @@ function earlyInitPage() {
     TAR.altitudeChart.init();
 
     if (aggregator) {
+        /*
         jQuery('#aggregator_header').show();
         jQuery('#credits').show();
         if (!onMobile) {
             jQuery('#creditsSelected').show();
         }
         jQuery('#selected_infoblock').addClass('aggregator-selected-bg');
+        */
 
         // activate to prevent iframe use
         if (inhibitIframe && window.self != window.top) {
-            window.top.location.href = "https://www.aggregator.com/";
+            window.top.location.href = "https://adsb.ezz456ch.xyz/";
             return;
         }
     }

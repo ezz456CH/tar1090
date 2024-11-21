@@ -109,7 +109,7 @@ select {
     background-size: calc(148 * var(--SCALE)) calc(148 * var(--SCALE));
     background-repeat: no-repeat;
     background-position: calc(7px * var(--SCALE)) calc(108px * var(--SCALE));
-    background-image: url("images/aggregator-logo.png");
+    /*background-image: url("images/aggregator-logo.png");*/
     z-index: 2;
     opacity: 0.12;
 }
