@@ -1709,11 +1709,9 @@ function earlyInitPage() {
         /*
         jQuery('#aggregator_header').show();
         jQuery('#credits').show();
-        if (!onMobile) {
-            jQuery('#creditsSelected').show();
-        }
         jQuery('#selected_infoblock').addClass('aggregator-selected-bg');
         */
+        jQuery('#creditsSelected').show();
 
         // activate to prevent iframe use
         if (inhibitIframe && window.self != window.top) {
