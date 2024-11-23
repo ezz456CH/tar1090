@@ -12,8 +12,8 @@
 .ol-box {
   box-sizing: border-box;
   border-radius: 2px;
-  border: 1.5px solid rgb(204 238 255 / 50%);
-  background-color: rgb(169 211 251 / 25%);
+  border: 1.5px solid rgb(119 170 255 / 50%);
+  background-color: rgb(119 170 255 / 30%);
 }
 
 .ol-mouse-position {
