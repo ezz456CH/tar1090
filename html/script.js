@@ -4893,6 +4893,9 @@ function toggleMilitary() {
     onlyMilitary = !onlyMilitary;
     buttonActive('#U', onlyMilitary);
 
+    if (onlyMilitary && SelectedPlane && !showTrace)
+        deselectAllPlanes();
+    
     refreshFilter();
     active();
     fetchData({ force: true });
