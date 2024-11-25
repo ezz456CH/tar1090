@@ -2878,6 +2878,10 @@ PlaneObject.prototype.setProjection = function (arg) {
 }
 
 function normalized_callsign(flight) {
+    if (routeApiUrl.includes('api.adsb.ezz456ch.xyz')) {
+        return flight;
+    }
+    
     const re = /^([A-Z]*)([0-9]*)([A-Z]*)$/;
     const match = flight.match(re);
     if (!match) {
