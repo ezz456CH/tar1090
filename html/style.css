@@ -15,7 +15,7 @@
 
 @font-face {
     font-family: "Cascadia Code";
-    src: url("fonts/CascadiaCode-Regular.ttf") format("truetype");
+    src: url("webfonts/CascadiaCode-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -23,7 +23,7 @@
 
 @font-face {
     font-family: "Cascadia Code";
-    src: url("fonts/CascadiaCode-Bold.ttf") format("truetype");
+    src: url("webfonts/CascadiaCode-Bold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
     font-display: block;
