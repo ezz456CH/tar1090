@@ -95,7 +95,7 @@ let webglIconOpacity = 1.0;
 let webglIconMapMoveOpacity = 1.0;
 
 // if more than by default 2000 aircraft are on the screen, reduce icon opacity when moving the screen:
-let webglIconMapMoveOpacityCrowded = 0.25;
+let webglIconMapMoveOpacityCrowded = 1.0;
 let webglIconMapMoveOpacityCrowdedThreshold = 2000;
 
 // different marker size depending on zoom lvl
@@ -217,7 +217,7 @@ let SiteCirclesColors = ['#000000', '#000000', '#000000'];
 let SiteCirclesLineDash = null; // null - solid line, [5, 5] - dashed line with 5 pixel lines and spaces in between
 
 // Controls page title, righthand pane when nothing is selected
-let PageName = "Flight Tracker Map - adsb.ezz456ch.xyz";
+let PageName = "Flight Tracker Map - adsb.ezz456ch.com";
 
 // Show country flags by ICAO addresses?
 let ShowFlags = true;
@@ -342,7 +342,7 @@ let planespottingAPI = false;
 // get flight route from routeApi service
 let useRouteAPI = false;
 // which routeApi service to use
-let routeApiUrl = "https://api.adsb.ezz456ch.xyz/api/v1/routes";
+let routeApiUrl = "https://api.adsb.ezz456ch.com/api/v1/routes";
 
 // show a link to jetphotos, only works if planespottersAPI is disabled
 let jetphotoLinks = false;

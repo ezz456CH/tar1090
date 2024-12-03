@@ -2878,7 +2878,7 @@ PlaneObject.prototype.setProjection = function (arg) {
 }
 
 function normalized_callsign(flight) {
-    if (routeApiUrl.includes('api.adsb.ezz456ch.xyz')) {
+    if (routeApiUrl.includes('api.adsb.ezz456ch.com')) {
         return flight;
     }
     
@@ -2904,7 +2904,7 @@ function routeCheck(currentName, lat, lon) {
 }
 
 function routeDoLookup(currentTime) {
-    if (routeApiUrl.includes('api.adsb.ezz456ch.xyz')) {
+    if (routeApiUrl.includes('api.adsb.ezz456ch.com')) {
         // JavaScript doesn't interrupt running functions - so this should be safe to do
         if (g.route_check_in_flight == false && g.route_check_array.length > 0) {
             g.route_check_in_flight = true;

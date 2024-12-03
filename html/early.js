@@ -155,7 +155,7 @@ var fakeLocalStorage = function() {
 };
 
 
-if (window.location.href.match(/ezz456ch.xyz/) && window.location.pathname == '/') {
+if (window.location.href.match(/ezz456ch.com/) && window.location.pathname == '/') {
     aggregator = true;
 }
 if (0 && window.self != window.top) {

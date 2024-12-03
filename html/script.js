@@ -1715,7 +1715,7 @@ function earlyInitPage() {
 
         // activate to prevent iframe use
         if (inhibitIframe && window.self != window.top) {
-            window.top.location.href = "https://adsb.ezz456ch.xyz/";
+            window.top.location.href = "https://adsb.ezz456ch.com/";
             return;
         }
     }
