@@ -2602,6 +2602,8 @@ function ol_map_init() {
         groupSelectStyle: 'none',
         activationMode: 'click', // click sucks in the current implementation
         target: 'map_canvas',
+        label: '<i class="fa-solid fa-layer-group"></i>',
+        collapseLabel: '<i class="fa-solid fa-caret-right"></i>'
     }));
 
     OLMap.on('movestart', function (event) {
