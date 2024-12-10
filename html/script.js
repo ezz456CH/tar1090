@@ -3342,7 +3342,7 @@ function refreshPhoto(selected) {
     }
     selected.psAPIparam = param;
 
-    setPhotoHtml("<p>Loading image...</p>");
+    setPhotoHtml('<i class="fa-solid fa-circle-notch fa-spin"></i>');
     jQuery('#copyrightInfo').html("<span></span>");
     //console.log(ts/1000 + 'sending psAPI request');
     selected.psAPIresponseTS = ts;

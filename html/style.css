@@ -1055,7 +1055,7 @@ table.infoSectionTable tr td {
 #copyrightInfo {
     position: Relative;
     font-size: var(--FS1);
-
+    padding-bottom: 3px;
 }
 
 #selected_photo {
