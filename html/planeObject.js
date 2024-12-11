@@ -3019,12 +3019,12 @@ PlaneObject.prototype.setFlight = function (flight) {
         this.name = 'No callsign';
     } else {
         this.flight = `${flight}`;
-        this.name = this.flight.trim() || 'empty callsign';
+        this.name = this.flight.trim() || 'Empty callsign';
         this.flightTs = now;
         if (useRouteAPI
             && this.visible
             && this.name
-            && this.name != 'empty callsign'
+            && this.name != 'Empty callsign'
             && this.registration != this.name
         ) {
 
