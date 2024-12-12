@@ -29,6 +29,14 @@
     font-display: block;
 }
 
+@font-face {
+    font-family: "ezz456CH's Pixel";
+    src: url("ezz456chs-pixel-regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
 html,
 body {
     -webkit-font-smoothing: antialiased;
@@ -222,17 +230,18 @@ select {
 }
 
 #creditsSelected {
-    margin-top: 6px;
+    margin-top: 12px;
+    margin-bottom: 6px;
 }
 
 .credits-text {
-    font-size: var(--FS2);
-    font-weight: bold;
+    font-size: calc(12px * var(--SCALE));
     color: var(--TXTCOLOR1);
+    font-family: "ezz456CH's Pixel";
 }
 
 .credits-image {
-    display: block;
+    display: none;
     width: calc(24px * var(--SCALE));
     height: calc(24px * var(--SCALE));
     background-size: calc(24px * var(--SCALE)) calc(24px * var(--SCALE));
@@ -803,11 +812,11 @@ table.infoSectionTable tr td {
 
 .largeText a,
 .largeText {
-    font-weight: bold;
     color: var(--TXTCOLOR1);
-    font-size: calc(15px * var(--SCALE));
+    font-size: calc(12px * var(--SCALE));
     text-decoration: none;
     border-radius: 4px;
+    font-family: "ezz456CH's Pixel";
 }
 
 .infoBlockTitleText {
