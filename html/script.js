@@ -6572,6 +6572,7 @@ function toggleShowTrace() {
         }
         selectPlaneByHex(hex, { noDeselect: true, follow: true, zoom: zoomLvl, });
         if (replay) {
+            jQuery("#selected_showTrace_hide").hide();
             replayStep();
         }
     }
