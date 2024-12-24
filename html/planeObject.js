@@ -2939,6 +2939,7 @@ function routeDoLookup(currentTime) {
                         }
                         if (route.route_iata_full) {
                             g.route_cache[route.callsign] = route.route_iata_full;
+                            g.route_cache[route.flight_no] = route.route_iata_full;
                         }
                     }
                 })
