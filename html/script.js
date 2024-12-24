@@ -3650,7 +3650,9 @@ function refreshSelected() {
     if (globeIndex && binCraft && !showTrace) {
         jQuery('#selected_message').prop('title', 'Number of receivers receiving this aircraft');
         jQuery('#selected_message').updateText('Receivers:');
-        if (selected.receiverCount >= 5 && selected.dataSource != 'mlat') {
+        if (isNaN(selected.receiverCount)) {
+            jQuery('#selected_message_count').updateText('n/a');
+        } else if (selected.receiverCount >= 5 && selected.dataSource != 'mlat') {
             jQuery('#selected_message_count').updateText('> ' + selected.receiverCount);
         } else {
             jQuery('#selected_message_count').updateText(selected.receiverCount);
@@ -4895,7 +4897,7 @@ function toggleMilitary() {
 
     if (onlyMilitary && SelectedPlane && !showTrace)
         deselectAllPlanes();
-    
+
     refreshFilter();
     active();
     fetchData({ force: true });
