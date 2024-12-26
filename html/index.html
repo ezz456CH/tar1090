@@ -23,8 +23,8 @@
   <link rel="preload" href="webfonts/CascadiaCode-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="webfonts/ezz456chs-pixel-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="css/all.min.css"/>
-  <link rel="stylesheet" href="css/fontawesome.min.css"/>
+  <link rel="stylesheet" href="css/all.min.css" />
+  <link rel="stylesheet" href="css/fontawesome.min.css" />
 
   <link rel="stylesheet" href="libs/jquery-ui-1.13.2.min.css" type="text/css">
   <link rel="stylesheet" href="libs/ol-8.2.0.css" type="text/css" />
@@ -800,7 +800,7 @@
       <div id="iconTestCanvas" style="background-color:#D2D2D2;display:none;">
       </div>
 
-        <div id="settings_infoblock">
+      <div id="settings_infoblock">
         <div id="settings_close" class="settingsCloseBox"></div>
         <div class="settingsOptionContainer">
           <div class="settingsText">Text and Icon size:</div>
@@ -905,7 +905,7 @@
           <div class="buttonSpacer">
           </div>
           <div id="zoom-in" title="Zoom in" class="button inActiveButton" onclick="zoomIn();"><span
-            class="buttonText"><i class="fa-solid fa-plus"></i></span>
+              class="buttonText"><i class="fa-solid fa-plus"></i></span>
           </div>
           <div id="zoom-out" title="Zoom out" class="button inActiveButton" onclick="zoomOut();"><span
               class="buttonText"><i class="fa-solid fa-minus"></i></span>
@@ -921,14 +921,14 @@
         <button id="altitude_chart_button"></button>
       </div>
       <div id="replayBar">
-        <button id="replayPlay">Play</button>
-        <p id="replayDateHint">Date:</p>
-          <p id="replayDateHintLocal" ></p>
+        <button id="replayPlay"><i class="fa-solid fa-play"></i></button>
+        <p id="replayDateHint" style="text-align: center;"></p>
+        <p id="replayDateHintLocal" style="text-align: center;"></p>
         <input type="text" class="datepicker" id="replayDatepicker">
         <p id="replayTimeHint">Time:</p>
         <p id="hourSelect"></p>
         <p id="minuteSelect"></p>
-        <p id="replayTimeZone">UTC Date:</p>
+        <p id="replayTimeZone" style="text-align: center;">UTC:</p>
         <p id="replaySpeedHint">Speed:</p>
         <p id="replaySpeedSelect"></p>
         <p id="replayLoading"></p>

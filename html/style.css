@@ -1195,11 +1195,14 @@ input {
     cursor: pointer;
     margin-top: 4px;
     margin-bottom: 4px;
+    height: 22px;
+    width: 22px;
 }
 
 #replayDatepicker {
     grid-area: datepicker;
     font-family: Cascadia Code;
+    font-weight: bold;
     height: calc(18px * var(--SCALE));
     color: var(--TXTCOLOR2);
     background-color: var(--BGCOLOR2);

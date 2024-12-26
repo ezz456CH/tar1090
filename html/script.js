@@ -179,6 +179,8 @@ let layers_group;
 let canvases;
 let gl;
 
+let tempDisableLabels = false
+
 const nullStyle = new ol.style.Style({});
 
 let estimateStyle;
@@ -1211,7 +1213,6 @@ function earlyInitPage() {
     jQuery("#trace_jump_1d").click(function () { shiftTrace(1) });
 
     jQuery("#histDatePicker").datepicker({
-        maxDate: '+1d',
         dateFormat: "yy-mm-dd",
         onSelect: function (date) {
             setTraceDate({ string: date });
@@ -4721,7 +4722,7 @@ function adjustInfoBlock() {
 
     jQuery('.mapbox-logo').css('left', (infoBlockWidth * globalScale) + 'px')
     jQuery('.ol-scale-line').css('left', (infoBlockWidth * globalScale + 8) + 'px');
-    jQuery('#replayBar').css('left', (infoBlockWidth * globalScale + 8) + 'px');
+    //jQuery('#replayBar').css('left', (infoBlockWidth * globalScale + 8) + 'px');
 
     if (SelectedPlane && toggles['enableInfoblock'].state) {
 
@@ -4730,12 +4731,26 @@ function adjustInfoBlock() {
         //jQuery('#sidebar_canvas').css('margin-bottom', jQuery('#selected_infoblock').height() + 'px');
         //
         if (mapIsVisible && document.getElementById('map_canvas').clientWidth < parseFloat(jQuery('#selected_infoblock').css('width')) * 3) {
-            jQuery('#selected_infoblock').css('height', '290px');
+            if (replay) {
+                jQuery('#selected_infoblock').css('height', '290px');
+                jQuery('#selected_infoblock').css('bottom', '100px');
+            } else {
+                jQuery('#selected_infoblock').css('height', '290px');
+                jQuery('#selected_infoblock').css('bottom', '0px');
+            }
+
             jQuery('#selected_typedesc').parent().parent().hide();
             jQuery('#credits').css('bottom', '295px');
             jQuery('#credits').css('left', '5px');
         } else {
-            jQuery('#selected_infoblock').css('height', '100%');
+            if (replay) {
+                jQuery('#selected_infoblock').css('height', 'calc(100% - 100px)');
+                jQuery('#selected_infoblock').css('bottom', '100px');
+            } else {
+                jQuery('#selected_infoblock').css('height', '100%');
+                jQuery('#selected_infoblock').css('bottom', '0px');
+            }
+
             jQuery('#credits').css('bottom', '');
             jQuery('#credits').css('left', '');
         }
@@ -6546,6 +6561,10 @@ function toggleShowTrace() {
     if (showTrace) {
         jQuery("#selected_showTrace_hide").hide();
 
+        if (replay) {
+            jQuery("#replayDatepicker").datepicker("option", "disabled", true);
+        }
+
         toggleFollow(false);
         showTraceWasIsolation = onlySelected;
         toggleIsolation("on");
@@ -6573,6 +6592,7 @@ function toggleShowTrace() {
         selectPlaneByHex(hex, { noDeselect: true, follow: true, zoom: zoomLvl, });
         if (replay) {
             jQuery("#selected_showTrace_hide").hide();
+            jQuery("#replayDatepicker").datepicker("option", "disabled", false);
             replayStep();
         }
     }
@@ -6674,13 +6694,17 @@ function setTraceDate(options) {
     } else {
         return null;
     }
-    traceDate.setUTCHours(0);
-    traceDate.setUTCMinutes(0);
-    traceDate.setUTCSeconds(0);
 
-    let tomorrow = (new Date()).getTime() + 86400e3;
-    if (traceDate.getTime() > tomorrow) {
-        traceDate = new Date(tomorrow);
+    traceDate.setUTCHours(0, 0, 0, 0);
+
+    let today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    let tomorrow = new Date(today);
+    tomorrow.setUTCDate(today.getUTCDate() + 1);
+
+    if (traceDate >= tomorrow) {
+        traceDate = new Date(tomorrow.getTime() - 86400e3);
     }
 
     traceDateString = zDateString(traceDate);
@@ -6706,6 +6730,15 @@ function shiftTrace(offset) {
     } else if (offset) {
         setTraceDate({ ts: traceDate.getTime() + offset * 86400 * 1000 });
     }
+
+    const date = new Date();
+
+    const local = new Date().getTimezoneOffset() * 60000;
+    const utc = new Date(date.getTime() + local);
+
+    const maxDate = utc.toISOString().split('T')[0]; jQuery("#histDatePicker").datepicker("option", "maxDate", maxDate);
+
+    jQuery("#histDatePicker").datepicker("option", "maxDate", maxDate);
 
     //jQuery('#trace_date').text('UTC day:\n' + traceDateString);
     jQuery("#histDatePicker").datepicker('setDate', traceDateString);
@@ -7625,7 +7658,7 @@ function currentExtent(factor) {
 }
 
 function replayDefaults(ts) {
-    jQuery("#replayPlay").html("Pause");
+    jQuery("#replayPlay").html('<i class="fa-solid fa-pause"></i>');
     return {
         playing: true,
         ts: ts,
@@ -7638,10 +7671,18 @@ function replayDefaults(ts) {
 }
 
 function replayClear() {
+    if (enableLabels) {
+        enableLabels = false;
+        tempDisableLabels = true
+    }
     clearTimeout(refreshId);
     reaper(true);
     refreshFilter();
     replayPlanes = {};
+    if (tempDisableLabels) {
+        enableLabels = true;
+        tempDisableLabels = false
+    }
 }
 
 function replayGetChunk(ts) {
@@ -7665,6 +7706,15 @@ function loadReplay(ts) {
         ts = new Date(lastAvailable);
         ts.setUTCMinutes(Math.floor(ts.getUTCMinutes() / 30) * 30 + 1);
         ts.setUTCSeconds(0);
+
+        const maxDate = ts.toISOString().split('T')[0];
+
+        const setDate = ts.toISOString().split('T')[0]
+
+        jQuery("#replayDatepicker").datepicker("option", "maxDate", maxDate);
+
+        jQuery("#replayDatepicker").datepicker("setDate", setDate);
+
         console.log('not available, using this time: ' + ts);
         replayClear();
     }
@@ -7793,12 +7843,12 @@ function initReplay(chunk, data) {
 
 function setReplayTimeHint(date) {
     if (true || utcTimesHistoric) {
-        jQuery("#replayDateHintLocal").html(TIMEZONE + " Date: " + lDateString(date));
+        jQuery("#replayDateHintLocal").html(TIMEZONE + ": " + lDateString(date));
         jQuery("#replayDateHint").html("" + zDateString(date));
         jQuery("#replayTimeHint").html("UTC:" + NBSP + zuluTime(date) + ' / ' + TIMEZONE + ":" + NBSP + localTime(date));
     } else {
         jQuery("#replayDateHintLocal").html("");
-        jQuery("#replayDateHint").html("Date: " + lDateString(date));
+        jQuery("#replayDateHint").html("" + lDateString(date));
         jQuery("#replayTimeHint").html("Time: " + localTime(date) + NBSP + TIMEZONE);
     }
 }
@@ -7815,6 +7865,8 @@ function replayOnSliderMove() {
 }
 let replayJumpEnabled = true;
 function replayJump() {
+    if (showTrace)
+        return;
     if (!showingReplayBar)
         return;
     if (!replayJumpEnabled)
@@ -8167,21 +8219,30 @@ function playReplay(state) {
             return;
         }
         replay.playing = true;
-        jQuery("#replayPlay").html("Pause");
+        jQuery("#replayPlay").html('<i class="fa-solid fa-pause"></i>');
         replayStep();
     } else {
         replay.playing = false;
-        jQuery("#replayPlay").html("Play");
+        jQuery("#replayPlay").html('<i class="fa-solid fa-play"></i>');
         clearTimeout(refreshId);
     }
 };
 
 function showReplayBar() {
+    if (showTrace) {
+        if (replay) {
+            replay = false;
+        }
+        return;
+    }
+
     console.log('showReplayBar()');
     showingReplayBar = !showingReplayBar;
     if (!showingReplayBar) {
         jQuery("#replayBar").hide();
-        replay.playing = false;
+        if (replay.playing) {
+            replay.playing = false;
+        }
         replayClear()
         replay = null;
         jQuery('#map_canvas').height('100%');
@@ -8200,8 +8261,8 @@ function showReplayBar() {
             replay.playing = false;
         }
         //ts.setUTCMinutes((parseInt((ts.getUTCMinutes() + 7.5)/15) * 15) % 60);
+
         let datepickerOptions = {
-            maxDate: '+1d',
             dateFormat: "yy-mm-dd",
             autoSize: true,
             onSelect: function (dateText) {
@@ -8247,6 +8308,7 @@ function showReplayBar() {
             }
         });
         const slideBase = 1.0;
+        let tempPauseReplay = false;
         jQuery('#replaySpeedSelect').slider({
             value: Math.pow(replay.speed, 1 / slideBase),
             step: 1.0,
@@ -8255,8 +8317,16 @@ function showReplayBar() {
             slide: function (event, ui) {
                 replay.speed = Math.pow(ui.value, slideBase).toFixed(1);
                 jQuery('#replaySpeedHint').text('Speed: ' + replay.speed + 'x');
+                if (replay.playing) {
+                    replay.playing = false;
+                    tempPauseReplay = true;
+                }
             },
             change: function (event, ui) {
+                if (tempPauseReplay) {
+                    replay.playing = true;
+                    tempPauseReplay = false;
+                }
                 replayStep();
             },
         });
