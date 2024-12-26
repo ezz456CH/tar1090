@@ -4647,6 +4647,7 @@ function toggleFollow(override) {
 }
 
 function resetMap() {
+    jQuery('#home').addClass('fa-fade');
     geoFindMe().always(function () {
         if (SitePosition) {
             CenterLon = SiteLon;
@@ -4669,6 +4670,8 @@ function resetMap() {
 
         //selectPlaneByHex(null,false);
         jQuery("#update_error").css('display', 'none');
+
+        jQuery('#home').removeClass('fa-fade');
     });
 }
 

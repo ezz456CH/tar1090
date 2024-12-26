@@ -149,7 +149,7 @@ select {
     touch-action: manipulation;
     margin: calc(4px * var(--SCALE));
     height: calc(42px * var(--SCALE));
-    width: calc(182px * var(--SCALE));
+    width: calc(100% - 8px * var(--SCALE));
     font-size: calc(13px * var(--SCALE));
     text-align: center;
 }
@@ -568,7 +568,7 @@ input.error {
 
 .layer-switcher {
     top: calc(3px * var(--SCALE)) !important;
-    right: calc(44px * var(--SCALE)) !important;
+    right: calc(41px * var(--SCALE)) !important;
     z-index: 999;
 }
 
@@ -662,11 +662,11 @@ input.error {
 #header_top {
     text-align: right;
     position: absolute;
-    right: calc(83px * var(--SCALE));
+    right: calc(77px * var(--SCALE));
     top: calc(0px * var(--SCALE));
     height: calc(38px * var(--SCALE));
     z-index: 9;
-    width: calc(111px * var(--SCALE));
+    width: calc(73px * var(--SCALE));
 }
 
 .svgButton {
@@ -1202,7 +1202,6 @@ input {
 #replayDatepicker {
     grid-area: datepicker;
     font-family: Cascadia Code;
-    font-weight: bold;
     height: calc(18px * var(--SCALE));
     color: var(--TXTCOLOR2);
     background-color: var(--BGCOLOR2);
@@ -1211,6 +1210,7 @@ input {
     margin-top: 4px;
     margin-bottom: 4px;
     font-size: var(--FS2);
+    font-weight: bold;
 }
 
 #hourSelect {
