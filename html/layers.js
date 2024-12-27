@@ -22,7 +22,7 @@ function createBaseLayers() {
     let us = new ol.Collection();
     let europe = new ol.Collection();
 
-    const tileTransition = onMobile ? 0 : 0;
+    const tileTransition = 0;
 
     if (loStore['customTiles'] != undefined) {
         custom_layers.push(new ol.layer.Tile({
@@ -45,6 +45,7 @@ function createBaseLayers() {
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
             maxZoom: 20,
+            transition: tileTransition,
         }),
         name: 'mapbox_dark',
         title: 'Mapbox Dark',
@@ -59,6 +60,7 @@ function createBaseLayers() {
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
             maxZoom: 20,
+            transition: tileTransition,
         }),
         name: 'mapbox_dark_no_label',
         title: 'Mapbox Dark No Label',
@@ -73,6 +75,7 @@ function createBaseLayers() {
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
             maxZoom: 20,
+            transition: tileTransition,
         }),
         name: 'mapbox_satellite',
         title: 'Mapbox Satellite',
@@ -87,6 +90,7 @@ function createBaseLayers() {
             tilePixelRatio: 2,
             attributions: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/">© OpenStreetMap</a>',
             maxZoom: 20,
+            transition: tileTransition,
         }),
         name: 'mapbox_satellite_no_label',
         title: 'Mapbox Satellite No Label',
@@ -675,6 +679,7 @@ function createBaseLayers() {
                 attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
                 attributionsCollapsible: false,
                 maxZoom: 20,
+                transition: tileTransition,
             });
             rainviewerClouds.setSource(rainviewerCloudsSource);
         };
@@ -697,6 +702,7 @@ function createBaseLayers() {
             opacity: rainViewerRadarOpacity,
             visible: false,
             zIndex: 90,
+            transition: tileTransition,
         });
         g.refreshRainviewerRadar = async function () {
             const latestLayer = await g.getRainviewerLayers('radar');
@@ -737,6 +743,7 @@ function createBaseLayers() {
             attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
             attributionsCollapsible: false,
             maxZoom: 20,
+            transition: tileTransition,
         });
         rainviewerRadarCoverage.setSource(rainviewerRadarCoverageSource);
 
