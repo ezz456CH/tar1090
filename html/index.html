@@ -42,8 +42,9 @@
 
     <div id="highlighted_infoblock" style="pointer-events: none">
       <div class="highlightedTitle infoBlockSection">
-        <div>
+        <div style="display: flex; align-items: center; gap: 4px;">
           <span class="identLarge"><span id="highlighted_callsign">n/a</span></span>
+          <span style="display: none;" class="flight_no" id="highlighted_flightno"></span>
         </div>
         <div>
           <span class="identSmall"><span id="highlighted_pf_route"></span></span>
@@ -92,10 +93,11 @@
       <div id="infoblock-container">
 
         <div class="highlightedTitle infoBlockSection">
-          <div>
+          <div style="display: flex; align-items: center; gap: 4px;">
             <span class="identLarge"
               title="Callsign: Typically the air traffic control callsign or the aircraft's registration, as entered into the transponder by the pilot"
               id="selected_callsign">n/a</span>
+            <span style="display: none;" class="flight_no" title="Flight number" id="selected_flightno"></span>
           </div>
           <div id="selected_icao"
             title="ICAO hex ID: The aircraft's unique ICAO identification number shown in hexadecimal format as set in the aircrafts transponder (can be wrong, we will still display the data with the wrong hex)">

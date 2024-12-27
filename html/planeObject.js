@@ -25,6 +25,7 @@ function PlaneObject(icao) {
     this.trace = []; // save last 30 seconds of positions
     this.lastTraceTs = 0;
     this.routeString = null;
+    this.flightNo = null;
 
     // Display info
     this.visible = false;
@@ -2901,6 +2902,7 @@ function routeCheck(currentName, lat, lon) {
     let route_check = { 'callsign': currentName, 'lat': lat, 'lng': lon };
     g.route_check_array.push(route_check);
     g.route_cache[currentName] = ''; // this way it only gets added to the array once
+    g.flight_no_cache[currentName] = '';
 }
 
 function routeDoLookup(currentTime) {
@@ -2940,6 +2942,8 @@ function routeDoLookup(currentTime) {
                         if (route.route_iata_full) {
                             g.route_cache[route.callsign] = route.route_iata_full;
                             g.route_cache[route.flight_no] = route.route_iata_full;
+                            g.flight_no_cache[route.callsign] = route.flight_no;
+                            g.flight_no_cache[route.flight_no] = route.flight_no;
                         }
                     }
                 })
@@ -3038,6 +3042,7 @@ PlaneObject.prototype.setFlight = function (flight) {
                 // this ensures that if eventually we get (and cache) the route, the plane
                 // information gets updated as we keep coming back to this function
                 this.routeString = g.route_cache[currentName];
+                this.flightNo = g.flight_no_cache[currentName];
             }
         }
     }

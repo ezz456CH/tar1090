@@ -754,6 +754,16 @@ input.error {
     width: 90%;
 }
 
+.flight_no {
+    font-size: calc(12px * var(--SCALE));
+    font-weight: bold;
+    color: var(--BGCOLOR1);
+    background: var(
+    --TXTCOLOR1);
+    border-radius: 2px;
+    padding: 2px;
+}
+
 .identLarge {
     font-size: calc(18px * var(--SCALE));
     color: var(--TXTCOLOR1);

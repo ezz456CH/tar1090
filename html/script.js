@@ -8,6 +8,7 @@
 g.planes = {};
 g.planesOrdered = [];
 g.route_cache = [];
+g.flight_no_cache = [];
 g.route_check_array = [];
 g.route_check_in_flight = false;
 g.route_cache_timer = new Date().getTime() / 1000 + 1; // one second from now
@@ -3518,6 +3519,13 @@ function refreshSelected() {
         } else {
             jQuery('#selected_route').updateText('n/a');
         }
+        if (selected.flightNo) {
+            jQuery('#selected_flightno').updateText(selected.flightNo);
+            jQuery('#selected_flightno').show();
+        } else {
+            jQuery('#selected_flightno').updateText('');
+            jQuery('#selected_flightno').hide();
+        }
     }
 
     let magResult = null;
@@ -3826,6 +3834,13 @@ function refreshHighlighted() {
             jQuery('#highlighted_route').updateText(highlighted.routeString);
         } else {
             jQuery('#highlighted_route').updateText('n/a');
+        }
+        if (highlighted.flightNo) {
+            jQuery('#highlighted_flightno').updateText(highlighted.flightNo);
+            jQuery('#highlighted_flightno').show();
+        } else {
+            jQuery('#highlighted_flightno').updateText('');
+            jQuery('#highlighted_flightno').hide();
         }
     }
 
