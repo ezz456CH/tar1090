@@ -5650,7 +5650,7 @@ function setGlobalScale(scale, init) {
     globalScale = scale;
     document.documentElement.style.setProperty("--SCALE", globalScale);
 
-    labelFont = "bold " + (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale) + "px Cascadia Code";
+    labelFont = "bold " + (12 * globalScale * labelScale) + "px/" + (14 * globalScale * labelScale) + "px Cascadia Code, monospace";
 
     checkScale();
     setLineWidth();
@@ -7025,7 +7025,7 @@ function createLocationDot() {
     let markerStyle = new ol.style.Style({
         text: new ol.style.Text({
             text: '+',
-            font: ((14 * globalScale) + 'px Cascadia Code'),
+            font: ((14 * globalScale) + 'px Cascadia Code, monospace'),
             fill: new ol.style.Fill({ color: '#000000' }),
         })
     });
@@ -7068,7 +7068,7 @@ function drawSiteCircle() {
                 width: globalScale,
             }),
             text: new ol.style.Text({
-                font: ((10 * globalScale) + 'px Cascadia Code'),
+                font: ((10 * globalScale) + 'px Cascadia Code, monospace'),
                 fill: new ol.style.Fill({ color: '#000000' }),
                 offsetY: -8,
                 text: format_distance_long(distance, DisplayUnits, 0),
@@ -8988,7 +8988,7 @@ function setSelectedIcao() {
         return;
     }
     selIcao = selected.icao;
-    let hex_html = "<span style='font-family: Cascadia Code;' class=identSmall>" + selected.icao.toUpperCase() + "</span>";
+    let hex_html = "<span style='font-family: Cascadia Code, monospace;' class=identSmall>" + selected.icao.toUpperCase() + "</span>";
     if (globeIndex || shareBaseUrl) {
         if (copiedIcao && (copiedIcao != selected.icao || new Date().getTime() - copyLinkTime > 2000)) {
             copiedIcao = null;

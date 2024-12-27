@@ -47,7 +47,7 @@ body {
     padding: calc(0px * var(--SCALE));
     background: var(--BGCOLOR1);
     background-color: var(--BGCOLOR1);
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     font-size: var(--FS2);
     overflow: hidden;
     height: 100%;
@@ -78,7 +78,7 @@ body {
 select {
     font-size: var(--FS2);
     height: calc(24px * var(--SCALE));
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     color: var(--TXTCOLOR2);
     background-color: var(--BGCOLOR2);
     border: none;
@@ -134,7 +134,7 @@ select {
 #export_kml_geom,
 #export_kml_geom_avg,
 #export_kml_baro {
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     display: flex;
     align-items: center;
     padding: 6px 14px;
@@ -431,7 +431,7 @@ select {
 }
 
 #ui-datepicker-div {
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
 }
 
 .aircraft_table_header {
@@ -448,11 +448,11 @@ select {
 }
 
 .verticalRateTriangle {
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
 }
 
 .icaoCodeColumn {
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     text-transform: uppercase;
 }
 
@@ -515,14 +515,14 @@ select {
     margin-top: 4px;
     margin-bottom: 4px;
     margin-right: 4px;
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
 }
 
 .formButton {
     font-size: var(--FS2);
     color: var(--TXTCOLOR3);
     background-color: var(--BGCOLOR2);
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     border: none;
     border-radius: 4px;
     padding: .2em .5em;
@@ -780,7 +780,7 @@ input.error {
 .identSmall {
     font-weight: bold;
     color: var(--TXTCOLOR1);
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
 }
 
 .infoSectionTable {
@@ -965,7 +965,7 @@ table.infoSectionTable tr td {
 
 .ui-tabs {
     background-color: var(--BGCOLOR1);
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
 }
 
 .ui-tabs-nav {
@@ -985,7 +985,7 @@ table.infoSectionTable tr td {
     text-align: left;
     outline: none;
     font-size: calc(15px * var(--SCALE));
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     font-weight: bold;
     color: var(--TXTCOLOR1);
 }
@@ -1136,11 +1136,11 @@ html .ui-button.ui-state-disabled:active {
 }
 
 .ui-widget button {
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
 }
 
 .ui-widget input {
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
 }
 
 .ui-slider {
@@ -1195,7 +1195,7 @@ input {
 
 #replayPlay {
     grid-area: play;
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     font-size: var(--FS2);
     color: var(--TXTCOLOR3);
     background-color: var(--BGCOLOR2);
@@ -1211,7 +1211,7 @@ input {
 
 #replayDatepicker {
     grid-area: datepicker;
-    font-family: Cascadia Code;
+    font-family: "Cascadia Code", monospace;
     height: calc(18px * var(--SCALE));
     color: var(--TXTCOLOR2);
     background-color: var(--BGCOLOR2);
