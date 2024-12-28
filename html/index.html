@@ -42,12 +42,14 @@
 
     <div id="highlighted_infoblock" style="pointer-events: none">
       <div class="highlightedTitle infoBlockSection">
-        <div style="display: flex; align-items: center; gap: 4px;">
+        <div>
           <span class="identLarge"><span id="highlighted_callsign">n/a</span></span>
-          <span style="display: none;" class="flight_no" id="highlighted_flightno"></span>
         </div>
         <div>
-          <span class="identSmall"><span id="highlighted_pf_route"></span></span>
+          <span class="identSmall" style="display: flex; align-items: center; gap: 4px;">
+            <span style="display: none;" class="tag-sm" id="highlighted_flightno"></span>
+            <span class="tag-sm" id="highlighted_pf_route"></span>
+          </span>
         </div>
       </div>
       <div class="infoBlockSection">
@@ -93,15 +95,16 @@
       <div id="infoblock-container">
 
         <div class="highlightedTitle infoBlockSection">
-          <div style="display: flex; align-items: center; gap: 4px;">
+          <div>
             <span class="identLarge"
               title="Callsign: Typically the air traffic control callsign or the aircraft's registration, as entered into the transponder by the pilot"
               id="selected_callsign">n/a</span>
-            <span style="display: none;" class="flight_no" title="Flight number" id="selected_flightno"></span>
           </div>
-          <div id="selected_icao"
-            title="ICAO hex ID: The aircraft's unique ICAO identification number shown in hexadecimal format as set in the aircrafts transponder (can be wrong, we will still display the data with the wrong hex)">
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <span style="display: none;" class="tag-sm" title="Flight number" id="selected_flightno"></span>
+            <span class="tag-sm" title="ICAO hex ID: The aircraft's unique ICAO identification number shown in hexadecimal format as set in the aircrafts transponder (can be wrong, we will still display the data with the wrong hex)" id="selected_icao"></span>
           </div>
+          <div style="margin-top: 4px;" id="selected_sharelink"></div>
           <div style="display: none" id="creditsSelected">
             <table class="infoSectionTable">
               <tr>

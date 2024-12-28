@@ -8988,17 +8988,17 @@ function setSelectedIcao() {
         return;
     }
     selIcao = selected.icao;
-    let hex_html = "<span style='font-family: Cascadia Code, monospace;' class=identSmall>" + selected.icao.toUpperCase() + "</span>";
+    let sharelink_html = "";
     if (globeIndex || shareBaseUrl) {
         if (copiedIcao && (copiedIcao != selected.icao || new Date().getTime() - copyLinkTime > 2000)) {
             copiedIcao = null;
         }
-        let copy_link_text = (copiedIcao != null) ? "Copied" : ("Copy" + NBSP + "Link");
-        let icao_link = "<span  class=identSmall><a class='link identSmall' target=\"_blank\" href=\"" + shareLink +
-            "\" onclick=\"copyShareLink(); return false;\">" + copy_link_text + "</a></span>";
-        hex_html = hex_html + "<br>" + icao_link;
+        let sharelink_text = (copiedIcao != null) ? '<i class="fa-solid fa-check"></i> Link Copied' : '<i class="fa-solid fa-share"></i> Share';
+        sharelink_html = "<span class=identSmall><a class='link identSmall' target=\"_blank\" href=\"" + shareLink +
+            "\" onclick=\"copyShareLink(); return false;\">" + sharelink_text + "</a></span>";
     }
-    jQuery('#selected_icao').html(hex_html);
+    jQuery('#selected_icao').html(selected.icao.toUpperCase());
+    jQuery('#selected_sharelink').html(sharelink_html);
 
     jQuery('a.identSmall').prop('href', shareLink);
 }

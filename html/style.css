@@ -754,7 +754,7 @@ input.error {
     width: 90%;
 }
 
-.flight_no {
+.tag-sm {
     font-size: calc(12px * var(--SCALE));
     font-weight: bold;
     color: var(--BGCOLOR1);
