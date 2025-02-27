@@ -4282,10 +4282,10 @@ function refreshFeatures() {
                 if (plane.squawk in tableColors.special) {
                     bgColor = tableColors.special[plane.squawk];
                     plane.bgColorCache = bgColor;
-                    plane.tr.style = "background-color: " + bgColor + "; color: black;";
+                    plane.tr.style = "background-color: " + bgColor + "; color: black; user-select: none;";
                 } else if (plane.bgColorCache != bgColor) {
                     plane.bgColorCache = bgColor;
-                    plane.tr.style = "background-color: " + bgColor + ";";
+                    plane.tr.style = "background-color: " + bgColor + "; user-select: none;";
                 }
 
                 for (let cell in activeCols) {
