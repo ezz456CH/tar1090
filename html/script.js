@@ -101,7 +101,7 @@ let userScale = 1;
 let iconScale = 0.75;
 let labelScale = 1;
 let newWidth = lineWidth;
-let SiteOverride = false;
+let SiteOverride = (SiteLat != null && SiteLon != null);
 let onJumpInput = null;
 let labelFill = null;
 let blackFill = null;
@@ -148,7 +148,6 @@ let infoBlockWidth = baseInfoBlockWidth;
 const renderBuffer = 60;
 
 let shareLink = '';
-
 
 let CenterLat = 0;
 let CenterLon = 0;
@@ -514,6 +513,7 @@ function afterFirstFetch() {
             func();
         }
 
+
         geoMag = geoMagFactory(cof2Obj());
 
         db_load_type_cache().always(function () {
@@ -720,13 +720,10 @@ function initialize() {
                 trace_hist_only = true;
             if (receiverJson.json_trace_interval < 2)
                 traces_high_res = true;
-            if (receiverJson.lat != null) {
+            if (receiverJson.lat != null && !SiteOverride) {
                 //console.log("receiver.json lat: " + receiverJson.lat)
                 SiteLat = receiverJson.lat;
                 SiteLon = receiverJson.lon;
-                SitePosition = [SiteLon, SiteLat];
-                DefaultCenterLat = receiverJson.lat;
-                DefaultCenterLon = receiverJson.lon;
             }
             if (receiverJson.jaeroTimeout) {
                 jaeroTimeout = receiverJson.jaeroTimeout * 60;
@@ -738,6 +735,13 @@ function initialize() {
                 altitudeFilter = false;
             }
         }
+
+        if (SiteLat && SiteLon) {
+            SitePosition = [SiteLon, SiteLat];
+            DefaultCenterLat = SiteLat;
+            DefaultCenterLon = SiteLon;
+        }
+
         configureReceiver = null;
 
         // Initialize stuff
@@ -844,11 +848,9 @@ function initPage() {
         let lat = parseFloat(usp.get('SiteLat'));
         let lon = parseFloat(usp.get('SiteLon'));
         if (!isNaN(lat) && !isNaN(lon)) {
-            if (true || usp.has('SiteNosave')) {
-                SiteLat = CenterLat = DefaultCenterLat = lat;
-                SiteLon = CenterLon = DefaultCenterLon = lon;
-                SiteOverride = true;
-            }
+            SiteLat = CenterLat = DefaultCenterLat = lat;
+            SiteLon = CenterLon = DefaultCenterLon = lon;
+            SiteOverride = true;
             loStore['SiteLat'] = lat;
             loStore['SiteLon'] = lon;
         }
@@ -1731,12 +1733,8 @@ function earlyInitPage() {
 
 
     if (hideButtons) {
-        jQuery('#header_top').hide();
-        jQuery('#header_side').hide();
-        jQuery('#tabs').hide();
-        jQuery('#filterButton').hide();
-        jQuery('.ol-control').hide();
-        jQuery('.ol-attribution').show();
+        showHideButtons();
+        runAfterLoad(showHideButtons);
     }
 }
 
@@ -2075,14 +2073,17 @@ function setIntervalTimers() {
 }
 
 function updateDrones() {
-    let req = jQuery.ajax({
-        url: droneJson,
-        dataType: 'json',
-    });
+    let jsons = Array.isArray(droneJson) ? droneJson : [ droneJson ];
+    for (let i in jsons) {
+        let req = jQuery.ajax({
+            url: jsons[i],
+            dataType: 'json',
+        });
 
-    req.done(function (data) {
-        handleDrones(data);
-    });
+        req.done(function(data) {
+            handleDrones(data);
+        });
+    }
 }
 
 function handleDrones(data) {
@@ -2105,7 +2106,7 @@ function processDrone(drone, now, last) {
         plane = new PlaneObject(hex);
     }
 
-    let ac = {};
+    let ac = drone;
 
     ac.type = 'other';
     ac.t = 'DRON';
@@ -2153,6 +2154,37 @@ function processAIS(data) {
     }
 }
 
+function shortShiptype(typeNumber) {
+    if (typeNumber == 0) return "UNKN";
+    if (typeNumber <= 19) return "RESE";
+    if (typeNumber <= 28) return "WING";
+    if (typeNumber <= 29) return "ASAR"; //Airborne SAR
+    if (typeNumber <= 30) return "FISH";
+    if (typeNumber <= 32) return "TUG";
+    if (typeNumber <= 33) return "DRED";
+    if (typeNumber <= 34) return "DIVE";
+    if (typeNumber <= 35) return "MIL";
+    if (typeNumber <= 36) return "SAIL";
+    if (typeNumber <= 37) return "YACH";
+    if (typeNumber <= 39) return "RESE";
+    if (typeNumber <= 49) return "HSPD";
+    if (typeNumber <= 50) return "PILO";
+    if (typeNumber <= 50) return "PILO";
+    if (typeNumber <= 51) return "SAR";
+    if (typeNumber <= 52) return "TUG";
+    if (typeNumber <= 53) return "TEND";
+    if (typeNumber <= 54) return "POLC";
+    if (typeNumber <= 55) return "LAW";
+    if (typeNumber <= 57) return "LOC";
+    if (typeNumber <= 58) return "MED";
+    if (typeNumber <= 59) return "SPEC";
+    if (typeNumber <= 69) return "PASS";
+    if (typeNumber <= 79) return "CARG";
+    if (typeNumber <= 89) return "TANK";
+    if (typeNumber <= 99) return "OTHE";
+    return "";
+}
+
 function processBoat(feature, now, last) {
     const pr = feature.properties;
     const hex = 'MMSI' + pr.mmsi;
@@ -2173,13 +2205,21 @@ function processBoat(feature, now, last) {
     ac.type = 'ais';
     ac.gs = pr.speed;
     ac.flight = pr.callsign;
-    ac.r = pr.shipname
+    ac.r = pr.shipname;
     ac.seen = now - pr.last_signal;
 
     ac.messages = pr.count;
     ac.rssi = pr.level;
 
     ac.track = pr.cog;
+
+    if (pr.destination) { ac.route = pr.destination; }
+    if (pr.shiptype !== undefined) { ac.t = shortShiptype(pr.shiptype); }
+    // Identify Non-Ship Types
+    if (pr.mmsi_type == 6) { ac.t = "ANAV"; } // Aids to Navigation
+    if (pr.mmsi_type == 5) {ac.t = "BASE"; } // Land Base Station
+    if (pr.mmsi_type == 3) {ac.t = "COAS"; } // Coast Station
+
 
     if (feature.geometry && feature.geometry.coordinates) {
         const coords = feature.geometry.coordinates;
@@ -2737,6 +2777,25 @@ function initMapEarly() {
     });
 }
 
+function showHideButtons() {
+    if (hideButtons) {
+        jQuery('#header_top').hide();
+        jQuery('#header_side').hide();
+        jQuery('#splitter').hide();
+        jQuery('#tabs').hide();
+        jQuery('#filterButton').hide();
+        jQuery('.ol-zoom').hide();
+        jQuery('.layer-switcher').hide();
+    } else {
+        jQuery('#header_top').show();
+        jQuery('#header_side').show();
+        jQuery('#splitter').show();
+        jQuery('#tabs').show();
+        jQuery('#filterButton').show();
+        jQuery('.ol-zoom').show();
+        jQuery('.layer-switcher').show();
+    }
+}
 
 // Initalizes the map and starts up our timers to call various functions
 function initMap() {
@@ -3065,26 +3124,8 @@ function initMap() {
                 resetMap();
                 break;
             case "H":
-                if (!hideButtons) {
-                    jQuery('#header_top').hide();
-                    jQuery('#header_side').hide();
-                    jQuery('#splitter').hide();
-                    jQuery('#tabs').hide();
-                    jQuery('#filterButton').hide();
-                    jQuery('.ol-control').hide();
-                    jQuery('.ol-attribution').show();
-                } else {
-                    jQuery('#header_top').show();
-                    jQuery('#header_side').show();
-                    jQuery('#splitter').show();
-                    jQuery('#tabs').show();
-                    jQuery('#filterButton').show();
-                    jQuery('.ol-control').show();
-                    jQuery('#expand_sidebar_control').hide();
-                    toggles['sidebar_visible'].restore();
-                    TAR.altitudeChart.render();
-                }
                 hideButtons = !hideButtons;
+                showHideButtons();
                 break;
             case "f":
                 toggleFollow();
@@ -6823,6 +6864,9 @@ function setLineWidth() {
 }
 let lastCallLocationChange = 0;
 function onLocationChange(position) {
+    if (SiteOverride) {
+        return;
+    }
     lastCallLocationChange = new Date().getTime();
     changeCenter();
     const moveMap = (Math.abs(SiteLat - CenterLat) < 0.000001 && Math.abs(SiteLon - CenterLon) < 0.000001);
@@ -7565,6 +7609,8 @@ function drawHeatmap() {
                     alt |= -65536;
                 if (alt == -123)
                     alt = 'ground';
+                else if (alt == -124)
+                    alt = null;
                 else
                     alt *= 25;
 
@@ -8068,6 +8114,8 @@ function replayStep(arg) {
             alt |= -65536;
         if (alt == -123)
             alt = 'ground';
+        else if (alt == -124)
+            alt = null;
         else
             alt *= 25;
 
