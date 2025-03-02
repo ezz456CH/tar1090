@@ -573,6 +573,16 @@ input.error {
 	z-index: 999;
 }
 
+.layer-switcher button::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f5fd";
+}
+
+.layer-switcher.shown button::before {
+    content: "\f0da" !important;
+}
+
 .layer-switcher button {
 	background-size: calc(26px * var(--SCALE)) calc(26px * var(--SCALE));
 	background-repeat: no-repeat;
