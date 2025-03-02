@@ -47,6 +47,12 @@ sudo bash -c "$(wget -nv -O - https://github.com/ezz456CH/tar1090/raw/master/ins
 
 Configuration should be preserved.
 
+## Testing changes to tar1090
+
+- Clone the github repo
+- Make changes
+- run `./install.sh test` to install from your local directory
+
 
 ## Configuration part 1: History interval and number of snapshots / ptracks duration (optional)
 
