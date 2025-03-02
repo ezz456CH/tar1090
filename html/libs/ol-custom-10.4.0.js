@@ -19339,7 +19339,7 @@
 				let e = 1;
 				const n = this.targetPointers[0],
 					i = this.down_.originalEvent,
-					r = n.clientY - i.clientY;
+					r = -(n.clientY - i.clientY);
 				void 0 !== this.lastDistance_ && (e = 1 - (this.lastDistance_ - r) * this.scaleDeltaByPixel_), (this.lastDistance_ = r), 1 != e && (this.lastScaleDelta_ = e);
 				const s = t.map,
 					o = s.getView();
