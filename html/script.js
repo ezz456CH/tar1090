@@ -6095,7 +6095,7 @@ function processURLParams() {
         // Load stored map settings if present
         zoomLvl = Number(loStore['zoomLvl']) || DefaultZoomLvl;
         zoomLvlCache = zoomLvl;
-        OLMap.getView().setZoom(zoomLvl);
+        OLMap.getView().setZoom(g.zoomLvl);
     }
 
     if (usp.has('mil'))
