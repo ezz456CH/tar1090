@@ -6093,8 +6093,8 @@ function processURLParams() {
 
     if (zoom) {
         // Load stored map settings if present
-        zoomLvl = Number(loStore['zoomLvl']) || DefaultZoomLvl;
-        zoomLvlCache = zoomLvl;
+        g.zoomLvl = Number(loStore['zoomLvl']) || DefaultZoomLvl;
+        zoomLvlCache = g.zoomLvl;
         OLMap.getView().setZoom(g.zoomLvl);
     }
 
