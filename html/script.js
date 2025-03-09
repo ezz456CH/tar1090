@@ -6094,7 +6094,7 @@ function processURLParams() {
     if (zoom) {
         // Load stored map settings if present
         g.zoomLvl = Number(loStore['zoomLvl']) || DefaultZoomLvl;
-        zoomLvlCache = g.zoomLvl;
+        g.zoomLvlCache = g.zoomLvl;
         OLMap.getView().setZoom(g.zoomLvl);
     }
 
