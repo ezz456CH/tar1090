@@ -7743,8 +7743,8 @@ function replayDefaults(ts) {
 }
 
 function replayClear() {
-    if (enableLabels) {
-        enableLabels = false;
+    if (g.enableLabels) {
+        g.enableLabels = false;
         tempDisableLabels = true
     }
     clearTimeout(refreshId);
@@ -7752,7 +7752,7 @@ function replayClear() {
     refreshFilter();
     replayPlanes = {};
     if (tempDisableLabels) {
-        enableLabels = true;
+        g.enableLabels = true;
         tempDisableLabels = false
     }
 }
