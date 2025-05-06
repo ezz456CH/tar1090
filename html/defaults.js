@@ -28,9 +28,6 @@ let DisplayUnits = "nautical";
 // provided by dump1090 itself. All positions are in decimal
 // degrees.
 
-// Default center of the map.
-let DefaultCenterLat = 14.81;
-let DefaultCenterLon = 104.46
 // The google maps zoom level, 0 - 16, lower is further out
 let DefaultZoomLvl   = 8.6;
 
@@ -38,12 +35,8 @@ let autoselectCoords = null;
 
 let showGrid = false;
 
-// Center marker. If dump1090 provides a receiver location,
-// that location is used and these settings are ignored.
 
 let SiteShow    = true;           // true to show a center marker
-let SiteLat     = null;            // position of the marker
-let SiteLon     = null;
 let SiteName    = "My Radar Site"; // tooltip of the marker
 
 // Update GPS location (keep map centered on GPS location)
@@ -68,7 +61,7 @@ let actual_range_show = false;
 // which map is displayed to new visitors
 let MapType_tar1090 = "mapbox_dark_no_label";
 let defaultOverlays = ["rainviewer_radar"];
-let dwdLayers = 'dwd:RX-Produkt';
+let dwdLayers = 'dwd:RADOLAN-RY';
 
 // Default map dim state
 let MapDim = false;
@@ -339,10 +332,12 @@ let planespottersAPIurl = "https://api.planespotters.net/pub/photos/";
 // get pictures from planespotting.be
 let planespottingAPI = false;
 
-// get flight route from routeApi service
+// get flight route from routeApi service default setting (toggle via settings checkbox)
 let useRouteAPI = false;
 // which routeApi service to use
-let routeApiUrl = "https://api.adsb.ezz456ch.com/api/v1/routes";
+let routeApiUrl = "https://adsb.im/api/0/routeset";
+// alternative: "https://api.adsb.ezz456ch.com/api/v1/routes";
+// routeApiUrl = ""; // to disable route API so it can't be enabled by a website visitor
 
 // show a link to jetphotos, only works if planespottersAPI is disabled
 let jetphotoLinks = false;
@@ -390,7 +385,7 @@ let audio_url = ["", "", "", "", "", ""]; // show html5 audio player for these U
 
 let aiscatcher_server = "";
 let aiscatcher_refresh = 15;
-let aiscatcher_test = true;
+let aiscatcher_test = true; // unused
 let aisTimeout = 1200;
 
 let droneJson = "";
@@ -446,3 +441,14 @@ let dynGlobeRate = false; // enable use of globeRates.json in index.html directo
 
 let multiOutline = false;
 let inhibitIframe = false;
+
+
+// !!! Please set the latitude / longitude in the decoder rather than
+// setting it here !!!
+// (graphs1090 will get the location from the decoder)
+let SiteLat     = null;            // position of the marker
+let SiteLon     = null;
+
+// Default center of the map if no Site location is set
+let DefaultCenterLat = 40.56;
+let DefaultCenterLon = -73.66

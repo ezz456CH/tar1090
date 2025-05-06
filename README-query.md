@@ -54,6 +54,7 @@ See the main readme for more examples on how to use the filters
 - mapOrientation=0-360 - normally true north faces up, use this to change which true direction is pointing up.
 - monochromeMarkers=xxxxxx - set constant html color for markers (parameter is an hexadecimal color).
 - monochromeTracks=xxxxxx - set constant html color for tracks (parameter is an hexadecimal color).
+- atcStyle - use a style somewhat like an ATC display
 - outlineWidth=value - set width for the for aircraft icons (only works with webGL disabled)
 - outlineColor=xxxxxx - set outline color (parameter is an hexadecimal color, only works with webGL disabled)
 - sidebarWidth=xxx - size of sidebar in pixels.
@@ -81,6 +82,8 @@ See the main readme for more examples on how to use the filters
 ## heatmap / replay (only available with readsb --heatmap parameter)
 
 - replay - replay history of all planes
+- replaySpeed - adjust replay speed
+- replayPaused - load replay paused
 - heatmap - show a heatmap for the last 24h by default (optional: supply the maximum number of dots drawn, default 32000)
 - heatDuration - how many hours to show in the heatmap
 - heatEnd - how many hours to shift the heatmap time window into the past
