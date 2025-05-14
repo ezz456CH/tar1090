@@ -6833,11 +6833,9 @@ function setTraceDate(options) {
     traceDate.setUTCSeconds(0);
     traceDate.setUTCMilliseconds(0);
 
-    let tomorrow = new Date(today);
-    tomorrow.setUTCDate(today.getUTCDate() + 1);
-
-    if (traceDate >= tomorrow) {
-        traceDate = new Date(tomorrow.getTime() - 86400e3);
+    let tomorrow = (new Date()).getTime() + 86400e3;
+    if (traceDate.getTime() > tomorrow) {
+        traceDate = new Date(tomorrow);
     }
 
     traceDateString = zDateString(traceDate);
@@ -6866,10 +6864,9 @@ function shiftTrace(offset) {
 
     const date = new Date();
 
-    const local = new Date().getTimezoneOffset() * 60000;
-    const utc = new Date(date.getTime() + local);
-
-    const maxDate = utc.toISOString().split('T')[0]; jQuery("#histDatePicker").datepicker("option", "maxDate", maxDate);
+    const maxDate = date.toISOString().split('T')[0];
+    
+    jQuery("#histDatePicker").datepicker("option", "maxDate", maxDate);
 
     jQuery("#histDatePicker").datepicker("option", "maxDate", maxDate);
 
