@@ -1766,7 +1766,9 @@ function earlyInitPage() {
         jQuery('#imageConfigLink').text(imageConfigText)
         jQuery('#imageConfigHeader').show();
     }
-
+    if (aiscatcher_server) {
+        aiscatcher_server = aiscatcher_server.replace('HOSTNAME', window.location.hostname);
+    }
 
     if (hideButtons) {
         showHideButtons();
