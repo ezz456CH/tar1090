@@ -1680,6 +1680,18 @@ function earlyInitPage() {
                 }
             }
         });
+
+        /*
+        new Toggle({
+            key: "useIataAirportCodes",
+            display: "Show IATA airport codes",
+            container: "#settingsRight",
+            init: useIataAirportCodes,
+            setState: function(state) {
+                useIataAirportCodes = state;
+            }
+        });
+        */
     } else {
         useRouteAPI = false;
     }
@@ -1779,10 +1791,7 @@ function earlyInitPage() {
 function initLegend(colors) {
     let html = '';
     html += '<div class="legendTitle" style="background-color:' + colors['adsb'] + ';">ADS-B</div>';
-    if (!globeIndex)
-        html += '<div class="legendTitle" style="background-color:' + colors['uat'] + ';">UAT / ADS-R</div>';
-    if (globeIndex)
-        html += '<div class="legendTitle" style="background-color:' + colors['uat'] + ';">ADS-C/R / UAT</div>';
+    html += '<div class="legendTitle" style="background-color:' + colors['uat'] + ';">UAT / ADS-R</div>';
     html += '<div class="legendTitle" style="background-color:' + colors['mlat'] + ';">MLAT</div>';
     html += '<br>';
     html += '<div class="legendTitle" style="background-color:' + colors['tisb'] + ';">TIS-B</div>';
@@ -1792,6 +1801,7 @@ function initLegend(colors) {
         html += '<div class="legendTitle" style="background-color:' + colors['other'] + ';">Other</div>';
     if (aiscatcher_server)
         html += '<div class="legendTitle" style="background-color:' + colors['ais'] + ';">AIS</div>';
+    html += '<div class="legendTitle" style="background-color:' + colors['adsc'] + `;">${jaeroLabel}</div>`;
 
     document.getElementById('legend').innerHTML = html;
 }
@@ -1809,7 +1819,7 @@ function initSourceFilter(colors) {
     html += createFilter(colors['tisb'], 'TIS-B', sources[3]);
     html += createFilter(colors['modeS'], 'Mode-S', sources[4]);
     html += createFilter(colors['other'], 'Other', sources[5]);
-    html += createFilter(colors['uat'], 'ADS-C', sources[6]);
+    html += createFilter(colors['adsc'], jaeroLabel, sources[6]);
 
     if (aiscatcher_server) {
         html += createFilter(colors['ais'], 'AIS', sources[7]);
@@ -3776,12 +3786,13 @@ function refreshSelected() {
     jQuery('#selected_sitedist1').updateText(format_distance_long(sitedist, DisplayUnits));
     jQuery('#selected_sitedist2').updateText(format_distance_long(sitedist, DisplayUnits));
     jQuery('#selected_rssi1').updateText(selected.rssi != null ? selected.rssi.toFixed(1) : "n/a");
-    if (globeIndex && binCraft && !showTrace) {
-        jQuery('#selected_message').prop('title', 'Number of receivers receiving this aircraft');
-        jQuery('#selected_message').updateText('Receivers:');
-        if (isNaN(selected.receiverCount)) {
-            jQuery('#selected_message_count').updateText('n/a');
-        } else if (selected.receiverCount >= 5 && selected.dataSource != 'mlat') {
+    if (
+        ((selected.messages == undefined && selected.receiverCount) || (globeIndex && binCraft))
+        && !showTrace
+    ) {
+        jQuery('#selected_message_count').prev().updateText('Receivers:');
+        jQuery('#selected_message_count').prop('title', 'Number of receivers receiving this aircraft');
+        if (selected.receiverCount >= 5 && selected.dataSource != 'mlat') {
             jQuery('#selected_message_count').updateText('> ' + selected.receiverCount);
         } else {
             jQuery('#selected_message_count').updateText(selected.receiverCount);

@@ -853,8 +853,13 @@ PlaneObject.prototype.updateIcon = function () {
         //    callsign =  'reg: ' + this.registration;
         else
             callsign = this.icao.toUpperCase();
-        if ((useRouteAPI || this.dataSource == "ais") && this.routeString)
-            callsign += ' - ' + this.routeString;
+        if ((useRouteAPI || this.dataSource == "ais") && this.routeString) {
+            if (g.extendedLabels) {
+                callsign += ' - ' + this.routeString;
+            } else {
+                callsign += '\n' + this.routeString;
+            }
+        }
 
         const unknown = NBSP + NBSP + "?" + NBSP + NBSP;
 
@@ -2991,37 +2996,38 @@ function routeDoLookup(currentTime) {
                     for (var route of routes) {
                         if (!route) {
                         console.error(`Route API returned this invalid element in the array ${route}`);
+                        console.log(routes);
                         continue;
                     }
                     // let's log just a little bit of what's happening
-                        if (debugRoute) {
-                            var logText = `result for ${route.callsign}: `;
-                            if (route._airport_codes_iata == 'unknown') {
-                                logText += 'unknown to the API server';
-                            } else if (route.plausible == false) {
-                                logText += `${route._airport_codes_iata} considered implausible`;
-                            } else {
-                                logText += `adding ${route._airport_codes_iata}`;
-                            }
-                            //console.log(logText);
+                    let codes = useIataAirportCodes ? route._airport_codes_iata : route.airport_codes;
+                    if (debugRoute) {
+                        var logText = `result for ${route.callsign}: `;
+                        if (codes == 'unknown') {
+                            logText += 'unknown to the API server';
+                        } else if (route.plausible == false) {
+                            logText += `${codes} considered implausible`;
+                        } else {
+                            logText += `adding ${codes}`;
                         }
-                        if (route.airport_codes != 'unknown') {
-                            if (route.plausible == true) {
-                                g.route_cache[route.callsign] = route._airport_codes_iata;
-                            } else {
-                                g.route_cache[route.callsign] = `?? ${route._airport_codes_iata}`;
-                            }
+                        //console.log(logText);
+                    }
+                    if (codes != 'unknown') {
+                        if (route.plausible == true) {
+                            g.route_cache[route.callsign] = codes;
+                        } else {
+                            g.route_cache[route.callsign] = `?? ${codes}`;
                         }
                     }
-                })
-                .fail((jqxhr, status, error) => {
-                    g.route_check_in_flight = false;
-                    console.log('API server call failed with', status);
-                });
-        } else {
-            if (0 && debugRoute) {
-                console.log(`nothing to send to server at ${currentTime}`);
-            }
+                }
+            })
+            .fail((jqxhr, status, error) => {
+                g.route_check_in_flight = false;
+                console.log('API server call failed with', status);
+            });
+    } else {
+        if (0 && debugRoute) {
+            console.log(`nothing to send to server at ${currentTime}`);
         }
     }
 }
