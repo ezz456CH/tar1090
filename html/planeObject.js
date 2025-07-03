@@ -852,14 +852,9 @@ PlaneObject.prototype.updateIcon = function () {
         // else if (this.registration)
         //    callsign =  'reg: ' + this.registration;
         else
-            callsign = this.icao.toUpperCase();
-        if ((useRouteAPI || this.dataSource == "ais") && this.routeString) {
-            if (g.extendedLabels) {
-                callsign += ' - ' + this.routeString;
-            } else {
-                callsign += '\n' + this.routeString;
-            }
-        }
+            callsign = 'hex: ' + this.icao;
+        if ((useRouteAPI || this.dataSource == "ais") && this.routeString)
+            callsign += ' - ' + this.routeString;
 
         const unknown = NBSP + NBSP + "?" + NBSP + NBSP;
 
@@ -3000,23 +2995,22 @@ function routeDoLookup(currentTime) {
                             continue;
                         }
                         // let's log just a little bit of what's happening
-                        let codes = useIataAirportCodes ? route._airport_codes_iata : route.airport_codes;
                         if (debugRoute) {
                             var logText = `result for ${route.callsign}: `;
-                            if (codes == 'unknown') {
+                            if (route._airport_codes_iata == 'unknown') {
                                 logText += 'unknown to the API server';
                             } else if (route.plausible == false) {
-                                logText += `${codes} considered implausible`;
+                                logText += `${route._airport_codes_iata} considered implausible`;
                             } else {
-                                logText += `adding ${codes}`;
+                                logText += `adding ${route._airport_codes_iata}`;
                             }
                             //console.log(logText);
                         }
-                        if (codes != 'unknown') {
+                        if (route.airport_codes != 'unknown') {
                             if (route.plausible == true) {
-                                g.route_cache[route.callsign] = codes;
+                                g.route_cache[route.callsign] = route._airport_codes_iata;
                             } else {
-                                g.route_cache[route.callsign] = `?? ${codes}`;
+                                g.route_cache[route.callsign] = `?? ${route._airport_codes_iata}`;
                             }
                         }
                     }
@@ -3031,59 +3025,59 @@ function routeDoLookup(currentTime) {
             }
         }
     }
+}
 
-    PlaneObject.prototype.setFlight = function (flight) {
-        if (flight == null) {
-            if (now - this.flightTs > 10 * 60) {
-                this.flight = null;
-                this.name = 'No callsign';
-            }
-        } else if (flight == "@@@@@@@@") {
+PlaneObject.prototype.setFlight = function (flight) {
+    if (flight == null) {
+        if (now - this.flightTs > 10 * 60) {
             this.flight = null;
             this.name = 'No callsign';
-        } else {
-            this.flight = `${flight}`;
-            this.name = this.flight.trim() || 'Empty callsign';
-            this.flightTs = now;
-            if (useRouteAPI
-                && this.visible
-                && this.name
-                && this.name != 'Empty callsign'
-                && this.registration != this.name
-            ) {
-
-                let currentName = normalized_callsign(this.name);
-                if (g.route_cache[currentName] === undefined &&
-                    this.seen_pos < 60 &&
-                    this.position) {
-                    routeCheck(currentName, this.position[1], this.position[0]);
-                } else {
-                    // this ensures that if eventually we get (and cache) the route, the plane
-                    // information gets updated as we keep coming back to this function
-                    this.routeString = g.route_cache[currentName];
-                    this.flightNo = g.flight_no_cache[currentName];
-                }
-            }
         }
-    }
+    } else if (flight == "@@@@@@@@") {
+        this.flight = null;
+        this.name = 'No callsign';
+    } else {
+        this.flight = `${flight}`;
+        this.name = this.flight.trim() || 'Empty callsign';
+        this.flightTs = now;
+        if (useRouteAPI
+            && this.visible
+            && this.name
+            && this.name != 'Empty callsign'
+            && this.registration != this.name
+        ) {
 
-    function normalizeTraceStamps(data) {
-        if (!data || !data.trace) {
-            console.log('normalizeTraceStamps: trace empty?')
-            return null;
-        }
-        let trace = data.trace;
-        let last = 0;
-        for (let i = 0; i < trace.length; i++) {
-            let point = trace[i];
-            point[0] += data.timestamp;
-            if (point[0] >= last) {
-                last = point[0];
+            let currentName = normalized_callsign(this.name);
+            if (g.route_cache[currentName] === undefined &&
+                this.seen_pos < 60 &&
+                this.position) {
+                routeCheck(currentName, this.position[1], this.position[0]);
             } else {
-                console.log('normalize: trace backwards last: ' + last.toFixed(3) + ' current: ' + point[0].toFixed(3));
+                // this ensures that if eventually we get (and cache) the route, the plane
+                // information gets updated as we keep coming back to this function
+                this.routeString = g.route_cache[currentName];
+                this.flightNo = g.flight_no_cache[currentName];
             }
         }
-        data.timestamp = 0;
-        return data;
     }
+}
+
+function normalizeTraceStamps(data) {
+    if (!data || !data.trace) {
+        console.log('normalizeTraceStamps: trace empty?')
+        return null;
+    }
+    let trace = data.trace;
+    let last = 0;
+    for (let i = 0; i < trace.length; i++) {
+        let point = trace[i];
+        point[0] += data.timestamp;
+        if (point[0] >= last) {
+            last = point[0];
+        } else {
+            console.log('normalize: trace backwards last: ' + last.toFixed(3) + ' current: ' + point[0].toFixed(3));
+        }
+    }
+    data.timestamp = 0;
+    return data;
 }
