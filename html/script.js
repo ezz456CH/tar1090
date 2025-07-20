@@ -6489,7 +6489,7 @@ let updateAddressBarString = "";
 function updateAddressBar() {
     if (!window.history || !window.history.replaceState)
         return;
-    if (heatmap || pTracks || !CenterLat || uuid)
+    if (heatmap || (pTracks && !haveTraces) || !CenterLat || uuid)
         return;
 
     let string = '';
@@ -8478,8 +8478,8 @@ function showReplayBar() {
             value: Math.pow(replay.speed, 1 / slideBase),
             step: 1.0,
             min: Math.pow(1, 1 / slideBase),
-            max: Math.pow(250, 1 / slideBase),
-            slide: function (event, ui) {
+            max: Math.pow(1000, 1 / slideBase),
+            slide: function(event, ui) {
                 replay.speed = Math.pow(ui.value, slideBase).toFixed(1);
                 jQuery('#replaySpeedHint').text('Speed: ' + replay.speed + 'x');
                 if (replay.playing) {

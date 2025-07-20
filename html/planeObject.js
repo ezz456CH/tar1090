@@ -502,7 +502,7 @@ PlaneObject.prototype.updateTrack = function (now, last, serverTrack, stale) {
     if (on_ground)
         stale_timeout = 30;
 
-    if (pTracks) {
+    if (pTracks && !serverTrack) {
         stale = false;
         stale_timeout = 120;
         if (this.dataSource == "adsc")
@@ -539,7 +539,7 @@ PlaneObject.prototype.updateTrack = function (now, last, serverTrack, stale) {
     let since_update = this.prev_time - this.tail_update;
     let distance_traveled = ol.sphere.getDistance(this.tail_position, this.prev_position);
 
-    if (pTracks && since_update < pTracksInterval) {
+    if (pTracks && since_update < pTracksInterval && !serverTrack) {
         return this.updateTrackPrev();
     }
 
@@ -581,12 +581,15 @@ PlaneObject.prototype.updateTrack = function (now, last, serverTrack, stale) {
             lastseg.fixed.appendCoordinate(projPrev);
         }
 
+        let estimatedFill = false;
+
         // draw great circle path for long distances
         if (distance > 30000
             && !(elapsed > 3600 && distance / elapsed * 3.6 < 100) && !modeS
             // don't draw a line if a long time has elapsed but no great distance was traveled
         ) {
-            if (!pTracks) {
+            estimatedFill = true;
+            if (!(pTracks && !serverTrack)) {
                 estimated = true;
             }
             let nPoints = distance / 19000;
@@ -616,6 +619,7 @@ PlaneObject.prototype.updateTrack = function (now, last, serverTrack, stale) {
                 fixed: new ol.geom.LineString(points),
                 feature: null,
                 estimated: estimated,
+                estimatedFill: estimatedFill,
                 ground: (this.prev_alt == "ground"),
                 altitude: this.prev_alt_rounded,
                 alt_real: this.prev_alt,
@@ -1800,7 +1804,7 @@ function altitudeLines(segment) {
         color = monochromeTracks;
 
     const modeS = (segment.dataSource == 'modeS');
-    const lineKey = color + '_' + debugTracks + '_' + noVanish + '_' + segment.estimated + '_' + newWidth + '_' + modeS;
+    const lineKey = '_' + color + debugTracks + noVanish + segment.estimated + newWidth + modeS + segment.noLabel + segment.estimatedFill;
 
     if (lineStyleCache[lineKey])
         return lineStyleCache[lineKey];
@@ -1864,40 +1868,27 @@ function altitudeLines(segment) {
             });
         }
     } else {
-        if (segment.noLabel || segment.estimated) {
-            lineStyleCache[lineKey] = [
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: color,
-                        width: 1 * newWidth * multiplier,
-                        lineJoin: join,
-                        lineCap: cap,
+        lineStyleCache[lineKey] = [
+            new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: (segment.estimatedFill ? 0 : 2) * newWidth,
+                    fill: new ol.style.Fill({
+                        color: color
                     })
                 }),
-            ];
-        } else {
-            lineStyleCache[lineKey] = [
-                new ol.style.Style({
-                    image: new ol.style.Circle({
-                        radius: 2 * newWidth,
-                        fill: new ol.style.Fill({
-                            color: color
-                        })
-                    }),
-                    geometry: function (feature) {
-                        return new ol.geom.MultiPoint(feature.getGeometry().getCoordinates());
-                    }
-                }),
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: color,
-                        width: 1 * newWidth * multiplier,
-                        lineJoin: join,
-                        lineCap: cap,
-                    })
+                geometry: function (feature) {
+                    return new ol.geom.MultiPoint(feature.getGeometry().getCoordinates());
+                }
+            }),
+            new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: color,
+                    width: ((segment.noLabel || segment.estimated) ? 0.5 : 1) * newWidth * multiplier,
+                    lineJoin: join,
+                    lineCap: cap,
                 })
-            ];
-        }
+            })
+        ];
     }
     return lineStyleCache[lineKey];
 }
