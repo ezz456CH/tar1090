@@ -326,18 +326,19 @@ PlaneObject.prototype.updateTail = function () {
 	return this.updateTrackPrev();
 };
 
-PlaneObject.prototype.updateTrackPrev = function () {
-	this.prev_position = this.position;
-	this.prev_time = this.position_time;
-	this.prev_track = this.track;
-	this.prev_rot = this.rotation;
-	this.prev_true = this.true_head;
-	this.prev_alt = this.altitude;
-	this.prev_alt_rounded = this.alt_rounded;
-	this.prev_alt_geom = this.alt_geom;
-	this.prev_speed = this.speed;
-	this.prev_rId = this.rId;
-	this.prev_dataSource = this.dataSource;
+PlaneObject.prototype.updateTrackPrev = function() {
+
+    this.prev_position = this.position;
+    this.prev_time = this.position_time;
+    this.prev_track = this.track;
+    this.prev_rot = this.rotation;
+    this.prev_true = this.true_heading;
+    this.prev_alt = this.altitude;
+    this.prev_alt_rounded = this.alt_rounded;
+    this.prev_alt_geom = this.alt_geom;
+    this.prev_speed = this.speed;
+    this.prev_rId = this.rId;
+    this.prev_dataSource = this.dataSource;
 
 	return true;
 };
