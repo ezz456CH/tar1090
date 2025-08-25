@@ -27,7 +27,7 @@ function createBaseLayers() {
     if (loStore['customTiles'] != undefined) {
         custom_layers.push(new ol.layer.Tile({
             source: new ol.source.OSM({
-                "url" : loStore['customTiles'],
+                "url": loStore['customTiles'],
                 maxZoom: 20,
                 transition: tileTransition,
             }),
@@ -526,7 +526,7 @@ function createBaseLayers() {
 
         us.push(tfrLayer);
 
-        let refreshTFR = function() {
+        let refreshTFR = function () {
             let source = new ol.source.Vector({
                 url: 'https://raw.githubusercontent.com/wiedehopf/tar1090-aux/master/tfrs.geojson',
                 format: new ol.format.GeoJSON(),
@@ -715,7 +715,7 @@ function createBaseLayers() {
             let validtime = (ms - ms % (5 * 60 * 1000)) / 1000;
             if (validtime != dwdValidtime) {
                 //console.log(`dwd validtime ${zuluTime(new Date(validtime * 1000))}`);
-                dwd.getSource().updateParams({validtime: validtime});
+                dwd.getSource().updateParams({ validtime: validtime });
                 dwdValidtime = validtime;
             }
         };
@@ -818,6 +818,43 @@ function createBaseLayers() {
         rainviewerRadarCoverage.setSource(rainviewerRadarCoverageSource);
 
         world.push(rainviewerRadarCoverage);
+
+        g.getcomposited_dirs = async function (key) {
+            const response = await fetch("https://api.radar.ezz456ch.com/composited_dirs");
+            const data = await response.json();
+            return data;
+        }
+        const radar_composites = new ol.layer.Tile({
+            name: 'radar_composites',
+            title: 'Radar Refl. Composites (Experimental)',
+            type: 'overlay',
+            opacity: 83,
+            visible: false,
+            zIndex: 90,
+            transition: tileTransition,
+        });
+        g.refresh_radar_composites = async function () {
+            const data = await g.getcomposited_dirs('radar');
+            const src = new ol.source.XYZ({
+                url: 'https://api.radar.ezz456ch.com/tiles/' + data.latest_composited_dir + '/{z}/{x}/{y}.png',
+                tileSize: 256,
+                attributions: '<a href="https://docs.ezz456ch.com/radar-composite-api/data-sources" target="_blank">Radar Data Src.</a>',
+                attributionsCollapsible: false,
+                maxZoom: 11,
+            });
+            radar_composites.setSource(src);
+        };
+
+        radar_composites.on('change:visible', function (evt) {
+            if (evt.target.getVisible()) {
+                g.refresh_radar_composites();
+                g.refresh_radar_interval = window.setInterval(g.refresh_radar_composites, 2 * 60 * 1000);
+            } else {
+                clearInterval(g.refresh_radar_interval);
+            }
+        });
+
+        world.push(radar_composites);
     }
 
     let createGeoJsonLayer = function (title, name, url, fill, stroke, showLabel = true) {

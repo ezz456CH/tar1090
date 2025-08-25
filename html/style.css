@@ -607,6 +607,7 @@ input.error {
 .layer-switcher.shown .panel {
 	overflow-y: auto;
 	height: 95vh;
+	width: 280px;
 }
 
 /* new css */
