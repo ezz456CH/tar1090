@@ -824,16 +824,16 @@ function createBaseLayers() {
             const data = await response.json();
             return data;
         }
-        const radar_composites = new ol.layer.Tile({
-            name: 'radar_composites',
-            title: 'Radar Refl. Composites (Experimental)',
+        const radar_composite = new ol.layer.Tile({
+            name: 'radar_composite',
+            title: 'Radar Refl. Composite (Experimental)',
             type: 'overlay',
-            opacity: 83,
+            opacity: 80,
             visible: false,
             zIndex: 90,
             transition: tileTransition,
         });
-        g.refresh_radar_composites = async function () {
+        g.refresh_radar_composite = async function () {
             const data = await g.getcomposited_dirs('radar');
             const src = new ol.source.XYZ({
                 url: 'https://api.radar.ezz456ch.com/tiles/' + data.latest_composited_dir + '/{z}/{x}/{y}.png',
@@ -842,19 +842,19 @@ function createBaseLayers() {
                 attributionsCollapsible: false,
                 maxZoom: 11,
             });
-            radar_composites.setSource(src);
+            radar_composite.setSource(src);
         };
 
-        radar_composites.on('change:visible', function (evt) {
+        radar_composite.on('change:visible', function (evt) {
             if (evt.target.getVisible()) {
-                g.refresh_radar_composites();
-                g.refresh_radar_interval = window.setInterval(g.refresh_radar_composites, 2 * 60 * 1000);
+                g.refresh_radar_composite();
+                g.refresh_radar_interval = window.setInterval(g.refresh_radar_composite, 2 * 60 * 1000);
             } else {
                 clearInterval(g.refresh_radar_interval);
             }
         });
 
-        world.push(radar_composites);
+        world.push(radar_composite);
     }
 
     let createGeoJsonLayer = function (title, name, url, fill, stroke, showLabel = true) {
