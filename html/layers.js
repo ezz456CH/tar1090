@@ -828,7 +828,7 @@ function createBaseLayers() {
             name: 'radar_composite',
             title: 'Radar Refl. Composite (Experimental)',
             type: 'overlay',
-            opacity: 80,
+            opacity: 0.80,
             visible: false,
             zIndex: 90,
             transition: tileTransition,
