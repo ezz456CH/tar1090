@@ -836,8 +836,9 @@ function createBaseLayers() {
         g.refresh_radar_composite = async function () {
             const data = await g.getcomposited_dirs('radar');
             const src = new ol.source.XYZ({
-                url: 'https://api.radar.ezz456ch.com/tiles/' + data.latest_composited_dir + '/{z}/{x}/{y}.png',
-                tileSize: 256,
+                url: 'https://api.radar.ezz456ch.com/tiles/' + data.latest_composited_dir + '/512/{z}/{x}/{y}.png',
+                tileSize: 512,
+                tilePixelRatio: 2,
                 attributions: '<a href="https://docs.ezz456ch.com/radar-composite-api/data-sources" target="_blank">Radar Data Src.</a>',
                 attributionsCollapsible: false,
                 maxZoom: 11,
