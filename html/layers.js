@@ -149,15 +149,89 @@ function createBaseLayers() {
         type: 'base',
     }));
 
+    if (offlineMapDetailOFM > 0) {
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapOfflineBright',
+            title: 'OpenFreeMap Offl. Bright',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "./openfreemap_offline/bright");
+                    ol.mapboxStyle.applyBackground(layer, "./openfreemap_offline/bright");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapOfflineLiberty',
+            title: 'OpenFreeMap Offl. Lib.',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "./openfreemap_offline/liberty");
+                    ol.mapboxStyle.applyBackground(layer, "./openfreemap_offline/liberty");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapOfflinePositron',
+            title: 'OpenFreeMap Offl. Pos.',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "./openfreemap_offline/positron");
+                    ol.mapboxStyle.applyBackground(layer, "./openfreemap_offline/positron");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapOfflineDark',
+            title: 'OpenFreeMap Offl. Dark',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "./openfreemap_offline/dark");
+                    ol.mapboxStyle.applyBackground(layer, "./openfreemap_offline/dark");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapOfflineFiord',
+            title: 'OpenFreeMap Offl. Fiord',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "./openfreemap_offline/fiord");
+                    ol.mapboxStyle.applyBackground(layer, "./openfreemap_offline/fiord");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+    }
+    if (1) {
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapBright',
+            title: 'OpenFreeMap Bright',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "https://tiles.openfreemap.org/styles/bright");
+                    ol.mapboxStyle.applyBackground(layer, "https://tiles.openfreemap.org/styles/bright");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+    }
     if (1) {
         world.push(new ol.layer.VectorTile({
             type: 'base',
             name: 'OpenFreeMapLiberty',
             title: 'OpenFreeMap Liberty',
-            declutter: true,
             onVisible: (layer) => {
                 if (!layer.get('styleApplied')) {
-                    // ol-mapbox-style plugin packed in with ol ... (kinda ugly)
                     ol.mapboxStyle.applyStyle(layer, "https://tiles.openfreemap.org/styles/liberty");
                     ol.mapboxStyle.applyBackground(layer, "https://tiles.openfreemap.org/styles/liberty");
                     layer.set('styleApplied', true);
@@ -170,12 +244,38 @@ function createBaseLayers() {
             type: 'base',
             name: 'OpenFreeMapPositron',
             title: 'OpenFreeMap Positron',
-            declutter: true,
             onVisible: (layer) => {
                 if (!layer.get('styleApplied')) {
-                    // ol-mapbox-style plugin packed in with ol ... (kinda ugly)
                     ol.mapboxStyle.applyStyle(layer, "https://tiles.openfreemap.org/styles/positron");
                     ol.mapboxStyle.applyBackground(layer, "https://tiles.openfreemap.org/styles/positron");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+    }
+    if (1) {
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapDark',
+            title: 'OpenFreeMap Dark',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "https://tiles.openfreemap.org/styles/dark");
+                    ol.mapboxStyle.applyBackground(layer, "https://tiles.openfreemap.org/styles/dark");
+                    layer.set('styleApplied', true);
+                }
+            },
+        }));
+    }
+    if (1) {
+        world.push(new ol.layer.VectorTile({
+            type: 'base',
+            name: 'OpenFreeMapFiord',
+            title: 'OpenFreeMap Fiord',
+            onVisible: (layer) => {
+                if (!layer.get('styleApplied')) {
+                    ol.mapboxStyle.applyStyle(layer, "https://tiles.openfreemap.org/styles/fiord");
+                    ol.mapboxStyle.applyBackground(layer, "https://tiles.openfreemap.org/styles/fiord");
                     layer.set('styleApplied', true);
                 }
             },
@@ -355,7 +455,7 @@ function createBaseLayers() {
             MapboxAPIKey = loStore['mapboxKey'];
         
         if (MapboxAPIKey) {
-            world.push(new ol.MapboxVectorLayer({
+            world.push(new ol.mapboxStyle.MapboxVectorLayer({
                 styleUrl: 'mapbox://styles/mapbox/streets-v10',
                 accessToken: MapboxAPIKey,
                 properties: {
@@ -364,7 +464,7 @@ function createBaseLayers() {
                     type: 'base',
                 },
             }));
-            world.push(new ol.MapboxVectorLayer({
+            world.push(new ol.mapboxStyle.MapboxVectorLayer({
                 styleUrl: 'mapbox://styles/mapbox/light-v11',
                 accessToken: MapboxAPIKey,
                 properties: {
@@ -373,7 +473,7 @@ function createBaseLayers() {
                     type: 'base',
                 },
             }));
-            world.push(new ol.MapboxVectorLayer({
+            world.push(new ol.mapboxStyle.MapboxVectorLayer({
                 styleUrl: 'mapbox://styles/mapbox/dark-v11',
                 accessToken: MapboxAPIKey,
                 properties: {
@@ -382,7 +482,7 @@ function createBaseLayers() {
                     type: 'base',
                 },
             }));
-            world.push(new ol.MapboxVectorLayer({
+            world.push(new ol.mapboxStyle.MapboxVectorLayer({
                 styleUrl: 'mapbox://styles/mapbox/outdoors-v10',
                 accessToken: MapboxAPIKey,
                 properties: {
@@ -782,7 +882,7 @@ function createBaseLayers() {
                 tilePixelRatio: 2,
                 attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
                 attributionsCollapsible: false,
-                maxZoom: 20,
+                maxZoom: 7,
             });
             rainviewerRadar.setSource(rainviewerRadarSource);
         };
@@ -797,65 +897,6 @@ function createBaseLayers() {
         });
 
         world.push(rainviewerRadar);
-
-        const rainviewerRadarCoverage = new ol.layer.Tile({
-            name: 'rainviewer_radar_coverage',
-            title: 'Rainviewer Radar Coverage',
-            type: 'overlay',
-            opacity: 0.25,
-            visible: false,
-            zIndex: 70,
-        });
-        const rainviewerRadarCoverageSource = new ol.source.XYZ({
-            url: 'https://tilecache.rainviewer.com/v2/coverage/0/512/{z}/{x}/{y}/0/0_0.png',
-            tileSize: 512,
-            tilePixelRatio: 2,
-            attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
-            attributionsCollapsible: false,
-            maxZoom: 20,
-            transition: tileTransition,
-        });
-        rainviewerRadarCoverage.setSource(rainviewerRadarCoverageSource);
-
-        world.push(rainviewerRadarCoverage);
-
-        g.getcomposited_dirs = async function (key) {
-            const response = await fetch("https://api.radar.ezz456ch.com/composited_dirs");
-            const data = await response.json();
-            return data;
-        }
-        const radar_composite = new ol.layer.Tile({
-            name: 'radar_composite',
-            title: 'Radar Refl. Composite (Experimental)',
-            type: 'overlay',
-            opacity: 0.80,
-            visible: false,
-            zIndex: 90,
-            transition: tileTransition,
-        });
-        g.refresh_radar_composite = async function () {
-            const data = await g.getcomposited_dirs('radar');
-            const src = new ol.source.XYZ({
-                url: 'https://api.radar.ezz456ch.com/tiles/' + data.latest_composited_dir + '/512/{z}/{x}/{y}.png',
-                tileSize: 512,
-                tilePixelRatio: 2,
-                attributions: '<a href="https://docs.ezz456ch.com/radar-composite-api/data-sources" target="_blank">Radar Data Src.</a>',
-                attributionsCollapsible: false,
-                maxZoom: 11,
-            });
-            radar_composite.setSource(src);
-        };
-
-        radar_composite.on('change:visible', function (evt) {
-            if (evt.target.getVisible()) {
-                g.refresh_radar_composite();
-                g.refresh_radar_interval = window.setInterval(g.refresh_radar_composite, 2 * 60 * 1000);
-            } else {
-                clearInterval(g.refresh_radar_interval);
-            }
-        });
-
-        world.push(radar_composite);
     }
 
     let createGeoJsonLayer = function (title, name, url, fill, stroke, showLabel = true) {
