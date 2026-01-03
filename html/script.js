@@ -7631,20 +7631,29 @@ function shiftTrace(offset) {
     traceOpts.showTimeEnd = null;
     traceOpts.showTime = null;
 
+    const date = new Date();
+    const maxDate = date.toISOString().split("T")[0];
+
     jQuery("#leg_sel").text("Loading ...");
-    if (!traceDate || offset == "today") {
+
+    let newTraceDate = new Date(date.getTime());
+
+    if (!traceDate || offset === "today") {
         if (replay) {
-            setTraceDate({ ts: replay.ts.getTime() });
+            newTraceDate = new Date(replay.ts.getTime());
         } else {
-            setTraceDate({ ts: new Date().getTime() });
+            newTraceDate = new Date(date.getTime());
         }
     } else if (offset) {
-        setTraceDate({ ts: traceDate.getTime() + offset * 86400 * 1000 });
+        newTraceDate = new Date(traceDate.getTime() + offset * 86400 * 1000);
+
+        const newTraceDateStr = newTraceDate.toISOString().split("T")[0];
+        if (newTraceDateStr > maxDate) {
+            newTraceDate = new Date(date.getTime());
+        }
     }
 
-    const date = new Date();
-
-    const maxDate = date.toISOString().split("T")[0];
+    setTraceDate({ ts: newTraceDate.getTime() });
 
     jQuery("#histDatePicker").datepicker("option", "maxDate", maxDate);
 
