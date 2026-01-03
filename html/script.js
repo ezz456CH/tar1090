@@ -3469,7 +3469,9 @@ function initMap() {
                     console.log(SelectedPlane.milRange());
                     break;
                 case "j":
-                    selectPlaneByHex(jumpTo, { follow: true });
+                    if (!showTrace) {
+                        selectPlaneByHex(jumpTo, { follow: true });
+                    }
                     break;
                 case "J":
                     debugJump = !debugJump;
