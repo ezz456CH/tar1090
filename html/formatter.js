@@ -113,7 +113,7 @@ function format_altitude_brief(alt, vr, displayUnits, withUnits) {
 		verticalRateTriangle = ''
 	}
 
-	return verticalRateTriangle + alt_text.padStart(5, NUMSP);
+	return verticalRateTriangle + alt_text;
 }
 
 // alt in feet

@@ -1060,7 +1060,7 @@ PlaneObject.prototype.updateIcon = function () {
                         speedString +
                         NBSP +
                         NNBSP +
-                        altString.padStart(6, NBSP);
+                        altString;
                 }
                 labelText += "\n" + callsign;
             }
@@ -1085,7 +1085,7 @@ PlaneObject.prototype.updateIcon = function () {
                     speedString +
                     NBSP +
                     NNBSP +
-                    altString.padStart(6, NBSP) +
+                    altString+
                     "\n";
             }
         }
@@ -2322,7 +2322,7 @@ PlaneObject.prototype.updateLines = function () {
             let text =
                 speedString.padStart(3, NBSP) +
                 "  " +
-                altString.padStart(6, NBSP) +
+                altString +
                 "\n" +
                 //+ NBSP + format_track_arrow(seg.track)
                 timestamp1 +
