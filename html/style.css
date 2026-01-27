@@ -234,7 +234,7 @@ select {
 }
 
 .credits-text {
-	font-size: calc(12px * var(--SCALE));
+	font-size: calc(14px * var(--SCALE));
 	color: var(--TXTCOLOR1);
 	font-family: "ezz456CH's Pixel";
 }
@@ -833,7 +833,7 @@ table.infoSectionTable tr td {
 .largeText a,
 .largeText {
 	color: var(--TXTCOLOR1);
-	font-size: calc(12px * var(--SCALE));
+	font-size: calc(14px * var(--SCALE));
 	text-decoration: none;
 	border-radius: 4px;
 	font-family: "ezz456CH's Pixel";
