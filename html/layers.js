@@ -772,6 +772,12 @@ function createBaseLayers() {
             extent: naExtent,
         });
 
+        let refreshNoaaRadar = function () {
+            noaaRadarSource.refresh();
+        }
+        refreshNoaaRadar();
+        window.setInterval(refreshNoaaRadar, 5 * 60 * 1000);
+
         us.push(noaaRadar);
     }
 
@@ -826,10 +832,9 @@ function createBaseLayers() {
     }
 
     if (true) {
-        g.getRainviewerLayers = async function (key) {
-            const response = await fetch("https://api.rainviewer.com/public/weather-maps.json", { credentials: "omit", });
-            const jsonData = await response.json();
-            return jsonData[key];
+        g.getRainviewerMaps = async function() {
+            const response = await fetch("https://api.rainviewer.com/public/weather-maps.json", {credentials: "omit",});
+            return await response.json();
         }
 
         const rainviewerClouds = new ol.layer.Tile({
@@ -874,12 +879,11 @@ function createBaseLayers() {
             zIndex: 90,
             transition: tileTransition,
         });
-        g.refreshRainviewerRadar = async function () {
-            const latestLayer = await g.getRainviewerLayers('radar');
+        g.refreshRainviewerRadar = async function() {
+            const maps = await g.getRainviewerMaps();
+            const past = maps.radar.past;
             const rainviewerRadarSource = new ol.source.XYZ({
-                url: 'https://tilecache.rainviewer.com/v2/radar/' + latestLayer.past[latestLayer.past.length - 1].time + '/512/{z}/{x}/{y}/2/0_1.png',
-                tileSize: 512,
-                tilePixelRatio: 2,
+                url: maps.host + past[past.length - 1].path + '/512/{z}/{x}/{y}/6/1_1.png',
                 attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
                 attributionsCollapsible: false,
                 maxZoom: 7,
