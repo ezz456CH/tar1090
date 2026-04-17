@@ -7980,16 +7980,17 @@ function remakeTrails() {
 function createLocationDot() {
     locationDotFeatures.clear();
     let markerStyle = new ol.style.Style({
-        text: new ol.style.Text({
-            text: "+",
-            font: 14 * globalScale + "px Cascadia Code, monospace",
-            fill: new ol.style.Fill({ color: "#000000" }),
-        }),
+        image: new ol.style.Circle({
+            radius: 7,
+            snapToPixel: false,
+            fill: new ol.style.Fill({color: '#33b5e5'}),
+            stroke: new ol.style.Stroke({
+                color: 'white', width: 2
+            })
+        })
     });
 
-    let feature = new ol.Feature(
-        new ol.geom.Point(ol.proj.fromLonLat(SitePosition))
-    );
+    let feature = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat(SitePosition)));
     feature.setStyle(markerStyle);
     locationDotFeatures.addFeature(feature);
 }
