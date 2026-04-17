@@ -7982,7 +7982,7 @@ function createLocationDot() {
         image: new ol.style.Circle({
             radius: 7,
             snapToPixel: false,
-            fill: new ol.style.Fill({color: '#33b5e5'}),
+            fill: new ol.style.Fill({color: '#3491e7'}),
             stroke: new ol.style.Stroke({
                 color: 'white', width: 2
             })
