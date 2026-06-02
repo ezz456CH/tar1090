@@ -8506,6 +8506,7 @@ function showReplayBar() {
         now = new Date().getTime() / 1000;
         g.now = now;
         inhibitFetch = false;
+        deselectAllPlanes();
         fetchData({ force: true });
     } else {
         inhibitFetch = true;
