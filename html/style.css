@@ -705,6 +705,10 @@ input.error {
     background-image: url('images/cog-white.svg');
     background-size: 120%;
 }
+
+.replayButton {
+    background-image: url('images/replay-white.svg');
+}
 */
 
 .button {
