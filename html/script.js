@@ -1283,18 +1283,6 @@ function earlyInitPage() {
                 document.documentElement.requestFullscreen();
             } else if (document.exitFullscreen) {
                 document.exitFullscreen();
-            }
-        });
-    } else {
-        jQuery("#fullscreenButton").hide();
-    }
-
-    if (onMobile) {
-        jQuery("#fullscreenButton").on("click", function () {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else if (document.exitFullscreen) {
-                document.exitFullscreen();
                 window.scrollTo(0, 0);
             }
         });
