@@ -431,6 +431,7 @@ select {
 
 #ui-datepicker-div {
 	font-family: 'Cascadia Code', monospace;
+	z-index: 100 !important;
 }
 
 .aircraft_table_header {

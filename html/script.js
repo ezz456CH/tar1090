@@ -344,6 +344,7 @@ function processReceiverUpdate(data, init) {
 }
 function fetchFail(jqxhr, status, error) {
     try {
+        if (status === "abort") return;
         pendingFetches--;
         if (pendingFetches <= 0 && !tabHidden) {
             triggerRefresh++;
@@ -6921,7 +6922,7 @@ function shiftTrace(offset) {
 
     let newTraceDate = new Date(date.getTime());
 
-    if (!traceDate || offset === "today") {
+    if (offset === "today") {
         if (replay) {
             newTraceDate = new Date(replay.ts.getTime());
         } else {
@@ -6929,11 +6930,12 @@ function shiftTrace(offset) {
         }
     } else if (offset) {
         newTraceDate = new Date(traceDate.getTime() + offset * 86400 * 1000);
-
         const newTraceDateStr = newTraceDate.toISOString().split("T")[0];
         if (newTraceDateStr > maxDate) {
             newTraceDate = new Date(date.getTime());
         }
+    } else if (traceDate) {
+        newTraceDate = new Date(traceDate.getTime());
     }
 
     setTraceDate({ ts: newTraceDate.getTime() });
@@ -7989,7 +7991,7 @@ function loadReplay(ts) {
 
         const errorFunc = (error) => {
             ff();
-            if (error.name == "AbortError") {
+            if (!error || error.name == "AbortError") {
                 //console.log(`aborted: ${rKey}`);
                 return;
             }
@@ -8005,16 +8007,13 @@ function loadReplay(ts) {
                 if (!response.ok) {
                     throw new Error(`HTTP error, status = ${response.status}`);
                 }
-                response
-                    .arrayBuffer()
-                    .then((data) => {
-                        delete replay.abortController;
-                        g.replayCache.add(rKey, data);
-                        initReplay(chunk, data);
-                        //console.log(`loaded: ${rKey}`);
-                        ff();
-                    })
-                    .catch(errorFunc);
+                response.arrayBuffer().then((data) => {
+                    delete replay.abortController;
+                    g.replayCache.add(rKey, data);
+                    initReplay(chunk, data);
+                    //console.log(`loaded: ${rKey}`);
+                    ff();
+                });
             }, errorFunc)
             .catch(errorFunc);
     }
@@ -8535,6 +8534,12 @@ function showReplayBar() {
         let datepickerOptions = {
             dateFormat: "yy-mm-dd",
             autoSize: true,
+            beforeShow: function () {
+                const max_date = new Date();
+                max_date.setUTCMinutes(Math.floor(max_date.getUTCMinutes() / 30) * 30);
+                max_date.setUTCSeconds(0);
+                jQuery("#replayDatepicker").datepicker("option", "maxDate", max_date.toISOString().split("T")[0]);
+            },
             onSelect: function (dateText) {
                 replay.dateText = dateText;
                 replayJump();
@@ -8542,18 +8547,23 @@ function showReplayBar() {
         };
         if (onMobile) {
             datepickerOptions.onClose = function (dateText, inst) {
-                jQuery("replayDatepicker").attr("disabled", false);
+                jQuery("#replayDatepicker").attr("disabled", false);
             };
             datepickerOptions.beforeShow = function (input, inst) {
-                jQuery("replayDatepicker").attr("disabled", true);
+                jQuery("#replayDatepicker").attr("disabled", true);
             };
-        } else {
-            //
         }
 
         jQuery("#replayDatepicker").datepicker(datepickerOptions);
 
+        ["#hourSelect", "#minuteSelect", "#replaySpeedSelect"].forEach((id) => {
+            if (jQuery(id).hasClass("ui-slider")) {
+                jQuery(id).slider("destroy");
+            }
+        });
+
         jQuery("#hourSelect").slider({
+            value: replay.hours,
             step: 1,
             min: 0,
             max: 23,
@@ -8566,6 +8576,7 @@ function showReplayBar() {
             },
         });
         jQuery("#minuteSelect").slider({
+            value: replay.minutes,
             step: 1,
             min: 0,
             max: 59,
@@ -8692,8 +8703,8 @@ function handleVisibilityChange() {
             //timeoutFetch();
         }
 
-        replay_was_active = replay.playing;
-        if (replay.playing) {
+        replay_was_active = replay?.playing ?? false;
+        if (replay_was_active) {
             playReplay(false);
         }
     }
