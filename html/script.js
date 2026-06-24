@@ -19,6 +19,7 @@ let tabHidden = false;
 let webgl = false;
 let webglFeatures = new ol.source.Vector();
 let webglLayer;
+let pendingFollow = null;
 let OLMap = null;
 let OLProj = null;
 let OLProjExtent = null;
@@ -807,8 +808,40 @@ function processQueryToggles() {
 function replaySpeedChange(arg) {
     traceOpts.replaySpeed = arg;
     console.log(arg);
-    if (traceOpts.animate) return;
-    legShift(0);
+    if (!traceOpts.animate) {
+        legShift(0);
+        return;
+    }
+
+    const remainingFrac = traceOpts.animateSteps > 0
+        ? traceOpts.animateCounter / traceOpts.animateSteps : 0;
+    const remainingRealtime = traceOpts.animateRealtime * remainingFrac;
+    const fps = webgl ? 28 : 1;
+    const newAnimateTime = remainingRealtime / arg;
+    const newSteps = Math.round(newAnimateTime / (1000 / fps));
+
+    traceOpts.animateFromLon = traceOpts.animatePos[0];
+    traceOpts.animateFromLat = traceOpts.animatePos[1];
+    traceOpts.animateRealtime = remainingRealtime;
+
+    clearTimeout(traceOpts.showTimeout);
+    cancelAnimationFrame(traceOpts.animateRAF);
+
+    if (newSteps < 2) {
+        traceOpts.animate = false;
+        traceOpts.showTime = traceOpts.showTimeEnd;
+        traceOpts.showTimeout = setTimeout(gotoTime, newAnimateTime);
+    } else {
+        traceOpts.animateSteps = newSteps;
+        traceOpts.animateCounter = newSteps;
+        traceOpts.animateStepTime = remainingRealtime / arg / newSteps;
+        const useRAF = webgl && traceOpts.animateStepTime < 16;
+        if (useRAF) {
+            traceOpts.animateRAF = requestAnimationFrame(gotoTime);
+        } else {
+            traceOpts.showTimeout = setTimeout(gotoTime, traceOpts.animateStepTime);
+        }
+    }
 }
 
 function initPage() {
@@ -2426,6 +2459,25 @@ function webglAddLayer() {
 
         layers.push(webglLayer);
 
+        {
+            const _origWebglRender = webglLayer.render.bind(webglLayer);
+            webglLayer.render = function(frameState, target) {
+                if (pendingFollow) {
+                    const renderer = this.getRenderer();
+                    const arr = renderer && renderer.instanceAttributesBuffer_ &&
+                                renderer.instanceAttributesBuffer_.getArray();
+                    if (arr && arr.length) {
+                        if (applyFollowPositionPatch(renderer, pendingFollow)) {
+                            pendingFollow = null;
+                        }
+                    } else {
+                        pendingFollow = null;
+                    }
+                }
+                return _origWebglRender(frameState, target);
+            };
+        }
+
         webgl = true;
 
         // only test webgl once in every browser
@@ -3194,7 +3246,7 @@ function initMap() {
                     refreshFilter();
                     break;
                 case "Y":
-                    showReplayBar();
+                    if (!showTrace) showReplayBar();
                     break;
                 case "u":
                     toggleMilitary();
@@ -4840,6 +4892,49 @@ function deselectAllPlanes(keepMain) {
     updateAddressBar();
 }
 
+function applyFollowPositionPatch(renderer, patch) {
+    const { plane, proj } = patch;
+    if (!plane.glMarker) return true;
+    if (!renderer.featureCache_) return false;
+    const bufArr = renderer.instanceAttributesBuffer_ && renderer.instanceAttributesBuffer_.getArray();
+    if (!bufArr || !bufArr.length) return false;
+
+    const attrsPerFeature = renderer.instanceAttributes.reduce((s, a) => s + (a.size || 1), 0);
+
+    let markerUid = -1;
+    for (const key in renderer.featureCache_) {
+        if (renderer.featureCache_[key].feature === plane.glMarker) { markerUid = Number(key); break; }
+    }
+    if (markerUid < 0) return false;
+
+    let idx = -1;
+    if (renderer.hitDetectionEnabled_) {
+        const gpuFeatureCount = (bufArr.length / attrsPerFeature) | 0;
+        for (let i = 0; i < gpuFeatureCount; i++) {
+            if (bufArr[i * attrsPerFeature + 4] === markerUid) { idx = i; break; }
+        }
+    } else {
+        let i = 0;
+        for (const key in renderer.featureCache_) {
+            if (Number(key) === markerUid) { idx = i; break; }
+            i++;
+        }
+    }
+    if (idx < 0) return false;
+
+    const rt = renderer.renderTransform_;
+    const tx = rt[0] * proj[0] + rt[2] * proj[1] + rt[4];
+    const ty = rt[1] * proj[0] + rt[3] * proj[1] + rt[5];
+
+    renderer.helper.bindBuffer(renderer.instanceAttributesBuffer_);
+    renderer.helper.getGL().bufferSubData(
+        renderer.helper.getGL().ARRAY_BUFFER,
+        idx * attrsPerFeature * 4,
+        new Float32Array([tx, ty])
+    );
+    return true;
+}
+
 function toggleFollow(override) {
     if (override == true) FollowSelected = true;
     else if (override == false) FollowSelected = false;
@@ -6051,7 +6146,11 @@ function mapRefresh(redraw) {
         for (let i in g.planesOrdered) {
             count++;
             const plane = g.planesOrdered[i];
-            delete plane.glMarker;
+            if (webgl && FollowSelected && plane === SelectedPlane && plane.glMarker) {
+                plane.glMarker.visible = false;
+            } else {
+                delete plane.glMarker;
+            }
             // disable mobile limitations when using webGL
             if (
                 plane.selected ||
@@ -6067,7 +6166,11 @@ function mapRefresh(redraw) {
     } else {
         for (let i in g.planesOrdered) {
             const plane = g.planesOrdered[i];
-            delete plane.glMarker;
+            if (webgl && FollowSelected && plane === SelectedPlane && plane.glMarker) {
+                plane.glMarker.visible = false;
+            } else {
+                delete plane.glMarker;
+            }
             addToMap.push(plane);
         }
     }
@@ -6076,9 +6179,9 @@ function mapRefresh(redraw) {
 
     // webGL zIndex hack:
     // sort all planes by altitude
-    // clear the vector source
-    // delete all feature objects so they are recreated, this is important
-    // draw order will be insertion / updateFeatures order
+    // clear the vector source, re-insert in order.
+    // draw order = insertion order.  The followed plane's glMarker is preserved
+    // (not deleted) so the gpu position patch can reuse its stable uid.
 
     addToMap.sort(function (x, y) {
         return x.zIndex - y.zIndex;
@@ -6780,22 +6883,30 @@ function toggleShowTrace() {
         //window.history.replaceState("object or string", "Title", string);
         //shareLink = string;
         updateAddressBar();
-        const hex = SelectedPlane.icao;
+        if (replay && showingReplayBar) {
+            jQuery("#selected_showTrace_hide").hide();
+            jQuery("#replayDatepicker").datepicker("option", "disabled", false);
+        }
+        const hex = SelectedPlane ? SelectedPlane.icao : null;
         sp = SelectedPlane = null;
         showTraceExit = true;
         for (let i in SelPlanes) {
             const plane = SelPlanes[i];
             plane.setNull();
         }
-        selectPlaneByHex(hex, {
-            noDeselect: true,
-            follow: true,
-            zoom: g.zoomLvl,
-        });
+        if (hex) {
+            selectPlaneByHex(hex, {
+                noDeselect: true,
+                follow: true,
+                zoom: g.zoomLvl,
+            });
+        }
         if (replay) {
-            jQuery("#selected_showTrace_hide").hide();
-            jQuery("#replayDatepicker").datepicker("option", "disabled", false);
-            replayStep();
+            if (!showingReplayBar) {
+                showReplayBar();
+            } else {
+                replayStep();
+            }
         }
     }
 
@@ -7386,6 +7497,7 @@ function drawOutlineJson() {
 function gotoTime(timestamp) {
     //console.log(`gotoTime(${timestamp}) animate: {${traceOpts.animate}}`);
     clearTimeout(traceOpts.showTimeout);
+    cancelAnimationFrame(traceOpts.animateRAF);
     if (timestamp) {
         traceOpts.showTime = timestamp;
         traceOpts.animate = false;
@@ -7393,22 +7505,32 @@ function gotoTime(timestamp) {
     if (!traceOpts.animate) {
         legShift(0);
     } else {
+        traceOpts.animateStepTime = traceOpts.animateRealtime / traceOpts.replaySpeed / traceOpts.animateSteps;
+
+        const useRAF = webgl && traceOpts.animateStepTime < 16;
+        const stepsToRun = useRAF
+            ? Math.min(traceOpts.animateCounter - 1, Math.ceil(16 / traceOpts.animateStepTime))
+            : 1;
+
         let marker = SelectedPlane.glMarker || SelectedPlane.marker;
         if (marker) {
-            traceOpts.animatePos[0] += (traceOpts.animateToLon - traceOpts.animateFromLon) / traceOpts.animateSteps;
-            traceOpts.animatePos[1] += (traceOpts.animateToLat - traceOpts.animateFromLat) / traceOpts.animateSteps;
-
+            const lonStep = (traceOpts.animateToLon - traceOpts.animateFromLon) / traceOpts.animateSteps;
+            const latStep = (traceOpts.animateToLat - traceOpts.animateFromLat) / traceOpts.animateSteps;
+            traceOpts.animatePos[0] += lonStep * stepsToRun;
+            traceOpts.animatePos[1] += latStep * stepsToRun;
             SelectedPlane.updateMarker();
         }
-        if (--traceOpts.animateCounter == 1) {
+        traceOpts.animateCounter -= stepsToRun;
+        if (traceOpts.animateCounter <= 1) {
             traceOpts.animate = false;
             traceOpts.showTime = traceOpts.showTimeEnd;
         }
 
-        traceOpts.animateStepTime = traceOpts.animateRealtime / traceOpts.replaySpeed / traceOpts.animateSteps;
-        clearTimeout(traceOpts.showTimeout);
-        //console.log(`setTimeout(gotoTime, (${traceOpts.animateStepTime}))`);
-        traceOpts.showTimeout = setTimeout(gotoTime, traceOpts.animateStepTime);
+        if (useRAF) {
+            traceOpts.animateRAF = requestAnimationFrame(gotoTime);
+        } else {
+            traceOpts.showTimeout = setTimeout(gotoTime, traceOpts.animateStepTime);
+        }
     }
 }
 
@@ -7553,6 +7675,7 @@ function getTrace(newPlane, hex, options) {
                     legShift(0, plane);
                     if (!multiSelect && showTraceTimestamp) {
                         gotoTime(showTraceTimestamp);
+                        showTraceTimestamp = null;
                     }
                 } else {
                     plane.processTrace();
@@ -8472,13 +8595,6 @@ function playReplay(state) {
 }
 
 function showReplayBar() {
-    if (showTrace) {
-        if (replay) {
-            replay = false;
-        }
-        return;
-    }
-
     console.log("showReplayBar()");
     showingReplayBar = !showingReplayBar;
     if (!showingReplayBar) {
