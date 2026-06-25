@@ -136,6 +136,9 @@ PlaneObject.prototype.setNull = function () {
     this.msgs978 = 0;
     this.messageRate = 0;
     this.messageRateOld = 0;
+
+    this.airline = null;
+    this.airlineKey = null;
 };
 
 function planeCloneState(target, source) {
@@ -3134,7 +3137,33 @@ PlaneObject.prototype.setTypeFlagsReg = function (data) {
         this.ladd = data.dbFlags & 8;
         if (this.pia) this.registration = null;
     }
-    if (data.r) this.registration = `${data.r}`;
+    if (data.r) {
+        const newRegistration = `${data.r}`;
+        if (newRegistration !== this.registration) {
+            this.registration = newRegistration;
+            this.clearAirlineCache();
+        }
+    }
+}
+
+PlaneObject.prototype.clearAirlineCache = function() {
+    this.airline = null;
+    this.airlineKey = null;
+};
+
+PlaneObject.prototype.getAirline = function() {
+    if (!airlineLookup || !operatorsCache || typeof lookupAirlineForCallsign !== 'function') {
+        return null;
+    }
+    const callsign = this.name || '';
+    const registration = this.registration || '';
+    const key = `${callsign}|${registration}`;
+    if (this.airlineKey === key) {
+        return this.airline;
+    }
+    this.airlineKey = key;
+    this.airline = lookupAirlineForCallsign(callsign, registration);
+    return this.airline;
 };
 
 PlaneObject.prototype.checkForDB = function (data) {
@@ -3453,7 +3482,8 @@ function routeDoLookup() {
         });
 }
 
-PlaneObject.prototype.setFlight = function (flight) {
+PlaneObject.prototype.setFlight = function(flight) {
+    const oldName = this.name;
     if (flight == null) {
         if (now - this.flightTs > 10 * 60) {
             this.flight = null;
@@ -3467,7 +3497,10 @@ PlaneObject.prototype.setFlight = function (flight) {
         this.name = this.flight.trim() || "empty callsign";
         this.flightTs = now;
     }
-};
+    if (this.name !== oldName) {
+        this.clearAirlineCache();
+    }
+}
 
 function normalizeTraceStamps(data) {
     if (!data || !data.trace) {
