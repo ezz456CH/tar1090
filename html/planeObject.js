@@ -953,28 +953,24 @@ PlaneObject.prototype.updateIcon = function () {
     let svgKey = fillColor + "!" + this.shape.name + "!" + this.strokeWidth;
     let labelText = null;
 
-    if (
-        g.enableLabels &&
-        (!multiSelect || (multiSelect && this.selected)) &&
-        ((g.zoomLvl >= labelZoom &&
-            this.altitude != "ground" &&
-            this.dataSource != "ais") ||
-            (g.zoomLvl >= labelZoomGround - 2 &&
-                this.speed > 5 &&
-                !this.fakeHex) ||
-            (g.zoomLvl >= labelZoomGround + 0 && !this.fakeHex) ||
-            g.zoomLvl >= labelZoomGround + 1 ||
-            this.selected)
+    if ( g.enableLabels && (!multiSelect || (multiSelect && this.selected)) &&
+        (this.dataSource != "ais" || g.zoomLvl >= labelZoomAIS) &&
+        (
+            (g.zoomLvl >= labelZoom && this.altitude != "ground")
+            || (g.zoomLvl >= labelZoomGround - 2 && this.speed > 5 && !this.fakeHex)
+            || (g.zoomLvl >= labelZoomGround + 0 && !this.fakeHex)
+            || (g.zoomLvl >= labelZoomGround + 1)
+            || this.selected
+        )
     ) {
         let callsign = "";
-        if (
-            this.flight &&
-            this.flight.trim() &&
-            !(this.dataSource == "ais" && !g.extendedLabels)
-        )
-            callsign = this.flight.trim();
-        else callsign = this.icao.toUpperCase();
-        if ((useRouteAPI || this.dataSource == "ais") && this.routeString) {
+        if (this.flight && this.flight.trim())
+            callsign =  this.flight.trim();
+        else if (this.registration)
+            callsign =  'reg: ' + this.registration;
+        else
+            callsign =   'hex: ' + this.icao;
+        if (useRouteAPI && this.dataSource != "ais" && this.routeString) {
             if (0 && g.extendedLabels) {
                 callsign += " - " + this.routeString;
             } else {
@@ -3302,8 +3298,12 @@ PlaneObject.prototype.routeCheck = function () {
         // we have all the pieces that allow us to lookup a route
         let route_check = { callsign: currentName, icao: this.icao };
         if (!this.position) {
-            // no lookup (for now)
-            return;
+            if (routeApiUrl.includes("adsb.im") && this.messages > 100) {
+                // check without plausibility check if we have received enough messages
+            } else {
+                // no lookup (for now)
+                return;
+            }
         } else if (showTrace || replay) {
             if (!routeApiUrl.includes("adsb.im")) {
                 route_check["lat"] = this.position[1];

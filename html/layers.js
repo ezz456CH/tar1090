@@ -140,23 +140,22 @@ function createBaseLayers() {
         }),
     );
 
-    let basemap_id = "rastertiles/voyager";
-    world.push(
-        new ol.layer.Tile({
+    if (0) {
+        let basemap_id = "rastertiles/voyager";
+        world.push(new ol.layer.Tile({
             source: new ol.source.OSM({
-                url: "https://{a-d}.basemaps.cartocdn.com/" + basemap_id + "/{z}/{x}/{y}.png",
-                attributions:
-                    'Powered by <a href="https://carto.com">CARTO.com</a>' +
-                    ' using data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
+                "url" : "https://{a-d}.basemaps.cartocdn.com/"+ basemap_id + "/{z}/{x}/{y}.png",
+                "attributions" : 'Powered by <a href="https://carto.com">CARTO.com</a>'
+                + ' using data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
                 attributionsCollapsible: false,
                 maxZoom: 15,
                 transition: tileTransition,
             }),
             name: "carto_" + basemap_id,
-            title: "CARTO.com English",
-            type: "base",
-        }),
-    );
+            title: 'CARTO.com English',
+            type: 'base',
+        }));
+    }
 
     world.push(
         new ol.layer.Tile({
@@ -433,36 +432,32 @@ function createBaseLayers() {
     */
 
     const date = new Date(Date.now() - 86400 * 1000);
-    const yesterday =
-        date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1).toString().padStart(2, "0") + "-" + date.getUTCDate().toString().padStart(2, "0");
-    world.push(
-        new ol.layer.Tile({
-            source: new ol.source.OSM({
-                url:
-                    "https://gibs-{a-c}.earthdata.nasa.gov/wmts/epsg3857/best/" +
-                    "MODIS_Terra_CorrectedReflectance_TrueColor/default/" +
-                    yesterday +
-                    "/" +
-                    "GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg",
-                attributions:
-                    '<a href="https://terra.nasa.gov/about/terra-instruments/modis">MODIS Terra</a> ' +
-                    yesterday +
-                    " Provided by NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Observing System Data and Information System (EOSDIS)",
-                maxZoom: 9,
-                transition: tileTransition,
-            }),
-            name: "gibs",
-            title: "GIBS Clouds " + yesterday,
-            type: "base",
+    const yesterday = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1).toString().padStart(2, '0') + '-' + date.getUTCDate().toString().padStart(2, '0');
+    world.push(new ol.layer.Tile({
+        source: new ol.source.OSM({
+            url: 'https://gibs-{a-c}.earthdata.nasa.gov/wmts/epsg3857/best/' +
+            'MODIS_Terra_CorrectedReflectance_TrueColor/default/' +
+            yesterday + '/' +
+            'GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg',
+            attributions: '<a href="https://terra.nasa.gov/about/terra-instruments/modis">MODIS Terra</a> ' +
+            yesterday + ' Provided by NASA\'s Global Imagery Browse Services (GIBS), part of NASA\'s Earth Observing System Data and Information System (EOSDIS)',
+            maxZoom: 9,
+            transition: tileTransition,
         }),
-    );
-    // carto.com basemaps, see the following URLs for details on them:
-    // http://basemaps.cartocdn.com
-    // https://github.com/CartoDB/cartodb/wiki/BaseMaps-available
+        name: 'gibs',
+        title: 'GIBS Clouds ' + yesterday,
+        type: 'base',
+    }));
 
-    let basemaps = ["dark_all", "dark_nolabels", "light_all", "light_nolabels"];
+    if (0) {
+        // carto.com basemaps, see the following URLs for details on them:
+        // http://basemaps.cartocdn.com
+        // https://github.com/CartoDB/cartodb/wiki/BaseMaps-available
 
-    if (1) {
+        let basemaps = [ "dark_all", "dark_nolabels",
+            "light_all", "light_nolabels"
+        ]
+
         for (let i in basemaps) {
             let basemap_id = basemaps[i];
 
